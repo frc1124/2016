@@ -1,4 +1,4 @@
-package tools;
+package org.usfirst.frc.team1124.robot.tools;
 
 import edu.wpi.first.wpilibj.CANTalon;
 

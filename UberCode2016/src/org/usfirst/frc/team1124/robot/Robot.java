@@ -1,15 +1,16 @@
 
 package org.usfirst.frc.team1124.robot;
 
+import org.usfirst.frc.team1124.robot.commands.Autonomous;
+import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team1124.robot.tools.ConfigIO;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.team1124.robot.commands.Autonomous;
-import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,6 +22,9 @@ import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 public class Robot extends IterativeRobot {
 	// operator interface
 	public static OI oi;
+	
+	// configuration interface
+	public static ConfigIO configIO;
 	
 	// subsystems
 	public static DriveTrain drivetrain;
@@ -45,6 +49,9 @@ public class Robot extends IterativeRobot {
 		
 		// instantiate operator interface
 		oi = new OI();
+		
+		// instantiate configuration interface
+		configIO = new ConfigIO();
 		
         // instantiate the command used for the autonomous period
         autonomousCommand = new Autonomous();
