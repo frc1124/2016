@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
-import org.usfirst.frc.team1124.robot.RobotMap;
+import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.RobotMapOBSOLETE;
 import org.usfirst.frc.team1124.robot.commands.teleop.ArcadeDriveJoystick;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -17,11 +18,11 @@ public class DriveTrain extends Subsystem {
 	public DriveTrain(){
 		super("DriveTrain");
 		
-		front_left_motor = new CANTalon(RobotMap.drivetrain.flMotor);
-		back_left_motor = new CANTalon(RobotMap.drivetrain.blMotor);
+		front_left_motor = new CANTalon(Robot.configIO.getIntVal("flMotor"));
+		back_left_motor = new CANTalon(Robot.configIO.getIntVal("blMotor"));
 		
-		front_right_motor = new CANTalon(RobotMap.drivetrain.frMotor);
-		back_right_motor = new CANTalon(RobotMap.drivetrain.brMotor);
+		front_right_motor = new CANTalon(Robot.configIO.getIntVal("frMotor"));
+		back_right_motor = new CANTalon(Robot.configIO.getIntVal("brMotor"));
 		
 		drive = new RobotDrive(front_left_motor, back_left_motor, front_right_motor, back_right_motor);
 	}
