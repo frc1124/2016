@@ -12,19 +12,25 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveTrain extends Subsystem {
 	
-	public CANTalon front_left_motor, back_left_motor,  front_right_motor, back_right_motor;
-	private RobotDrive drive;
+	public CANTalon left_1, left_2, left_3, right_1, right_2, right_3;
+	private RobotDrive firstpair;
+	private RobotDrive secondpair;
+	private RobotDrive thirdpair;
 	
 	public DriveTrain(){
 		super("DriveTrain");
 		
-		front_left_motor = new CANTalon(Robot.configIO.getIntVal("flMotor"));
-		back_left_motor = new CANTalon(Robot.configIO.getIntVal("blMotor"));
+		left_1 = new CANTalon(Robot.configIO.getIntVal("left1"));
+		left_2 = new CANTalon(Robot.configIO.getIntVal("left2"));
+		left_3 = new CANTalon(Robot.configIO.getIntVal("left3"));
 		
-		front_right_motor = new CANTalon(Robot.configIO.getIntVal("frMotor"));
-		back_right_motor = new CANTalon(Robot.configIO.getIntVal("brMotor"));
+		right_1 = new CANTalon(Robot.configIO.getIntVal("right1"));
+		right_2 = new CANTalon(Robot.configIO.getIntVal("right2"));
+		right_3 = new CANTalon(Robot.configIO.getIntVal("right3"));
 		
-		drive = new RobotDrive(front_left_motor, back_left_motor, front_right_motor, back_right_motor);
+		firstpair = new RobotDrive(left_1, right_1);
+		secondpair = new RobotDrive(left_2, right_2);
+		thirdpair = new RobotDrive(left_3, right_3);
 	}
 	
 	protected void initDefaultCommand() {
@@ -34,89 +40,45 @@ public class DriveTrain extends Subsystem {
 	// tank drive method
 	
 	public void drive_tank(double left, double right){
-		drive.setInvertedMotor(MotorType.kFrontLeft, true);
-		drive.setInvertedMotor(MotorType.kRearLeft, true);
-		drive.setInvertedMotor(MotorType.kFrontRight, true);
-		drive.setInvertedMotor(MotorType.kRearRight, true);
+		firstpair.setInvertedMotor(MotorType.kFrontLeft, true);
+		secondpair.setInvertedMotor(MotorType.kFrontLeft, true);
+		thirdpair.setInvertedMotor(MotorType.kFrontLeft, true);
+	
 		
-		drive.tankDrive(left, right);
+		firstpair.tankDrive(left, right);
+		secondpair.tankDrive(left, right);
+		thirdpair.tankDrive(left, right);
 	}
 	
 	// arcade drive methods
 	
 	public void drive(double move, double rotate) {
-		drive.setInvertedMotor(MotorType.kFrontLeft, false);
-		drive.setInvertedMotor(MotorType.kRearLeft, false);
-		drive.setInvertedMotor(MotorType.kFrontRight, false);
-		drive.setInvertedMotor(MotorType.kRearRight, false);
+		firstpair.setInvertedMotor(MotorType.kFrontLeft, true);
+		secondpair.setInvertedMotor(MotorType.kFrontLeft, true);
+		thirdpair.setInvertedMotor(MotorType.kFrontLeft, true);
 		
-		drive.arcadeDrive(move, rotate);
+		firstpair.arcadeDrive(move, rotate);
+		secondpair.arcadeDrive(move, rotate);
+		thirdpair.arcadeDrive(move, rotate);
 	}
 	
 	public void drive(Joystick js){
-		drive.setInvertedMotor(MotorType.kFrontLeft, false);
-		drive.setInvertedMotor(MotorType.kRearLeft, false);
-		drive.setInvertedMotor(MotorType.kFrontRight, false);
-		drive.setInvertedMotor(MotorType.kRearRight, false);
+		firstpair.setInvertedMotor(MotorType.kFrontLeft, true);
+		secondpair.setInvertedMotor(MotorType.kFrontLeft, true);
+		thirdpair.setInvertedMotor(MotorType.kFrontLeft, true);
 		
-		drive.arcadeDrive(js);
+		firstpair.arcadeDrive(js);
+		secondpair.arcadeDrive(js);
+		thirdpair.arcadeDrive(js);
 	}
 	
-	// mecanum drive methods
-
-	public void drive_mecanum(double x, double y, double r, double theta) {
-		drive.setInvertedMotor(MotorType.kFrontLeft, true);
-		drive.setInvertedMotor(MotorType.kRearLeft, true);
-		drive.setInvertedMotor(MotorType.kFrontRight, false);
-		drive.setInvertedMotor(MotorType.kRearRight, false);
-		
-		drive.mecanumDrive_Cartesian(x, y, r, theta);
-	}
-
-	public void drive_mecanum_basic(double x, double y) {
-		double r = 0;
-		double theta = 0;
-		
-		drive.setInvertedMotor(MotorType.kFrontLeft, true);
-		drive.setInvertedMotor(MotorType.kRearLeft, true);
-		drive.setInvertedMotor(MotorType.kFrontRight, false);
-		drive.setInvertedMotor(MotorType.kRearRight, false);
-		
-		drive.mecanumDrive_Cartesian(x, y, r, theta);
-	}
 	
-	public void drive_mecanum(Joystick js){
-		double y = js.getY();
-		double x = js.getX();
-		double r = js.getZ();
-		double theta = 0;
-		
-		drive.setInvertedMotor(MotorType.kFrontLeft, true);
-		drive.setInvertedMotor(MotorType.kRearLeft, true);
-		drive.setInvertedMotor(MotorType.kFrontRight, false);
-		drive.setInvertedMotor(MotorType.kRearRight, false);
-		
-		drive.mecanumDrive_Cartesian(x, y, r, theta);
-	}
-	
-	public void drive_mecanum_basic(Joystick js){
-		double y = js.getY();
-		double x = js.getX();
-		double r = 0;
-		double theta = 0;
-		
-		drive.setInvertedMotor(MotorType.kFrontLeft, true);
-		drive.setInvertedMotor(MotorType.kRearLeft, true);
-		drive.setInvertedMotor(MotorType.kFrontRight, false);
-		drive.setInvertedMotor(MotorType.kRearRight, false);
-		
-		drive.mecanumDrive_Cartesian(x, y, r, theta);
-	}
-
 	// mode-independent methods
 	
 	public void stop(){
-		drive.arcadeDrive(0, 0);
+		firstpair.arcadeDrive(0, 0);
+		secondpair.arcadeDrive(0, 0);
+		thirdpair.arcadeDrive(0, 0);
 	}
 	
 }
