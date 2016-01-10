@@ -41,12 +41,10 @@ public class OI {
 	private Joystick js1 = new Joystick(0);
 	
 	private Button button_4 = new JoystickButton(js1, 4);
-	private Button button_5 = new JoystickButton(js1, 5);
 	
 	public OI(){
 		// setup drive mode control
 		button_4.whenPressed(new ArcadeDriveJoystick());
-		button_5.whenPressed(new MecanumDriveJoystick());
 	}
 	
 	public Joystick getJoystick(){

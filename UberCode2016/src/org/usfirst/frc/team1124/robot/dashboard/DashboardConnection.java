@@ -15,7 +15,7 @@ public class DashboardConnection {
 		USBCamera camera = new USBCamera("cam0");
         camera.openCamera();
         
-        srv.setSize(0); // 640 by 480
+        srv.setSize(1); // 320x240
         srv.startAutomaticCapture(camera);
 	}
 	
@@ -87,6 +87,7 @@ public class DashboardConnection {
 			Robot.pdp.clearStickyFaults();
 		}
 		
+		/*
 		// pneumatics control module (if applicable)
 		SmartDashboard.putBoolean("pressure_switch_state", Robot.compressor.getPressureSwitchValue());
 		SmartDashboard.putBoolean("compressor_enabled", Robot.compressor.enabled());
@@ -112,6 +113,7 @@ public class DashboardConnection {
 		}else{
 			Robot.compressor.stop();
 		}
+		*/
 		
 		// motor data
 		

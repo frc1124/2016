@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.RobotMapOBSOLETE;
 import org.usfirst.frc.team1124.robot.commands.teleop.ArcadeDriveJoystick;
 
 import edu.wpi.first.wpilibj.CANTalon;
