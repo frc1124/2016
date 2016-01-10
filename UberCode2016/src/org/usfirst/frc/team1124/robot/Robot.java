@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team1124.robot.commands.Autonomous;
+import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 
 /**
@@ -29,6 +30,9 @@ public class Robot extends IterativeRobot {
 	public static Compressor compressor;
 	public static PowerDistributionPanel pdp;
 	
+	// camera
+	public DashboardConnection db_connection = new DashboardConnection();
+	
 	// autonomous
     Command autonomousCommand;
     
@@ -45,6 +49,9 @@ public class Robot extends IterativeRobot {
 		
 		// instantiate operator interface
 		oi = new OI();
+		
+		// start camera stream to driver station
+		db_connection.initCamera();
 		
         // instantiate the command used for the autonomous period
         autonomousCommand = new Autonomous();
