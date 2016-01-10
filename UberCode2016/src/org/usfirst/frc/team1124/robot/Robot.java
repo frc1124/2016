@@ -12,6 +12,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.usfirst.frc.team1124.robot.commands.Autonomous;
+import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
+import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -33,6 +37,9 @@ public class Robot extends IterativeRobot {
 	public static Compressor compressor;
 	public static PowerDistributionPanel pdp;
 	
+	// camera
+	public DashboardConnection db_connection = new DashboardConnection();
+	
 	// autonomous
     Command autonomousCommand;
     
@@ -53,7 +60,10 @@ public class Robot extends IterativeRobot {
 		
 		// instantiate configuration interface
 		configIO = new ConfigIO();
-		
+
+		// start camera stream to driver station
+		db_connection.initCamera();
+
         // instantiate the command used for the autonomous period
         autonomousCommand = new Autonomous();
     }

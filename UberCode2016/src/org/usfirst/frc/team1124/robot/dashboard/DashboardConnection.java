@@ -1,11 +1,23 @@
 package org.usfirst.frc.team1124.robot.dashboard;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import org.usfirst.frc.team1124.robot.Robot;
 import edu.wpi.first.wpilibj.ControllerPower;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 public class DashboardConnection {
 	private static boolean firstCall = false;
+	
+	public void initCamera(){
+		CameraServer srv = CameraServer.getInstance();
+		
+		USBCamera camera = new USBCamera("cam0");
+        camera.openCamera();
+        
+        srv.setSize(0); // 640 by 480
+        srv.startAutomaticCapture(camera);
+	}
 	
 	public void updateDashboard(){
 		// one-time operations
