@@ -13,6 +13,10 @@ public class SafeCANTalon extends CANTalon{
 		super(deviceNumber, controlPeriodMs);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public void rekt(){
+		//rekt
+	}
 
 	
 }

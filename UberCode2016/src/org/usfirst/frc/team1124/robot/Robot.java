@@ -37,6 +37,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     
     // this revision of code (displayed on dashboard)
+	// i need to edit this file to make a new commit
     public static String codeRevision = "[v6.4.0]:lift-swap_bash-2015";
 
     /**
