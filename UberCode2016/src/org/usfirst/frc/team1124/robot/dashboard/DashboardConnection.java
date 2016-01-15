@@ -15,6 +15,9 @@ public class DashboardConnection {
 		USBCamera camera = new USBCamera("cam0");
         camera.openCamera();
         
+        camera.setWhiteBalanceManual(5800);
+        camera.setExposureManual(0);
+        
         srv.setSize(1); // 320x240
         srv.startAutomaticCapture(camera);
 	}

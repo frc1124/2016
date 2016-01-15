@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1124.robot.commands.Autonomous;
 import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
@@ -52,14 +53,14 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	// instantiate configuration interface
+    	configIO = new ConfigIO();
+    	
     	// instantiate subsystems
 		drivetrain = new DriveTrain();
 		
 		// instantiate operator interface
 		oi = new OI();
-		
-		// instantiate configuration interface
-		configIO = new ConfigIO();
 
 		// start camera stream to driver station
 		db_connection.initCamera();

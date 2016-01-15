@@ -20,6 +20,7 @@ public class ConfigIO {
 	static BufferedReader br;
 
 	public ConfigIO(){
+
 		file = new File(filePath);
 		try {
 			file.createNewFile();
@@ -67,14 +68,14 @@ public class ConfigIO {
 			} 
 		}
 
-//		for(int v = 0; v < config.size(); v++)
-//			System.out.println(config.keySet().toArray()[v] + " = " + config.get(config.keySet().toArray()[v]));
+		//		for(int v = 0; v < config.size(); v++)
+		//			System.out.println(config.keySet().toArray()[v] + " = " + config.get(config.keySet().toArray()[v]));
 	}
-	
+
 	public String getStringVal(String key){
 		return config.get(key);
 	}
-	
+
 	public int getIntVal(String key){
 		return Integer.parseInt(config.get(key));
 	}
