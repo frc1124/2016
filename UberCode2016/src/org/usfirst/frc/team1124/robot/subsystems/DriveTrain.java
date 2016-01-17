@@ -64,6 +64,26 @@ public class DriveTrain extends Subsystem {
 		return left.getDistance();
 	}
 	
+	public boolean getLeftEncoderDirection(){
+		return left.getDirection();
+	}
+	
+	public double getLeftEncoderRate(){
+		return left.getRate();
+	}
+	
+	public double getRightEncoderDistance(){
+		return right.getDistance();
+	}
+	
+	public boolean getRightEncoderDirection(){
+		return right.getDirection();
+	}
+	
+	public double getRightEncoderRate(){
+		return right.getRate();
+	}
+	
 	// tank drive method
 	
 	public void drive_tank(double left, double right){
