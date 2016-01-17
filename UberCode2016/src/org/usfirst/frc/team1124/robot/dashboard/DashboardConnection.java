@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1124.robot.dashboard;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
+
 import org.usfirst.frc.team1124.robot.Robot;
 
 import com.ni.vision.NIVision;
@@ -120,8 +122,8 @@ public class DashboardConnection {
 		SmartDashboard.putNumber("right_drive_encoder_dist", Robot.drivetrain.getRightEncoderDistance());
 		SmartDashboard.putNumber("right_drive_encoder_rate", Robot.drivetrain.getRightEncoderRate());
 		
-		/*
-		// pneumatics control module (if applicable)
+		
+		// pneumatics control module
 		SmartDashboard.putBoolean("pressure_switch_state", Robot.compressor.getPressureSwitchValue());
 		SmartDashboard.putBoolean("compressor_enabled", Robot.compressor.enabled());
 		SmartDashboard.putNumber("compressor_current", Robot.compressor.getCompressorCurrent());
@@ -146,7 +148,7 @@ public class DashboardConnection {
 		}else{
 			Robot.compressor.stop();
 		}
-		*/
+		
 		
 		// motor data
 		SmartDashboard.putNumber("left_drive_talon_1_temp_fault", Robot.drivetrain.left_1.getFaultOverTemp());
