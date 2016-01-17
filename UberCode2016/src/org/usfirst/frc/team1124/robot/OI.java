@@ -1,8 +1,5 @@
 package org.usfirst.frc.team1124.robot;
 
-import org.usfirst.frc.team1124.robot.commands.camera.Flash;
-import org.usfirst.frc.team1124.robot.commands.teleop.ArcadeDriveJoystick;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -45,7 +42,6 @@ public class OI {
 	
 	public OI(){
 		// setup drive mode control
-		button_1.whenPressed(new Flash());
 	}
 	
 	public Joystick getJoystick(){

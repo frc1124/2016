@@ -5,7 +5,6 @@ import org.usfirst.frc.team1124.robot.commands.Autonomous;
 import org.usfirst.frc.team1124.robot.commands.teleop.ArcadeDriveJoystick;
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team1124.robot.subsystems.CameraFlash;
 
 // tools
 import org.usfirst.frc.team1124.robot.tools.ConfigIO;
@@ -38,7 +37,6 @@ public class Robot extends IterativeRobot {
 	
 	// subsystems
 	public static DriveTrain drivetrain;
-	public static CameraFlash cameraflash;
 	
 	// components
 	public static Compressor compressor;
@@ -64,7 +62,6 @@ public class Robot extends IterativeRobot {
     	
     	// instantiate subsystems
 		drivetrain = new DriveTrain();
-		cameraflash = new CameraFlash();
 		
 		// instantiate operator interface
 		oi = new OI();
