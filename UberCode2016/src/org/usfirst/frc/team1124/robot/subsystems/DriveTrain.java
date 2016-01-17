@@ -57,7 +57,7 @@ public class DriveTrain extends Subsystem {
 		setDefaultCommand(new ArcadeDriveJoystick());
 	}
 	
-	// encoders
+	// encoder data
 	
 	public double getLeftEncoderDistance(){
 		return left.getDistance();
@@ -71,6 +71,10 @@ public class DriveTrain extends Subsystem {
 		return left.getRate();
 	}
 	
+	public boolean getLeftEncoderStopped(){
+		return left.getStopped();
+	}
+	
 	public double getRightEncoderDistance(){
 		return right.getDistance();
 	}
@@ -81,6 +85,10 @@ public class DriveTrain extends Subsystem {
 	
 	public double getRightEncoderRate(){
 		return right.getRate();
+	}
+	
+	public boolean getRightEncoderStopped(){
+		return right.getStopped();
 	}
 	
 	// tank drive method

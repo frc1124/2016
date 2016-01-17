@@ -90,6 +90,18 @@ public class DashboardConnection {
 			Robot.pdp.clearStickyFaults();
 		}
 		
+		// drive encoders
+		
+		SmartDashboard.putNumber("left_drive_encoder_dist", Robot.drivetrain.getLeftEncoderDistance());
+		SmartDashboard.putBoolean("left_drive_encoder_dir", Robot.drivetrain.getLeftEncoderDirection());
+		SmartDashboard.putNumber("left_drive_encoder_rate", Robot.drivetrain.getLeftEncoderRate());
+		SmartDashboard.putBoolean("left_drive_encoder_stopped", Robot.drivetrain.getLeftEncoderStopped());
+		
+		SmartDashboard.putNumber("right_drive_encoder_dist", Robot.drivetrain.getRightEncoderDistance());
+		SmartDashboard.putBoolean("right_drive_encoder_dir", Robot.drivetrain.getRightEncoderDirection());
+		SmartDashboard.putNumber("right_drive_encoder_rate", Robot.drivetrain.getRightEncoderRate());
+		SmartDashboard.putBoolean("right_drive_encoder_stopped", Robot.drivetrain.getRightEncoderStopped());
+		
 		/*
 		// pneumatics control module (if applicable)
 		SmartDashboard.putBoolean("pressure_switch_state", Robot.compressor.getPressureSwitchValue());
