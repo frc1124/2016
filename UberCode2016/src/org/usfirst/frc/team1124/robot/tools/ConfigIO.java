@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,50 +18,54 @@ public class ConfigIO {
 	static BufferedReader br;
 
 	public ConfigIO(){
-
 		file = new File(filePath);
-		try {
+		
+		try{
 			file.createNewFile();
-		} catch (IOException e1) {
+		}catch(IOException e1){
 			e1.printStackTrace();
 		}
+		
 		config = new HashMap<String, String>();
-		try { 
+		
+		try{ 
 			br = new BufferedReader(new FileReader(filePath)); 
-		} 
-		catch (FileNotFoundException e) {
+		}catch(FileNotFoundException e){
 			e.printStackTrace();
 		}
 
-		try {
+		try{
 			String line = br.readLine();
 
-			while (line != null) {
+			while(line != null){
 				if(line.charAt(0) != '#'){
 					String value1 = "";
 					String value2 = "";
+					
 					boolean encounteredSpace = false;
+					
 					for(int l = 0; l < line.length() && !encounteredSpace; l++){
 						if(line.charAt(l) != ' '){
 							value1 += line.charAt(l);
-						}
-						else {
-							value2 = line.substring(l+1);
+						}else {
+							value2 = line.substring(l + 1);
 							encounteredSpace = true;
 						}
 					}
-					if(encounteredSpace)
+					
+					if(encounteredSpace){
 						config.put(value1, value2);
+					}
 				}
+				
 				line = br.readLine();
 			}
-		} 
-		catch (IOException e) { e.printStackTrace(); } 
-		finally { 
-			try { 
+		}catch(IOException e){ 
+			e.printStackTrace(); 
+		}finally{ 
+			try{ 
 				br.close(); 
-			} 
-			catch (IOException e) { 
+			}catch(IOException e){ 
 				e.printStackTrace(); 
 			} 
 		}
@@ -71,11 +73,13 @@ public class ConfigIO {
 		//		for(int v = 0; v < config.size(); v++)
 		//			System.out.println(config.keySet().toArray()[v] + " = " + config.get(config.keySet().toArray()[v]));
 	}
-
+	
+	/** Get the string value from the config file.*/
 	public String getStringVal(String key){
 		return config.get(key);
 	}
-
+	
+	/** Get the integer value from the config file.*/
 	public int getIntVal(String key){
 		return Integer.parseInt(config.get(key));
 	}

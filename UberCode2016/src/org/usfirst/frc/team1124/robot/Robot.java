@@ -1,21 +1,25 @@
-
 package org.usfirst.frc.team1124.robot;
 
+// commands
 import org.usfirst.frc.team1124.robot.commands.Autonomous;
+
+// subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
+
+// tools
 import org.usfirst.frc.team1124.robot.tools.ConfigIO;
 
+// dashboard
+import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
+
+// wpilib components
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team1124.robot.commands.Autonomous;
-import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
-import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the

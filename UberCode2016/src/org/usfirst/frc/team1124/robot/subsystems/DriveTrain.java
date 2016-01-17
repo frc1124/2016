@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends Subsystem {
 	
@@ -101,9 +100,6 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void drive(Joystick js){
-        SmartDashboard.putNumber("LEFT ENCODER", Robot.drivetrain.getLeftEncoderDistance());
-		
-		
 		firstpair.arcadeDrive(js);
 		secondpair.arcadeDrive(js);
 		thirdpair.arcadeDrive(js);
