@@ -93,14 +93,10 @@ public class DashboardConnection {
 		// drive encoders
 		
 		SmartDashboard.putNumber("left_drive_encoder_dist", Robot.drivetrain.getLeftEncoderDistance());
-		SmartDashboard.putBoolean("left_drive_encoder_dir", Robot.drivetrain.getLeftEncoderDirection());
 		SmartDashboard.putNumber("left_drive_encoder_rate", Robot.drivetrain.getLeftEncoderRate());
-		SmartDashboard.putBoolean("left_drive_encoder_stopped", Robot.drivetrain.getLeftEncoderStopped());
 		
 		SmartDashboard.putNumber("right_drive_encoder_dist", Robot.drivetrain.getRightEncoderDistance());
-		SmartDashboard.putBoolean("right_drive_encoder_dir", Robot.drivetrain.getRightEncoderDirection());
 		SmartDashboard.putNumber("right_drive_encoder_rate", Robot.drivetrain.getRightEncoderRate());
-		SmartDashboard.putBoolean("right_drive_encoder_stopped", Robot.drivetrain.getRightEncoderStopped());
 		
 		/*
 		// pneumatics control module (if applicable)
@@ -131,17 +127,29 @@ public class DashboardConnection {
 		*/
 		
 		// motor data
+		SmartDashboard.putNumber("left_drive_talon_1_temp_fault", Robot.drivetrain.left_1.getFaultOverTemp());
+		SmartDashboard.putNumber("left_drive_talon_1_volt_fault", Robot.drivetrain.left_1.getFaultUnderVoltage());
+		SmartDashboard.putNumber("left_drive_talon_1_hardware_fault", Robot.drivetrain.left_1.getFaultHardwareFailure());
 		
-		//data that can be gathered (that does not relate to PID and connected encoder function)
-		/*
-		Robot.drivetrain.front_left_motor.getBrakeEnableDuringNeutral();
-		Robot.drivetrain.front_left_motor.getTemp();
-		Robot.drivetrain.front_left_motor.getOutputCurrent();
-		Robot.drivetrain.front_left_motor.getOutputVoltage();
-		Robot.drivetrain.front_left_motor.getBusVoltage();
-		Robot.drivetrain.front_left_motor.getFaultOverTemp();
-		Robot.drivetrain.front_left_motor.getFaultUnderVoltage();
-		Robot.drivetrain.front_left_motor.getFaultHardwareFailure();
-		*/
+		SmartDashboard.putNumber("left_drive_talon_2_temp_fault", Robot.drivetrain.left_2.getFaultOverTemp());
+		SmartDashboard.putNumber("left_drive_talon_2_volt_fault", Robot.drivetrain.left_2.getFaultUnderVoltage());
+		SmartDashboard.putNumber("left_drive_talon_2_hardware_fault", Robot.drivetrain.left_2.getFaultHardwareFailure());
+		
+		SmartDashboard.putNumber("left_drive_talon_3_temp_fault", Robot.drivetrain.left_3.getFaultOverTemp());
+		SmartDashboard.putNumber("left_drive_talon_3_volt_fault", Robot.drivetrain.left_3.getFaultUnderVoltage());
+		SmartDashboard.putNumber("left_drive_talon_3_hardware_fault", Robot.drivetrain.left_3.getFaultHardwareFailure());
+
+		SmartDashboard.putNumber("right_drive_talon_1_temp_fault", Robot.drivetrain.right_1.getFaultOverTemp());
+		SmartDashboard.putNumber("right_drive_talon_1_volt_fault", Robot.drivetrain.right_1.getFaultUnderVoltage());
+		SmartDashboard.putNumber("right_drive_talon_1_hardware_fault", Robot.drivetrain.right_1.getFaultHardwareFailure());
+		
+		SmartDashboard.putNumber("right_drive_talon_2_temp_fault", Robot.drivetrain.right_2.getFaultOverTemp());
+		SmartDashboard.putNumber("right_drive_talon_2_volt_fault", Robot.drivetrain.right_2.getFaultUnderVoltage());
+		SmartDashboard.putNumber("right_drive_talon_2_hardware_fault", Robot.drivetrain.right_2.getFaultHardwareFailure());
+		
+		SmartDashboard.putNumber("right_drive_talon_3_temp_fault", Robot.drivetrain.right_3.getFaultOverTemp());
+		SmartDashboard.putNumber("right_drive_talon_3_volt_fault", Robot.drivetrain.right_3.getFaultUnderVoltage());
+		SmartDashboard.putNumber("right_drive_talon_3_hardware_fault", Robot.drivetrain.right_3.getFaultHardwareFailure());
+		
 	}
 }
