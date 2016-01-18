@@ -3,8 +3,11 @@ package org.usfirst.frc.team1124.robot;
 // commands
 import org.usfirst.frc.team1124.robot.commands.Autonomous;
 import org.usfirst.frc.team1124.robot.commands.teleop.ArcadeDriveJoystick;
+
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 // tools
 import org.usfirst.frc.team1124.robot.tools.ConfigIO;
@@ -13,7 +16,6 @@ import org.usfirst.frc.team1124.robot.tools.ConfigIO;
 import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
 
 // wpilib components
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
@@ -37,6 +39,7 @@ public class Robot extends IterativeRobot {
 	
 	// subsystems
 	public static DriveTrain drivetrain;
+	public static USBCamera camera;
 	
 	// components
 	public static Compressor compressor;
@@ -67,7 +70,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		// start camera stream to driver station
-		db_connection.initCamera();
+		camera = db_connection.initCamera();
 
         // instantiate the command used for the autonomous period
         autonomousCommand = new Autonomous();

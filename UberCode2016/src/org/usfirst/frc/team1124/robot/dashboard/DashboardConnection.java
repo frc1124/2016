@@ -19,7 +19,7 @@ public class DashboardConnection {
 	//Image frame;
     //AxisCamera camera;
 	
-	public void initCamera(){
+	public USBCamera initCamera(){
 	    
 		CameraServer srv = CameraServer.getInstance();
 		//frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
@@ -31,10 +31,11 @@ public class DashboardConnection {
 		
         camera.setWhiteBalanceManual(4500);
         camera.setExposureManual(0);
-        camera.setBrightness(40);
         
         srv.setSize(1); // 320x240
         srv.startAutomaticCapture(camera);
+        
+        return camera;
 	}
 	
 	/*
