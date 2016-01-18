@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * The two pistons that control the arm
+ * The two pistons that are used for climbing
  */
 public class ArmPistons extends Subsystem {
 	
