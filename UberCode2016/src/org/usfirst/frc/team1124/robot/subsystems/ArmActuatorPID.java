@@ -2,6 +2,7 @@ package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -17,6 +18,8 @@ public class ArmActuatorPID extends PIDSubsystem {
 	
 	private Talon actuator;
 	private Encoder encoder;
+	
+	private DigitalInput limit_switch;
 	
 	public ArmActuatorPID(){
 		super("ArmActuators", P, I, D);
