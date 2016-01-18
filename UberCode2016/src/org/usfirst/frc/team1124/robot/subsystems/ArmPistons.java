@@ -29,10 +29,12 @@ public class ArmPistons extends Subsystem {
         //setDefaultCommand(new Command());
     }
     
+    /** Extend the arm pistons */
     public void extend(){
     	left_piston.set(DoubleSolenoid.Value.kForward);
     }
     
+    /** Retract the arm pistons */
     public void retract(){
     	left_piston.set(DoubleSolenoid.Value.kReverse);
     }
