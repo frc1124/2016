@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Solenoid;
+import org.usfirst.frc.team1124.robot.Robot;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -8,19 +10,31 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ArmPistons extends Subsystem {
 	
-	Solenoid left_piston;
-	Solenoid right_piston;
+	DoubleSolenoid left_piston;
+	DoubleSolenoid right_piston;
 	
 	public ArmPistons(){
 		super("ArmPistons");
 		
-		left_piston = new Solenoid(0);
-		right_piston = new Solenoid(1);
+		int left_a = Robot.configIO.getIntVal("arm_piston_left_a");
+		int left_b = Robot.configIO.getIntVal("arm_piston_left_b");
+		int right_a = Robot.configIO.getIntVal("arm_piston_right_a");
+		int right_b = Robot.configIO.getIntVal("arm_piston_right_b");
+		
+		left_piston = new DoubleSolenoid(left_a, left_b);
+		right_piston = new DoubleSolenoid(right_a, right_b);
 	}
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        //setDefaultCommand(new Command());
+    }
+    
+    public void extend(){
+    	left_piston.set(DoubleSolenoid.Value.kForward);
+    }
+    
+    public void retract(){
+    	left_piston.set(DoubleSolenoid.Value.kReverse);
     }
 }
 
