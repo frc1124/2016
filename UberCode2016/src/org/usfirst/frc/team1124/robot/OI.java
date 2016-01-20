@@ -37,15 +37,25 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 	
 	private Joystick js1 = new Joystick(0);
+	private Joystick js2 = new Joystick(1);
+	private Joystick js3 = new Joystick(2);
 	
 	private Button button_1 = new JoystickButton(js1, 1);
 	
 	public OI(){
-		// setup drive mode control
+		// setup drive mode control (bind buttons)
 	}
 	
-	public Joystick getJoystick(){
+	public Joystick getController(){
 		return js1;
+	}
+	
+	public Joystick getJS1(){
+		return js2;
+	}
+	
+	public Joystick getJS2(){
+		return js3;
 	}
 	
 }

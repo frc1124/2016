@@ -2,6 +2,7 @@ package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -12,6 +13,8 @@ public class IntakeBelts extends Subsystem {
     
 	private Talon motor;
 	
+	private DigitalInput light_sensor;
+	
 	private final int INTAKE_SPEED = 1;
 	private final int LOW_GOAL_SPEED = -1;
 	
@@ -19,10 +22,16 @@ public class IntakeBelts extends Subsystem {
 		super("IntakeBelts");
 		
 		motor = new Talon(Robot.configIO.getIntVal("intake_belts"));
+		
+		light_sensor = new DigitalInput(Robot.configIO.getIntVal("intake_belts_light_sensor"));
 	}
 	
     public void initDefaultCommand() {
         //setDefaultCommand(new Command());
+    }
+    
+    public boolean getSensorState(){
+    	return light_sensor.get();
     }
     
     /** Intake a ball */

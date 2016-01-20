@@ -1,16 +1,11 @@
 package org.usfirst.frc.team1124.robot.dashboard;
 
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.Compressor;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
-import com.ni.vision.NIVision;
-import com.ni.vision.NIVision.Image;
-
 import edu.wpi.first.wpilibj.ControllerPower;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.AxisCamera;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 
 public class DashboardConnection {
@@ -22,30 +17,19 @@ public class DashboardConnection {
 	public USBCamera initCamera(){
 	    
 		CameraServer srv = CameraServer.getInstance();
-		//frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 		
 		USBCamera camera = new USBCamera("cam0");
         camera.openCamera();
-        
-		//camera = new AxisCamera("10.11.24.81");
 		
         camera.setWhiteBalanceManual(4500);
         camera.setExposureManual(0);
+        camera.setBrightness(80);
         
         srv.setSize(1); // 320x240
         srv.startAutomaticCapture(camera);
         
         return camera;
 	}
-	
-	/*
-	public void refreshCamera(){
-        camera.getImage(frame);
-
-		CameraServer srv = CameraServer.getInstance();
-		srv.setImage(frame);
-	}
-	*/
 	
 	public void updateDashboard(){
 		// one-time operations

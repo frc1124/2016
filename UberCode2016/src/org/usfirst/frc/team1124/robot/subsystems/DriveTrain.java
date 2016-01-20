@@ -15,6 +15,11 @@ public class DriveTrain extends Subsystem {
 	
 	public CANTalon left_1, left_2, left_3, right_1, right_2, right_3;
 	
+	// PID constants used for auto targeting and hold position
+	public final double P = 1;
+	public final double I = 0.01;
+	public final double D = 0;
+	
 	private RobotDrive firstpair;
 	private RobotDrive secondpair;
 	private RobotDrive thirdpair;
@@ -43,11 +48,9 @@ public class DriveTrain extends Subsystem {
 		int right_a_channel = Robot.configIO.getIntVal("right_enc_a");
 		int right_b_channel = Robot.configIO.getIntVal("right_enc_b");
 		
-		
 		firstpair.setInvertedMotor(MotorType.kRearLeft, true);
 		secondpair.setInvertedMotor(MotorType.kRearLeft, true);
 		thirdpair.setInvertedMotor(MotorType.kRearLeft, true);
-		
 		
 		left = new Encoder(left_a_channel, left_b_channel, false, EncodingType.k4X);
 		right = new Encoder(right_a_channel, right_b_channel, false, EncodingType.k4X);
@@ -112,7 +115,6 @@ public class DriveTrain extends Subsystem {
 		secondpair.arcadeDrive(js);
 		thirdpair.arcadeDrive(js);
 	}
-	
 	
 	// mode-independent methods
 	
