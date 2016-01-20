@@ -15,9 +15,9 @@ local.properties
 .classpath
 .settings/
 .loadpath
-.class
-build/
-dist/
+*.class
+UberCode2016/build/
+UberCode2016/dist/
 
 # External tool builders
 .externalToolBuilders/
