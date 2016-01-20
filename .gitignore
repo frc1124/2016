@@ -5,7 +5,7 @@
 *.pydevproject
 .project
 .metadata
-bin/
+UberCode2016/bin/
 tmp/
 *.tmp
 *.bak
