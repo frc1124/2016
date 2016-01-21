@@ -6,23 +6,26 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TankDriveJoystick extends Command {
-
-	protected void initialize() {
-		
+	
+	public TankDriveJoystick(){
+		requires(Robot.drivetrain);
 	}
 
+	protected void initialize() {}
+
 	protected void execute() {
-		Joystick js = Robot.oi.getController();	
+		Joystick js = Robot.oi.getController();
+		
 		Robot.drivetrain.drive_tank(js);
 	}
 
 	protected boolean isFinished() {
 		// this doesn't ever stop (as of now) which is what we want...as of now...
-		return true;
+		return false;
 	}
 
 	protected void end() {
-		
+		Robot.drivetrain.stop();
 	}
 	protected boolean isInterruptable(){
 		// so we can toggle drive modes
