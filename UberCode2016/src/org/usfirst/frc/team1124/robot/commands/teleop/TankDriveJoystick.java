@@ -7,22 +7,19 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TankDriveJoystick extends Command {
 
-	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
+		Joystick js = Robot.oi.getController();
 		
+		Robot.drivetrain.drive_tank(js);
 	}
 
-	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+		// this doesn't ever stop (as of now) which is what we want...as of now...
+		return true;
 	}
 
 	@Override
@@ -33,7 +30,7 @@ public class TankDriveJoystick extends Command {
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
+		end();
 		
 	}
 

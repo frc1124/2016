@@ -102,6 +102,10 @@ public class DriveTrain extends Subsystem {
 		thirdpair.tankDrive(left, right);
 	}
 	
+	public void drive_tank(Joystick js){
+		drive_tank(js.getY(), js.getThrottle());
+	}
+	
 	// arcade drive methods
 	
 	public void drive(double move, double rotate) {
