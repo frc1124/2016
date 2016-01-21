@@ -12,8 +12,7 @@ public class TankDriveJoystick extends Command {
 	}
 
 	protected void execute() {
-		Joystick js = Robot.oi.getController();
-		
+		Joystick js = Robot.oi.getController();	
 		Robot.drivetrain.drive_tank(js);
 	}
 
@@ -22,13 +21,14 @@ public class TankDriveJoystick extends Command {
 		return true;
 	}
 
-	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
 		
 	}
+	protected boolean isInterruptable(){
+		// so we can toggle drive modes
+		return true;
+	}
 
-	@Override
 	protected void interrupted() {
 		end();
 		
