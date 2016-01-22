@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
- * The linear actuator on the arm used to actuate the arm; impliments PID subsystem. PID control for distance.
+ * The linear actuator on the arm used to actuate the arm; implements PID subsystem. PID control for distance.
  */
 public class ArmActuatorPID extends PIDSubsystem {
 	
@@ -21,6 +21,8 @@ public class ArmActuatorPID extends PIDSubsystem {
 	private Encoder encoder;
 	
 	private DigitalInput limit_switch;
+	
+	private double setpoint; // used for arm presets (full up, full down, etc.)
 	
 	public ArmActuatorPID() {
         // Use these to get going:
@@ -45,12 +47,10 @@ public class ArmActuatorPID extends PIDSubsystem {
     }
 
 	protected double returnPIDInput() {
-		// TODO Auto-generated method stub
-		return 0;
+		return encoder.getRate();
 	}
 
 	protected void usePIDOutput(double output) {
-		// TODO Auto-generated method stub
-		
+		actuator.pidWrite(output);
 	}
 }

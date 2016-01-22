@@ -7,6 +7,7 @@ import org.usfirst.frc.team1124.robot.commands.teleop.ArcadeDriveJoystick;
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1124.robot.subsystems.IntakeBelts;
+import org.usfirst.frc.team1124.robot.subsystems.ArmActuatorPID;
 import org.usfirst.frc.team1124.robot.subsystems.ArmPistons;
 import edu.wpi.first.wpilibj.Compressor;
 
@@ -43,6 +44,7 @@ public class Robot extends IterativeRobot {
 	// subsystems
 	public static DriveTrain drivetrain;
 	public static ArmPistons arm_pistons;
+	public static ArmActuatorPID arm_actuator_pid;
 	public static IntakeBelts intake_belts;
 	public static USBCamera camera;
 	
