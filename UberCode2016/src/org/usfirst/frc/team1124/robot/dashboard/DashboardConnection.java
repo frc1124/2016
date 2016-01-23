@@ -4,33 +4,55 @@ import edu.wpi.first.wpilibj.CameraServer;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
+import com.ni.vision.NIVision;
+import com.ni.vision.NIVision.Image;
+
 import edu.wpi.first.wpilibj.ControllerPower;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.AxisCamera;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 
 public class DashboardConnection {
 	private static boolean firstCall = false;
     
-	//Image frame;
-    //AxisCamera camera;
+	Image frame;
+    AxisCamera camera;
 	
-	public USBCamera initCamera(){
+	private CameraServer srv;
+	//private USBCamera camera;
+	
+	public void initCamera(){
 	    
-		CameraServer srv = CameraServer.getInstance();
+		srv = CameraServer.getInstance();
 		
-		USBCamera camera = new USBCamera("cam0");
-        camera.openCamera();
+        frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+        camera = new AxisCamera("10.11.24.81");
 		
-        camera.setWhiteBalanceManual(4500);
-        camera.setExposureManual(0);
-        camera.setBrightness(80);
+		//camera = new USBCamera("cam0");
+        //camera.openCamera();
+		
+        //camera.setWhiteBalanceManual(4500);
+        //camera.setExposureManual(0);
+		//camera.setBrightness(100);
         
         srv.setSize(1); // 320x240
-        srv.startAutomaticCapture(camera);
         
-        return camera;
+        //return camera;
 	}
 	
+	public void getImage(){
+        camera.getImage(frame);
+        
+        CameraServer.getInstance().setImage(frame);
+	}
+	
+	/*
+	public void configCamera(){
+        camera.setWhiteBalanceManual(4500);
+        camera.setExposureManual(0);
+		camera.setBrightness(100);
+	}
+	*/
 	public void updateDashboard(){
 		// one-time operations
 		if(firstCall){
@@ -109,6 +131,7 @@ public class DashboardConnection {
 		
 		
 		// pneumatics control module
+		/*
 		SmartDashboard.putBoolean("pressure_switch_state", Robot.compressor.getPressureSwitchValue());
 		SmartDashboard.putBoolean("compressor_enabled", Robot.compressor.enabled());
 		SmartDashboard.putNumber("compressor_current", Robot.compressor.getCompressorCurrent());
@@ -133,8 +156,8 @@ public class DashboardConnection {
 		}else{
 			Robot.compressor.stop();
 		}
-		
-		
+		*/
+		/*
 		// motor data
 		SmartDashboard.putNumber("left_drive_talon_1_temp_fault", Robot.drivetrain.left_1.getFaultOverTemp());
 		SmartDashboard.putNumber("left_drive_talon_1_volt_fault", Robot.drivetrain.left_1.getFaultUnderVoltage());
@@ -158,7 +181,7 @@ public class DashboardConnection {
 		
 		SmartDashboard.putNumber("right_drive_talon_3_temp_fault", Robot.drivetrain.right_3.getFaultOverTemp());
 		SmartDashboard.putNumber("right_drive_talon_3_volt_fault", Robot.drivetrain.right_3.getFaultUnderVoltage());
-		SmartDashboard.putNumber("right_drive_talon_3_hardware_fault", Robot.drivetrain.right_3.getFaultHardwareFailure());
+		SmartDashboard.putNumber("right_drive_talon_3_hardware_fault", Robot.drivetrain.right_3.getFaultHardwareFailure());*/
 		
 	}
 }

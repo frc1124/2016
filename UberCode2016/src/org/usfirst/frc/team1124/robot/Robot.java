@@ -72,23 +72,29 @@ public class Robot extends IterativeRobot {
     	
     	// instantiate subsystems
 		drivetrain = new DriveTrain();
+		pdp = new PowerDistributionPanel();
 		
 		// instantiate operator interface
 		oi = new OI();
 
 		// start camera stream to driver station
-		camera = db_connection.initCamera();
+		//camera = db_connection.initCamera();
+		db_connection.initCamera();
 
         // instantiate the command used for the autonomous period
         autonomousCommand = new Autonomous();
     }
 	
 	public void disabledPeriodic() {
+    	db_connection.updateDashboard();
+    	
 		Scheduler.getInstance().run();
 	}
 
     public void autonomousInit() {
         // schedule the autonomous command
+    	drivetrain.setBrake();
+    	
         if(autonomousCommand != null){
         	autonomousCommand.start();
         }
@@ -98,6 +104,10 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	db_connection.updateDashboard();
+    	
+    	db_connection.getImage();
+    	
         Scheduler.getInstance().run();
     }
 
@@ -106,6 +116,7 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
+    	drivetrain.setCoast();
     	
         if(autonomousCommand != null){
         	autonomousCommand.cancel();
@@ -119,13 +130,16 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
-
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	db_connection.updateDashboard();
+    	
+    	db_connection.getImage();
+    	
         Scheduler.getInstance().run();
     }
     

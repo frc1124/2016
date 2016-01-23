@@ -48,12 +48,8 @@ public class DriveTrain extends Subsystem {
 		int right_a_channel = Robot.configIO.getIntVal("right_enc_a");
 		int right_b_channel = Robot.configIO.getIntVal("right_enc_b");
 		
-		firstpair.setInvertedMotor(MotorType.kRearLeft, true);
-		secondpair.setInvertedMotor(MotorType.kRearLeft, true);
-		thirdpair.setInvertedMotor(MotorType.kRearLeft, true);
-		
 		left = new Encoder(left_a_channel, left_b_channel, false, EncodingType.k4X);
-		right = new Encoder(right_a_channel, right_b_channel, false, EncodingType.k4X);
+		right = new Encoder(right_a_channel, right_b_channel, true, EncodingType.k4X);
 	}
 	
 	protected void initDefaultCommand() {
@@ -108,16 +104,14 @@ public class DriveTrain extends Subsystem {
 	
 	// arcade drive methods
 	
-	public void drive(double move, double rotate) {
+	private void drive(double move, double rotate) {
 		firstpair.arcadeDrive(move, rotate);
 		secondpair.arcadeDrive(move, rotate);
 		thirdpair.arcadeDrive(move, rotate);
 	}
 	
 	public void drive(Joystick js){
-		firstpair.arcadeDrive(js);
-		secondpair.arcadeDrive(js);
-		thirdpair.arcadeDrive(js);
+		drive(-js.getY(), js.getX());
 	}
 	
 	// mode-independent methods
@@ -128,4 +122,23 @@ public class DriveTrain extends Subsystem {
 		thirdpair.arcadeDrive(0, 0);
 	}
 	
+	// toggle break/coast
+	
+	public void setCoast(){
+		left_1.enableBrakeMode(false);
+		left_2.enableBrakeMode(false);
+		left_3.enableBrakeMode(false);
+		right_1.enableBrakeMode(false);
+		right_2.enableBrakeMode(false);
+		right_3.enableBrakeMode(false);
+	}
+	
+	public void setBrake(){
+		left_1.enableBrakeMode(true);
+		left_2.enableBrakeMode(true);
+		left_3.enableBrakeMode(true);
+		right_1.enableBrakeMode(true);
+		right_2.enableBrakeMode(true);
+		right_3.enableBrakeMode(true);
+	}
 }
