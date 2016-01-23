@@ -58,7 +58,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     
     // this revision of code (displayed on dashboard)
-    public static String codeRevision = "[v0.0.0]:build-season";
+    public static String codeRevision = "[v1.0.0]:build-season";
 
     /**
      * This function is run when the robot is first started up and should be
