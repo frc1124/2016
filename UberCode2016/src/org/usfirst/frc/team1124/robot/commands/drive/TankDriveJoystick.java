@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1124.robot.commands.teleop;
+package org.usfirst.frc.team1124.robot.commands.drive;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
@@ -9,6 +9,8 @@ public class TankDriveJoystick extends Command {
 	
 	public TankDriveJoystick(){
 		requires(Robot.drivetrain);
+        
+        setInterruptible(true);
 	}
 
 	protected void initialize() {}

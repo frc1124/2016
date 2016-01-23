@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.commands.arm.ArmHoldPosition;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -13,16 +14,14 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  */
 public class ArmActuatorPID extends PIDSubsystem {
 	
-	private final static double P = 1;
-	private final static double I = 0.01;
-	private final static double D = 0;
+	public final static double P = 1;
+	public final static double I = 0.01;
+	public final static double D = 0;
 	
 	private Talon actuator;
 	private Encoder encoder;
 	
 	private DigitalInput limit_switch;
-	
-	private double setpoint; // used for arm presets (full up, full down, etc.)
 	
 	public ArmActuatorPID() {
         // Use these to get going:
@@ -40,28 +39,19 @@ public class ArmActuatorPID extends PIDSubsystem {
 		
 		limit_switch = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit"));
 		
-		setpoint = 0; // will be the default position at start
+		// will be the default position at start
+		setSetpoint(0); 
 	}
 	
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new ArmHoldPosition());
     }
 
 	protected double returnPIDInput() {
-		return encoder.getRate();
-	}
-	
-	public void changeSetSetpoint(double sp)
-	{
-		setpoint = sp; // add a safety at some point so it never tries to get to an impossible setpoint
-	}
-	public double returnSetSetpoint()
-	{
-		return setpoint;
+		return encoder.getDistance();
 	}
 
 	protected void usePIDOutput(double output) {
-		actuator.pidWrite(output);
+		actuator.set(output);
 	}
 }

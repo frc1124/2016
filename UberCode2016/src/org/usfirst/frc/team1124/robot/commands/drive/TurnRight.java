@@ -1,12 +1,12 @@
-package org.usfirst.frc.team1124.robot.commands.auto;
+package org.usfirst.frc.team1124.robot.commands.drive;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TurnLeft extends Command {
+public class TurnRight extends Command {
 	
-	public TurnLeft(){
+	public TurnRight(){
 		requires(Robot.drivetrain);
 		setTimeout(0.4);
 	}
@@ -16,7 +16,7 @@ public class TurnLeft extends Command {
 	}
 
 	protected void execute() {
-		Robot.drivetrain.drive_tank(-1, 1);
+		Robot.drivetrain.drive_tank(1, -1);
 	}
 
 	protected boolean isFinished() {

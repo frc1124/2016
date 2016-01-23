@@ -2,8 +2,7 @@ package org.usfirst.frc.team1124.robot;
 
 // commands
 import org.usfirst.frc.team1124.robot.commands.Autonomous;
-import org.usfirst.frc.team1124.robot.commands.teleop.ArcadeDriveJoystick;
-
+import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1124.robot.subsystems.IntakeBelts;
@@ -59,8 +58,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     
     // this revision of code (displayed on dashboard)
-	// i need to edit this file to make a new commit
-    public static String codeRevision = "[v6.4.0]:lift-swap_bash-2015";
+    public static String codeRevision = "[v0.0.0]:build-season";
 
     /**
      * This function is run when the robot is first started up and should be

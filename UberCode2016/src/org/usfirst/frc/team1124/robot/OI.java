@@ -1,5 +1,8 @@
 package org.usfirst.frc.team1124.robot;
 
+import org.usfirst.frc.team1124.robot.commands.arm.MoveArm;
+import org.usfirst.frc.team1124.robot.enums.ArmState;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -48,9 +51,12 @@ public class OI {
 	
 	public OI(){
 		// setup drive mode control (bind buttons)
-		
+
+		Robot.oi.getButton10().whenReleased(new MoveArm(ArmState.Up));
+		Robot.oi.getButton11().whenReleased(new MoveArm(ArmState.Down));
 	}
 	
+	// joysticks/controllers
 	public Joystick getController(){
 		return js1;
 	}
@@ -63,13 +69,12 @@ public class OI {
 		return js3;
 	}
 	
-	public Button getButton10()
-	{
+	// buttons
+	public Button getButton10(){
 		return button_10;
 	}
 	
-	public Button getButton11()
-	{
+	public Button getButton11(){
 		return button_11;
 	}
 	

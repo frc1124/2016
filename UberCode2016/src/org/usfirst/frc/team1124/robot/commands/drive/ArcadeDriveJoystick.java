@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1124.robot.commands.teleop;
+package org.usfirst.frc.team1124.robot.commands.drive;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
@@ -9,6 +9,8 @@ public class ArcadeDriveJoystick extends Command {
 	
 	public ArcadeDriveJoystick(){
 		requires(Robot.drivetrain);
+		
+		setInterruptible(true);
 	}
 	
 	protected void initialize() {}
@@ -26,11 +28,6 @@ public class ArcadeDriveJoystick extends Command {
 
 	protected void end() {
         Robot.drivetrain.stop();
-	}
-	
-	protected boolean isInterruptable(){
-		// so we can toggle drive modes
-		return true;
 	}
 
 	protected void interrupted() {

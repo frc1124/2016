@@ -10,7 +10,7 @@ import com.ni.vision.NIVision.Image;
 import edu.wpi.first.wpilibj.ControllerPower;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
-import edu.wpi.first.wpilibj.vision.USBCamera;
+//import edu.wpi.first.wpilibj.vision.USBCamera;
 
 public class DashboardConnection {
 	private static boolean firstCall = false;
@@ -18,12 +18,12 @@ public class DashboardConnection {
 	Image frame;
     AxisCamera camera;
 	
-	private CameraServer srv;
+	//private CameraServer srv;
 	//private USBCamera camera;
 	
 	public void initCamera(){
 	    
-		srv = CameraServer.getInstance();
+		//srv = CameraServer.getInstance();
 		
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
         camera = new AxisCamera("10.11.24.81");
@@ -35,11 +35,12 @@ public class DashboardConnection {
         //camera.setExposureManual(0);
 		//camera.setBrightness(100);
         
-        srv.setSize(1); // 320x240
+        //srv.setSize(1); // 320x240
         
         //return camera;
 	}
 	
+	/** Only run this method while the robot is ENABLED! This method gets the image and sends it to the dashboard for display and processing. */
 	public void getImage(){
         camera.getImage(frame);
         

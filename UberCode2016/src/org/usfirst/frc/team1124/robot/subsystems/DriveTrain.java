@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.commands.teleop.ArcadeDriveJoystick;
+import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveTrain extends Subsystem {
 	
-	public CANTalon left_1, left_2, left_3, right_1, right_2, right_3;
+	private CANTalon left_1, left_2, left_3, right_1, right_2, right_3;
 	
 	// PID constants used for auto targeting and hold position
 	public final double P = 1;
@@ -56,7 +56,7 @@ public class DriveTrain extends Subsystem {
 		setDefaultCommand(new ArcadeDriveJoystick());
 	}
 	
-	// encoder data
+	// encoder methods
 	
 	public double getLeftEncoderDistance(){
 		return left.getDistance();
@@ -88,6 +88,11 @@ public class DriveTrain extends Subsystem {
 	
 	public boolean getRightEncoderStopped(){
 		return right.getStopped();
+	}
+	
+	public void resetEncoders(){
+		left.reset();
+		right.reset();
 	}
 	
 	// tank drive method
