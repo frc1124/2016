@@ -39,6 +39,8 @@ public class ArmActuatorPID extends PIDSubsystem {
 		encoder = new Encoder(port_a, port_b, false, EncodingType.k4X);
 		
 		limit_switch = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit"));
+		
+		setpoint = 0; // will be the default position at start
 	}
 	
     public void initDefaultCommand() {
@@ -48,6 +50,15 @@ public class ArmActuatorPID extends PIDSubsystem {
 
 	protected double returnPIDInput() {
 		return encoder.getRate();
+	}
+	
+	public void changeSetSetpoint(double sp)
+	{
+		setpoint = sp; // add a safety at some point so it never tries to get to an impossible setpoint
+	}
+	public double returnSetSetpoint()
+	{
+		return setpoint;
 	}
 
 	protected void usePIDOutput(double output) {

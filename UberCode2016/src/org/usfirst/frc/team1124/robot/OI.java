@@ -41,6 +41,8 @@ public class OI {
 	private Joystick js3 = new Joystick(2);
 	
 	private Button button_1 = new JoystickButton(js1, 1);
+	private Button button_10 = new JoystickButton(js1, 10);
+	private Button button_11 = new JoystickButton(js1, 11);
 	
 	public OI(){
 		// setup drive mode control (bind buttons)
@@ -56,6 +58,16 @@ public class OI {
 	
 	public Joystick getJS2(){
 		return js3;
+	}
+	
+	public Button getButton10()
+	{
+		return button_10;
+	}
+	
+	public Button getButton11()
+	{
+		return button_11;
 	}
 	
 }
