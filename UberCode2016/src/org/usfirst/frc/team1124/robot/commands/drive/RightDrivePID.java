@@ -12,15 +12,21 @@ public class RightDrivePID extends PIDCommand {
 	private double speed = 0;
 	private double setpoint = 0;
 
+    public RightDrivePID(double setpoint) {
+		super("RightDrivePID", Robot.drivetrain.P, Robot.drivetrain.I, Robot.drivetrain.D);
+		
+        requires(Robot.drivetrain);
+        setInterruptible(true);
+        
+        this.setpoint = setpoint;
+    }
+
     public RightDrivePID(double setpoint, double feedForward) {
 		super("RightDrivePID", Robot.drivetrain.P, Robot.drivetrain.I, Robot.drivetrain.D);
         
-		if(feedForward != 0){
-	        getPIDController().setPID(Robot.drivetrain.P, Robot.drivetrain.I, Robot.drivetrain.D, feedForward);
-		}
+	    getPIDController().setPID(Robot.drivetrain.P, Robot.drivetrain.I, Robot.drivetrain.D, feedForward);
 		
         requires(Robot.drivetrain);
-        
         setInterruptible(true);
         
         this.setpoint = setpoint;
