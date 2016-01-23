@@ -12,8 +12,12 @@ public class LeftDrivePID extends PIDCommand {
 	private double speed = 0;
 	private double setpoint = 0;
 	
-    public LeftDrivePID(double setpoint) {
+    public LeftDrivePID(double setpoint, double feedForward) {
 		super(Robot.drivetrain.P, Robot.drivetrain.I, Robot.drivetrain.D);
+        
+		if(feedForward != 0){
+	        getPIDController().setPID(Robot.drivetrain.P, Robot.drivetrain.I, Robot.drivetrain.D, feedForward);
+		}
         
         requires(Robot.drivetrain);
         
