@@ -17,6 +17,7 @@ public class IntakeBelts extends Subsystem {
 	
 	private final int INTAKE_SPEED = 1;
 	private final int LOW_GOAL_SPEED = -1;
+	private final int SHOOT_SPEED = 1; // belts to shooter
 	
 	public IntakeBelts(){
 		super("IntakeBelts");
@@ -37,6 +38,11 @@ public class IntakeBelts extends Subsystem {
     /** Intake a ball */
     public void intake(){
     	motor.set(INTAKE_SPEED);
+    }
+    
+    /** Shoot a ball */
+    public void shoot(){
+    	motor.set(SHOOT_SPEED);
     }
     
     /** Spit the ball back out */
