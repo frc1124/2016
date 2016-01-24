@@ -12,15 +12,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Autonomous extends CommandGroup {
     
     public  Autonomous() {
-    	addSequential(new TimedAutoDrive(0.5, 0.5, 1.5));
-    	addSequential(new TurnRight());
-    	
-    	addSequential(new TimedAutoDrive(0.5, 0.5, 1.5));
-    	addSequential(new TurnLeft());
-
-    	addSequential(new TimedAutoDrive(0.5, 0.5, 1.5));
-    	addSequential(new TurnLeft());
-
-    	addSequential(new TimedAutoDrive(0.5, 0.5, 1.5));
+    	addSequential(new TimedAutoDrive(0.75, 0.75, 10));
     }
 }
