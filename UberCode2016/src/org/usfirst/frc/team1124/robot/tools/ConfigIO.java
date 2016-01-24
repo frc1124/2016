@@ -59,12 +59,12 @@ public class ConfigIO {
 
 		try{
 			String line = br1.readLine();
-			rawConfig.add(line);
 			
 			while(line != null){
 				if(line.charAt(0) != '#'){
 					String value1 = "";
 					String value2 = "";
+					rawConfig.add(line);
 					
 					boolean encounteredSpace = false;
 					
