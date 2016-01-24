@@ -119,12 +119,12 @@ public class ConfigIO {
 		}catch(UnsupportedEncodingException e){
 			e.printStackTrace();
 		}
-		
+	
 		for(int i = 0; i <  config.size(); i++){
 			String tempKey = (String) config.keySet().toArray()[i];
 			String tempVal = config.get(tempKey);
 			
-			wr0.println(tempKey + " " + tempVal);
+			wr0.write(tempKey + " " + tempVal);
 		}
 	}
 }
