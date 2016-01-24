@@ -52,8 +52,8 @@ public class OI {
 	public OI(){
 		// setup drive mode control (bind buttons)
 
-		Robot.oi.getButton10().whenReleased(new MoveArm(ArmState.Up));
-		Robot.oi.getButton11().whenReleased(new MoveArm(ArmState.Down));
+		//button_10.whenReleased(new MoveArm(ArmState.Up));
+		//button_11.whenReleased(new MoveArm(ArmState.Down));
 	}
 	
 	// joysticks/controllers
@@ -68,15 +68,5 @@ public class OI {
 	public Joystick getJS2(){
 		return js3;
 	}
-	
-	// buttons
-	public Button getButton10(){
-		return button_10;
-	}
-	
-	public Button getButton11(){
-		return button_11;
-	}
-	
 }
 
