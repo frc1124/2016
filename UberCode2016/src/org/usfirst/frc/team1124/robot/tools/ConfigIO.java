@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1124.robot.tools;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +15,7 @@ public class ConfigIO {
 	// saves and imports from and to "/home/lvuser/config/robot.cfg"
 	// i need to edit this file to make a new commit
 	private static File file;
-	private final static String filePath = "/home/lvuser/config/robot.cfg";
+	private final static String filePath = "robot.cfg";
 	static Map<String, String> config;
 	static BufferedReader br1;
 	static ArrayList<String> rawConfig;
@@ -121,12 +120,14 @@ public class ConfigIO {
 			e.printStackTrace();
 		}
 
-		for(int c = 0; c < fullConfig.size(); c++)
-			for(int i = 0; i <  config.size(); i++){
+		for(int c = 0; c < fullConfig.size(); c++){
+			boolean foundKey = false; 
+			String fCLine = "";
+			for(int i = 0; i <  config.size() && !foundKey; i++){
 				String tempKey = (String) config.keySet().toArray()[i];
 				String tempVal = config.get(tempKey);
 				
-				String fCLine = fullConfig.get(c);
+				fCLine = fullConfig.get(c);
 				String fCKey = "";
 				for(int s = 0; s < fCLine.length() && fCLine.charAt(0) != '#' && fCLine.charAt(s) != ' '; s++){
 					if(fCLine.charAt(s) != ' ')
@@ -135,21 +136,13 @@ public class ConfigIO {
 				
 				if(fCKey.equals(tempKey)){
 					wr0.println(tempKey + " " + tempVal);
+					foundKey = true;
 				}
-				else wr0.println(fCLine);
 			}
-
-		wr0.close();
-	}
-
-	/** Pushes the in-code config map to config file */
-	private void writeConfigToFile(){
-
-
-		for(int i = 0; i <  config.size(); i++){
-			String tempKey = (String) config.keySet().toArray()[i];
-			String tempVal = config.get(tempKey);
+			if(!foundKey)
+				wr0.println(fCLine);
 		}
+
 		wr0.close();
 	}
 }
