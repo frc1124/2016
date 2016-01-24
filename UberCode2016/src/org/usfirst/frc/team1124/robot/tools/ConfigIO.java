@@ -67,7 +67,7 @@ public class ConfigIO {
 					rawConfig.add(line);
 					
 					boolean encounteredSpace = false;
-					
+				
 					for(int l = 0; l < line.length() && !encounteredSpace; l++){
 						if(line.charAt(l) != ' '){
 							value1 += line.charAt(l);
@@ -103,6 +103,7 @@ public class ConfigIO {
 	
 	/** Writes keys and values to config map. If the key already exists it overrides the existing value. */
 	public void writeKeyVal(String key, String value){
+		reloadConfig();
 		config.put(key, value);
 		writeConfigToFile();
 	}
