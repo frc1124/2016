@@ -47,7 +47,7 @@ public class ConfigIO {
 		return Integer.parseInt(config.get(key));
 	}
 	
-	public void reloadConfig(){
+	private void reloadConfig(){
 		try{ 
 			br1 = new BufferedReader(new FileReader(filePath)); 
 		}catch(FileNotFoundException e){
@@ -109,21 +109,21 @@ public class ConfigIO {
 	}
 	
 	/** Pushes the in-code config map to config file */
-	public void writeConfigToFile(){
-		BufferedReader br0;
+	private void writeConfigToFile(){
 		PrintWriter wr0 = null;
-		try {
-			br0 = new BufferedReader(new FileReader(filePath));
+		
+		try{
 			wr0 = new PrintWriter(filePath, "UTF-8");
-		} catch (FileNotFoundException e) {
+		}catch(FileNotFoundException e){
 			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
+		}catch(UnsupportedEncodingException e){
 			e.printStackTrace();
 		}
 		
 		for(int i = 0; i <  config.size(); i++){
 			String tempKey = (String) config.keySet().toArray()[i];
 			String tempVal = config.get(tempKey);
+			
 			wr0.println(tempKey + " " + tempVal);
 		}
 	}
