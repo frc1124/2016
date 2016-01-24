@@ -20,19 +20,10 @@ public class LeftDrivePID extends PIDCommand {
         
         this.setpoint = setpoint;
     }
-	
-    public LeftDrivePID(double setpoint, double feedForward) {
-		super(Robot.drivetrain.P, Robot.drivetrain.I, Robot.drivetrain.D);
-        
-	    getPIDController().setPID(Robot.drivetrain.P, Robot.drivetrain.I, Robot.drivetrain.D, feedForward);
-		
-        requires(Robot.drivetrain);
-        setInterruptible(true);
-        
-        this.setpoint = setpoint;
-    }
 
     protected void initialize() {
+    	Robot.drivetrain.resetEncoders();
+    	
     	setSetpoint(setpoint);
     }
 
@@ -49,7 +40,7 @@ public class LeftDrivePID extends PIDCommand {
     protected void interrupted() {
     	end();
     }
-
+    
 	protected double returnPIDInput() {
 		return Robot.drivetrain.getLeftEncoderDistance();
 	}
@@ -60,5 +51,9 @@ public class LeftDrivePID extends PIDCommand {
 	
 	public double getSpeed(){
 		return speed;
+	}
+	
+	public void updateSetpoint(double setpoint){
+		setSetpoint(setpoint);
 	}
 }
