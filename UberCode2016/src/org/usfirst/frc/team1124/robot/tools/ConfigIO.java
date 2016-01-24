@@ -124,7 +124,7 @@ public class ConfigIO {
 			String tempKey = (String) config.keySet().toArray()[i];
 			String tempVal = config.get(tempKey);
 			
-			wr0.write(tempKey + " " + tempVal);
+			wr0.println(tempKey + " " + tempVal);
 		}
 		
 		wr0.close();
