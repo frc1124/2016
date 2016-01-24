@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +17,11 @@ public class ConfigIO {
 	private static File file;
 	private final static String filePath = "/home/lvuser/config/robot.cfg";
 	static Map<String, String> config;
-	static BufferedReader br;
+	static BufferedReader br1;
 
 	public ConfigIO(){
 		file = new File(filePath);
+		config = new HashMap<String, String>();
 		
 		try{
 			file.createNewFile();
@@ -26,16 +29,32 @@ public class ConfigIO {
 			e1.printStackTrace();
 		}
 		
-		config = new HashMap<String, String>();
-		
+		reloadConfig();
+		//		for(int v = 0; v < config.size(); v++)
+		//			System.out.println(config.keySet().toArray()[v] + " = " + config.get(config.keySet().toArray()[v]));
+	}
+	
+	/** Get the string value from the config file.*/
+	public String getStringVal(String key){
+		return config.get(key);
+	}
+	
+	/** Get the integer value from the config file.*/
+	public int getIntVal(String key){
+		return Integer.parseInt(config.get(key));
+	}
+	
+	public void reloadConfig(){
 		try{ 
-			br = new BufferedReader(new FileReader(filePath)); 
+			br1 = new BufferedReader(new FileReader(filePath)); 
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 		}
+		
+		config.clear();
 
 		try{
-			String line = br.readLine();
+			String line = br1.readLine();
 
 			while(line != null){
 				if(line.charAt(0) != '#'){
@@ -58,29 +77,42 @@ public class ConfigIO {
 					}
 				}
 				
-				line = br.readLine();
+				line = br1.readLine();
 			}
 		}catch(IOException e){ 
 			e.printStackTrace(); 
 		}finally{ 
 			try{ 
-				br.close(); 
+				br1.close(); 
 			}catch(IOException e){ 
 				e.printStackTrace(); 
 			} 
 		}
-
-		//		for(int v = 0; v < config.size(); v++)
-		//			System.out.println(config.keySet().toArray()[v] + " = " + config.get(config.keySet().toArray()[v]));
 	}
 	
-	/** Get the string value from the config file.*/
-	public String getStringVal(String key){
-		return config.get(key);
+	/** Writes keys and values to config map. If the key already exists it overrides the existing value. */
+	public void writeKeyVal(String key, String value){
+		config.put(key, value);
+		writeConfigToFile();
 	}
 	
-	/** Get the integer value from the config file.*/
-	public int getIntVal(String key){
-		return Integer.parseInt(config.get(key));
+	/** Pushes the in-code config map to config file */
+	public void writeConfigToFile(){
+		BufferedReader br0;
+		PrintWriter wr0 = null;
+		try {
+			br0 = new BufferedReader(new FileReader(filePath));
+			wr0 = new PrintWriter(filePath, "UTF-8");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		for(int i = 0; i <  config.size(); i++){
+			String tempKey = (String) config.keySet().toArray()[i];
+			String tempVal = config.get(tempKey);
+			wr0.println(tempKey + " " + tempVal);
+		}
 	}
 }
