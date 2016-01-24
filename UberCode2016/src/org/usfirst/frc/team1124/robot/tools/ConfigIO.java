@@ -126,5 +126,7 @@ public class ConfigIO {
 			
 			wr0.write(tempKey + " " + tempVal);
 		}
+		
+		wr0.close();
 	}
 }
