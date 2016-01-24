@@ -1,26 +1,21 @@
 package org.usfirst.frc.team1124.robot.commands.shooter;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.commands.belts.LoadIntoShooter;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  *
  */
 public class ShootBall extends Command {
-
-	// take in the needed setpoint
-	
-	// is ball loaded
-	// spin up to speed
-	// feed ball
 	
 	private double setpoint = 1;
 	
     public ShootBall(double setpoint)
     {
     	requires(Robot.shooter_pid);
-    	requires(Robot.intake_belts);
     	this.setpoint = setpoint; // takes in a value that comes from the vision calculations
     	setInterruptible(true);
     }
@@ -35,10 +30,7 @@ public class ShootBall extends Command {
     	}
     }
 
-    protected void execute()
-    {
-    	
-    }
+    protected void execute() {}
 
     protected boolean isFinished()
     {
@@ -47,10 +39,7 @@ public class ShootBall extends Command {
 
     protected void end()
     {
-    	Robot.intake_belts.shoot();
-    	setTimeout(2); // change this to stop running the belts when needed
-    	Robot.intake_belts.stop();
-    	Robot.shooter_pid.disable();
+    	Scheduler.getInstance().add(new LoadIntoShooter());
     }
 
     protected void interrupted()
