@@ -44,9 +44,10 @@ public class DashboardConnection {
 	
 	/** Only run this method while the robot is ENABLED! This method gets the image and sends it to the dashboard for display and processing. */
 	public void getImage(){
-        camera.getImage(frame);
-        
-        CameraServer.getInstance().setImage(frame);
+        try{
+        	camera.getImage(frame);
+            CameraServer.getInstance().setImage(frame);
+        }catch(Exception e){}
 	}
 	
 	/*
@@ -70,8 +71,8 @@ public class DashboardConnection {
 		// encoders
 		updateEncoders();
 		
-		// motor data
-		updateMotorFaults();
+		// config
+		sendConfigToDash();
 	}
 	
 	private void oneTimeOperations(){
@@ -96,9 +97,6 @@ public class DashboardConnection {
 			SmartDashboard.putString("pdp_can_key_port_13", "Front Right Drive Motor (CAN ID#1)");
 			SmartDashboard.putString("pdp_can_key_port_14", "Back Left Drive Motor (CAN ID#3)");
 			SmartDashboard.putString("pdp_can_key_port_15", "Back Right Drive Motor (CAN ID#4)");
-
-			// config
-			sendConfigToDash();
 			
 			firstCall = false;
 		}
@@ -136,7 +134,7 @@ public class DashboardConnection {
 	
 	private void updatePDP(){
 		SmartDashboard.putNumber("pdp_voltage", Robot.pdp.getVoltage());
-		SmartDashboard.putNumber("pdp_temp", Robot.pdp.getTemperature());
+		SmartDashboard.putNumber("pdp_temp", (Robot.pdp.getTemperature() * (9.00/5.00)) + 32.00);
 		SmartDashboard.putNumber("pdp_total_current", Robot.pdp.getTotalCurrent());
 		SmartDashboard.putNumber("pdp_total_power", Robot.pdp.getTotalPower());
 		SmartDashboard.putNumber("pdp_total_energy", Robot.pdp.getTotalEnergy());
@@ -145,45 +143,41 @@ public class DashboardConnection {
 			SmartDashboard.putNumber("pdp_port_" + i + "_current", Robot.pdp.getCurrent(i));
 		}
 		
-		boolean resetTotalEnergy = SmartDashboard.getBoolean("reset_pdp_total_energy");
-		boolean clearStickyFaults = SmartDashboard.getBoolean("clear_pdp_sticky_faults");
-		
-		if(resetTotalEnergy){
-			Robot.pdp.resetTotalEnergy();
-		}
-		
-		if(clearStickyFaults){
-			Robot.pdp.clearStickyFaults();
-		}
-	}
-	
-	private void updateMotorFaults(){
-		SmartDashboard.putNumber("left_drive_talon_1_temp_fault", Robot.drivetrain.left_1.getFaultOverTemp());
-		SmartDashboard.putNumber("left_drive_talon_1_volt_fault", Robot.drivetrain.left_1.getFaultUnderVoltage());
-		SmartDashboard.putNumber("left_drive_talon_1_hardware_fault", Robot.drivetrain.left_1.getFaultHardwareFailure());
-		
-		SmartDashboard.putNumber("left_drive_talon_2_temp_fault", Robot.drivetrain.left_2.getFaultOverTemp());
-		SmartDashboard.putNumber("left_drive_talon_2_volt_fault", Robot.drivetrain.left_2.getFaultUnderVoltage());
-		SmartDashboard.putNumber("left_drive_talon_2_hardware_fault", Robot.drivetrain.left_2.getFaultHardwareFailure());
-		
-		SmartDashboard.putNumber("left_drive_talon_3_temp_fault", Robot.drivetrain.left_3.getFaultOverTemp());
-		SmartDashboard.putNumber("left_drive_talon_3_volt_fault", Robot.drivetrain.left_3.getFaultUnderVoltage());
-		SmartDashboard.putNumber("left_drive_talon_3_hardware_fault", Robot.drivetrain.left_3.getFaultHardwareFailure());
-
-		SmartDashboard.putNumber("right_drive_talon_1_temp_fault", Robot.drivetrain.right_1.getFaultOverTemp());
-		SmartDashboard.putNumber("right_drive_talon_1_volt_fault", Robot.drivetrain.right_1.getFaultUnderVoltage());
-		SmartDashboard.putNumber("right_drive_talon_1_hardware_fault", Robot.drivetrain.right_1.getFaultHardwareFailure());
-		
-		SmartDashboard.putNumber("right_drive_talon_2_temp_fault", Robot.drivetrain.right_2.getFaultOverTemp());
-		SmartDashboard.putNumber("right_drive_talon_2_volt_fault", Robot.drivetrain.right_2.getFaultUnderVoltage());
-		SmartDashboard.putNumber("right_drive_talon_2_hardware_fault", Robot.drivetrain.right_2.getFaultHardwareFailure());
-		
-		SmartDashboard.putNumber("right_drive_talon_3_temp_fault", Robot.drivetrain.right_3.getFaultOverTemp());
-		SmartDashboard.putNumber("right_drive_talon_3_volt_fault", Robot.drivetrain.right_3.getFaultUnderVoltage());
-		SmartDashboard.putNumber("right_drive_talon_3_hardware_fault", Robot.drivetrain.right_3.getFaultHardwareFailure());
+		try{
+			boolean resetTotalEnergy = SmartDashboard.getBoolean("reset_pdp_total_energy");
+			boolean clearStickyFaults = SmartDashboard.getBoolean("clear_pdp_sticky_faults");
+			
+			if(resetTotalEnergy){
+				Robot.pdp.resetTotalEnergy();
+			}
+			
+			if(clearStickyFaults){
+				Robot.pdp.clearStickyFaults();
+			}
+		}catch(Exception e){}
 	}
 	
 	private void sendConfigToDash(){
+		ArrayList<String> temp = Robot.configIO.getConfigText();
+		
+		try{
+			boolean updateConfig = SmartDashboard.getBoolean("update_config");
+			
+			if(updateConfig){
+				for(int i = 0; i < temp.size(); i++){
+					String newData = SmartDashboard.getString("new_config_" + i);
+					
+					String[] items = newData.split(" ");
+					
+					Robot.configIO.changeKeyVal(items[0], items[1]);
+				}
+				
+				SmartDashboard.putBoolean("update_config", false);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		ArrayList<String> list = Robot.configIO.getConfigText();
 		
 		SmartDashboard.putNumber("config_count", list.size());
