@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +19,10 @@ public class ConfigIO {
 	private final static String filePath = "/home/lvuser/config/robot.cfg";
 	static Map<String, String> config;
 	static BufferedReader br1;
-
+	static ArrayList<String> rawConfig;
+	
 	public ConfigIO(){
+		rawConfig = new ArrayList<String>();
 		file = new File(filePath);
 		config = new HashMap<String, String>();
 		
@@ -52,10 +55,12 @@ public class ConfigIO {
 		}
 		
 		config.clear();
+		rawConfig.clear();
 
 		try{
 			String line = br1.readLine();
-
+			rawConfig.add(line);
+			
 			while(line != null){
 				if(line.charAt(0) != '#'){
 					String value1 = "";
@@ -78,6 +83,7 @@ public class ConfigIO {
 				}
 				
 				line = br1.readLine();
+				rawConfig.add(line);
 			}
 		}catch(IOException e){ 
 			e.printStackTrace(); 
@@ -88,6 +94,12 @@ public class ConfigIO {
 				e.printStackTrace(); 
 			} 
 		}
+	}
+	
+	/** */
+	public ArrayList<String> getConfigText(){
+		reloadConfig();
+		return rawConfig;
 	}
 	
 	/** Writes keys and values to config map. If the key already exists it overrides the existing value. */
