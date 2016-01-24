@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveTrain extends Subsystem {
 	
-	private CANTalon left_1, left_2, left_3, right_1, right_2, right_3;
+	public CANTalon left_1, left_2, left_3, right_1, right_2, right_3;
 	
 	// PID constants used for auto targeting and hold position
 	public final double P = 1;

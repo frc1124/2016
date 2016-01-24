@@ -2,6 +2,8 @@ package org.usfirst.frc.team1124.robot.dashboard;
 
 import edu.wpi.first.wpilibj.CameraServer;
 
+import java.util.ArrayList;
+
 import org.usfirst.frc.team1124.robot.Robot;
 
 import com.ni.vision.NIVision;
@@ -54,8 +56,25 @@ public class DashboardConnection {
 		camera.setBrightness(100);
 	}
 	*/
+	
 	public void updateDashboard(){
 		// one-time operations
+		oneTimeOperations();
+		
+		// roboRIO
+		updateRoboRIO();
+		
+		// power distribution panel
+		updatePDP();
+		
+		// encoders
+		updateEncoders();
+		
+		// motor data
+		updateMotorFaults();
+	}
+	
+	private void oneTimeOperations(){
 		if(firstCall){
 			// general data
 			SmartDashboard.putString("code_revision", Robot.codeRevision);
@@ -77,11 +96,25 @@ public class DashboardConnection {
 			SmartDashboard.putString("pdp_can_key_port_13", "Front Right Drive Motor (CAN ID#1)");
 			SmartDashboard.putString("pdp_can_key_port_14", "Back Left Drive Motor (CAN ID#3)");
 			SmartDashboard.putString("pdp_can_key_port_15", "Back Right Drive Motor (CAN ID#4)");
+
+			// config
+			sendConfigToDash();
 			
 			firstCall = false;
 		}
+	}
+	
+	private void updateEncoders(){
+		// drive encoders
+		SmartDashboard.putNumber("left_drive_encoder_dist", Robot.drivetrain.getLeftEncoderDistance());
+		SmartDashboard.putNumber("left_drive_encoder_rate", Robot.drivetrain.getLeftEncoderRate());
 		
-		// roboRIO
+		SmartDashboard.putNumber("right_drive_encoder_dist", Robot.drivetrain.getRightEncoderDistance());
+		SmartDashboard.putNumber("right_drive_encoder_rate", Robot.drivetrain.getRightEncoderRate());
+		
+	}
+	
+	private void updateRoboRIO(){
 		SmartDashboard.putNumber("rio_input_voltage", ControllerPower.getInputVoltage());
 		SmartDashboard.putNumber("rio_input_current", ControllerPower.getInputCurrent());
 		
@@ -99,8 +132,9 @@ public class DashboardConnection {
 		SmartDashboard.putNumber("rio_current_6v", ControllerPower.getCurrent6V());
 		SmartDashboard.putBoolean("rio_enabled_6v", ControllerPower.getEnabled6V());
 		SmartDashboard.putNumber("rio_fault_count_6v", ControllerPower.getFaultCount6V());
-		
-		// power distribution panel
+	}
+	
+	private void updatePDP(){
 		SmartDashboard.putNumber("pdp_voltage", Robot.pdp.getVoltage());
 		SmartDashboard.putNumber("pdp_temp", Robot.pdp.getTemperature());
 		SmartDashboard.putNumber("pdp_total_current", Robot.pdp.getTotalCurrent());
@@ -121,45 +155,9 @@ public class DashboardConnection {
 		if(clearStickyFaults){
 			Robot.pdp.clearStickyFaults();
 		}
-		
-		// drive encoders
-		
-		SmartDashboard.putNumber("left_drive_encoder_dist", Robot.drivetrain.getLeftEncoderDistance());
-		SmartDashboard.putNumber("left_drive_encoder_rate", Robot.drivetrain.getLeftEncoderRate());
-		
-		SmartDashboard.putNumber("right_drive_encoder_dist", Robot.drivetrain.getRightEncoderDistance());
-		SmartDashboard.putNumber("right_drive_encoder_rate", Robot.drivetrain.getRightEncoderRate());
-		
-		
-		// pneumatics control module
-		/*
-		SmartDashboard.putBoolean("pressure_switch_state", Robot.compressor.getPressureSwitchValue());
-		SmartDashboard.putBoolean("compressor_enabled", Robot.compressor.enabled());
-		SmartDashboard.putNumber("compressor_current", Robot.compressor.getCompressorCurrent());
-		
-		SmartDashboard.putBoolean("compressor_close_loop_enabled", Robot.compressor.getClosedLoopControl());
-		SmartDashboard.putBoolean("compressor_current_fault", Robot.compressor.getCompressorCurrentTooHighFault());
-		SmartDashboard.putBoolean("compressor_current_sticky_fault", Robot.compressor.getCompressorCurrentTooHighStickyFault());
-		SmartDashboard.putBoolean("compressor_shorted_fault", Robot.compressor.getCompressorShortedFault());
-		SmartDashboard.putBoolean("compressor_shorted_sticky_fault", Robot.compressor.getCompressorShortedStickyFault());
-		SmartDashboard.putBoolean("compressor_not_connected_fault", Robot.compressor.getCompressorNotConnectedFault());
-		SmartDashboard.putBoolean("compressor_not_connected_sticky_fault", Robot.compressor.getCompressorNotConnectedStickyFault());
-		
-		boolean clearAllPCMStickyFaults = SmartDashboard.getBoolean("reset_pcm_faults");
-		boolean enableCompressor = SmartDashboard.getBoolean("enable_compressor");
-		
-		if(clearAllPCMStickyFaults){
-			Robot.compressor.clearAllPCMStickyFaults();
-		}
-		
-		if(enableCompressor){
-			Robot.compressor.start();
-		}else{
-			Robot.compressor.stop();
-		}
-		*/
-		/*
-		// motor data
+	}
+	
+	private void updateMotorFaults(){
 		SmartDashboard.putNumber("left_drive_talon_1_temp_fault", Robot.drivetrain.left_1.getFaultOverTemp());
 		SmartDashboard.putNumber("left_drive_talon_1_volt_fault", Robot.drivetrain.left_1.getFaultUnderVoltage());
 		SmartDashboard.putNumber("left_drive_talon_1_hardware_fault", Robot.drivetrain.left_1.getFaultHardwareFailure());
@@ -182,7 +180,16 @@ public class DashboardConnection {
 		
 		SmartDashboard.putNumber("right_drive_talon_3_temp_fault", Robot.drivetrain.right_3.getFaultOverTemp());
 		SmartDashboard.putNumber("right_drive_talon_3_volt_fault", Robot.drivetrain.right_3.getFaultUnderVoltage());
-		SmartDashboard.putNumber("right_drive_talon_3_hardware_fault", Robot.drivetrain.right_3.getFaultHardwareFailure());*/
+		SmartDashboard.putNumber("right_drive_talon_3_hardware_fault", Robot.drivetrain.right_3.getFaultHardwareFailure());
+	}
+	
+	private void sendConfigToDash(){
+		ArrayList<String> list = Robot.configIO.getConfigText();
 		
+		SmartDashboard.putNumber("config_count", list.size());
+		
+		for(int i = 0; i < list.size(); i++){
+			SmartDashboard.putString("config_" + i, list.get(i));
+		}
 	}
 }
