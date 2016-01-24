@@ -83,7 +83,6 @@ public class ConfigIO {
 				}
 				
 				line = br1.readLine();
-				rawConfig.add(line);
 			}
 		}catch(IOException e){ 
 			e.printStackTrace(); 
