@@ -47,8 +47,8 @@ public class DriveTrain extends Subsystem {
 		int right_a_channel = Robot.configIO.getIntVal("right_enc_a");
 		int right_b_channel = Robot.configIO.getIntVal("right_enc_b");
 		
-		left = new Encoder(left_a_channel, left_b_channel, false, EncodingType.k4X);
-		right = new Encoder(right_a_channel, right_b_channel, true, EncodingType.k4X);
+		left = new Encoder(left_a_channel, left_b_channel, true, EncodingType.k4X);
+		right = new Encoder(right_a_channel, right_b_channel, false, EncodingType.k4X);
 	}
 	
 	protected void initDefaultCommand() {
