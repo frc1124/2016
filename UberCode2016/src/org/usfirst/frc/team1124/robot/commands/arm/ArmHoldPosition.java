@@ -4,6 +4,13 @@ import org.usfirst.frc.team1124.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+//_____  _____  ______   ________  _______          _       _______     ____    ____  
+//|_   _||_   _||_   _ \ |_   __  ||_   __ \       / \     |_   __ \   |_   \  /   _| 
+//| |    | |    | |_) |  | |_ \_|  | |__) |       / _ \      | |__) |    |   \/   |   
+//| '    ' |    |  __'.  |  _| _   |  __ /       / ___ \     |  __ /     | |\  /| |   
+// \ \__/ /    _| |__) |_| |__/ | _| |  \ \_   _/ /   \ \_  _| |  \ \_  _| |_\/_| |_  
+//  `.__.'    |_______/|________||____| |___| |____| |____||____| |___||_____||_____| 
+//    
 /**
  *	This command holds the arm at the current setpoint; it is ran between MoveArm commands
  */
