@@ -12,6 +12,9 @@ import com.ni.vision.NIVision.Image;
 import edu.wpi.first.wpilibj.ControllerPower;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
+import edu.wpi.first.wpilibj.vision.AxisCamera.ExposureControl;
+import edu.wpi.first.wpilibj.vision.AxisCamera.Resolution;
+import edu.wpi.first.wpilibj.vision.AxisCamera.WhiteBalance;
 //import edu.wpi.first.wpilibj.vision.USBCamera;
 
 public class DashboardConnection {
@@ -29,6 +32,17 @@ public class DashboardConnection {
 		
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
         camera = new AxisCamera("10.11.24.81");
+        
+        camera.writeColorLevel(50);
+        camera.writeBrightness(50);
+        
+        camera.writeCompression(30);
+        
+        camera.writeResolution(Resolution.k320x240);
+        camera.writeExposureControl(ExposureControl.kHold);
+        
+        camera.writeWhiteBalance(WhiteBalance.kFixedFluorescent1);
+        camera.writeMaxFPS(20);
 		
 		//camera = new USBCamera("cam0");
         //camera.openCamera();
