@@ -90,7 +90,15 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void resetEncoders(){
+		resetLeftEncoder();
+		resetRightEncoder();
+	}
+	
+	public void resetLeftEncoder(){
 		left.reset();
+	}
+	
+	public void resetRightEncoder(){
 		right.reset();
 	}
 	

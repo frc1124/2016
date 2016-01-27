@@ -124,6 +124,18 @@ public class DashboardConnection {
 		SmartDashboard.putNumber("right_drive_encoder_dist", Robot.drivetrain.getRightEncoderDistance());
 		SmartDashboard.putNumber("right_drive_encoder_rate", Robot.drivetrain.getRightEncoderRate());
 		
+		try {
+			boolean reset_right = SmartDashboard.getBoolean("right_encoder_reset");
+			boolean reset_left = SmartDashboard.getBoolean("left_encoder_reset");
+			
+			if(reset_right){
+				Robot.drivetrain.resetRightEncoder();
+			}
+			
+			if(reset_left){
+				Robot.drivetrain.resetLeftEncoder();
+			}
+		} catch(Exception e) {}
 	}
 	
 	private void updateRoboRIO(){
