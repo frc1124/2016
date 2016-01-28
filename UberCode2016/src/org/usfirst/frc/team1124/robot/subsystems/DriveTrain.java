@@ -153,4 +153,24 @@ public class DriveTrain extends Subsystem {
 		right_2.enableBrakeMode(true);
 		right_3.enableBrakeMode(true);
 	}
+
+	public void setLeftMotor(double i) {
+		this.left_1.set(i);
+		this.left_2.set(i);
+		this.left_3.set(i);
+	}
+
+	public double getLeftMotor() {
+		return (this.left_1.get()+this.left_2.get()+this.left_3.get())/3;
+	}
+
+	public void setRightMotor(double i) {
+		this.right_1.set(i);
+		this.right_2.set(i);
+		this.right_3.set(i);
+	}
+
+	public double getRightMotor() {
+		return (this.right_1.get()+this.right_2.get()+this.right_3.get())/3;
+	}
 }
