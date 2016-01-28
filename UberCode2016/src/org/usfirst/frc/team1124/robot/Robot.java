@@ -2,6 +2,7 @@ package org.usfirst.frc.team1124.robot;
 
 // commands
 import org.usfirst.frc.team1124.robot.commands.Autonomous;
+import org.usfirst.frc.team1124.robot.commands.UpdatePositionTracking;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
@@ -48,6 +49,7 @@ public class Robot extends IterativeRobot {
 	public static IntakeBelts intake_belts;
 	public static ShooterPID shooter_pid;
 	public static USBCamera camera;
+	public static PositionTracker positionTracker;
 	
 	// components
 	public static Compressor compressor;
@@ -83,6 +85,10 @@ public class Robot extends IterativeRobot {
 
         // instantiate the command used for the autonomous period
         autonomousCommand = new Autonomous();
+
+		// Set up position tracking
+		positionTracker = new PositionTracker();
+        Scheduler.getInstance().add(new UpdatePositionTracking());
     }
 	
 	public void disabledPeriodic() {
