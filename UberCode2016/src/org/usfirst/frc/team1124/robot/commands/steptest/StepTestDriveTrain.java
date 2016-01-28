@@ -65,7 +65,8 @@ public class StepTestDriveTrain extends Command {
 	}
 
 	/**
-	 * Perform the test.
+	 * Perform the test. This is called back over and over until isFinished() returns true. 
+	 * In this case, that means we've run out of steps.
 	 */
 	@Override
 	protected void execute() {

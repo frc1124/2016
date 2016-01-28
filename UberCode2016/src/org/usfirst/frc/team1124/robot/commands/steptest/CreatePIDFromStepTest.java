@@ -167,11 +167,45 @@ public class CreatePIDFromStepTest extends Command {
 	}
 
 	/**
-	 * Find the slope of the encoder values.
+	 * Find the slope of the encoder values. Uses line of best fit:
+	 * http://hotmath.com/hotmath_help/topics/line-of-best-fit.html
 	 * 
 	 * @param	seg   	data to analyze
 	 */
 	private double getSlope(List<double[]> seg) {
+		// Use line of best fit algorithm
+		// Start with when we have a steady signal
+		int offset = this.findTdOffset(seg);
+
+		// Get mean of x values, in this case time
+		// Get mean of y values, in this case val
+		double X = 0;
+		double Y = 0;
+		for (int i=offset;i<seg.size();i++) {
+			double[] point = seg.get(i);
+			X += point[0];
+			Y +=  point[2];
+		}
+		int s = seg.size() - offset;
+		X /= s;
+		Y /= s;
+
+		// Calculate best fit
+		double sXY = 0;
+		double sX2 = 0;
+		for (int i=offset;i<seg.size();i++) {
+			double[] point = seg.get(i);
+			double sX = point[0] - X;
+			double sY = point[2] - Y;
+			sXY += sX * sY;
+			sX2 += sX*sX;
+		}
+		double m = sXY / sX2;
+		return m;
+	}
+
+	@SuppressWarnings("unused")
+	private double deprecatedGetSlope(List<double[]> seg) {
 		// Using a tree map to store slope => count because it automatically sorts keys.
 		// This is useful later when we're looking for median.
 		Map<Double,Integer> mMap = new TreeMap<Double,Integer>();
@@ -232,12 +266,13 @@ public class CreatePIDFromStepTest extends Command {
 	}
 
 	/**
-	 * Tests the analysis portion of the command. It does not actually test the execute.
+	 * Tests the analysis portion of the command.
 	 */
 	public void main(String[] args) {
 		List<List<double[]>> data = new ArrayList<List<double[]>>();
-		// TODO: fake data
+		// TODO: fake data to test
 		CreatePIDFromStepTest test = new CreatePIDFromStepTest(data);
+		test.execute();
 
 		// check coefficients
 		System.out.println("P: "+test.getP());
