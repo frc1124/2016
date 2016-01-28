@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 //  | '    ' |    |  __'.  |  _| _   |  __ /      |  __'.   / ___ \     | |   _   | |   _  _.____`.  
 //   \ \__/ /    _| |__) |_| |__/ | _| |  \ \_   _| |__) |_/ /   \ \_  _| |__/ | _| |__/ || \____) | 
 //    `.__.'    |_______/|________||____| |___| |_______/|____| |____||________||________| \______.' 
-//             TEST :)                                                                                     
+//                                                                                                 
 /**
  *	Ball intake. Belts will run at intake speed set in IntakeBelts subsystem, then stop when light sensor detects ball.
  */
