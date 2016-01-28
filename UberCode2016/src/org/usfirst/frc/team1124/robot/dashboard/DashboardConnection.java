@@ -136,6 +136,9 @@ public class DashboardConnection {
 				Robot.drivetrain.resetLeftEncoder();
 			}
 		} catch(Exception e) {}
+		
+		SmartDashboard.putNumber("left_drive_speed", Robot.drivetrain.left_1.get());
+		SmartDashboard.putNumber("right_drive_speed", Robot.drivetrain.right_1.get());
 	}
 	
 	private void updateRoboRIO(){

@@ -16,8 +16,12 @@ public class DriveTrain extends Subsystem {
 	
 	// PID constants used for auto targeting and hold position
 	public final double P = 1;
-	public final double I = 0.01;
+	public final double I = 0;
 	public final double D = 0;
+	
+	public final double SETPOINT_TOLERANCE = Math.PI / 60;
+	
+	private final double ENCODER_DIST_PER_PULSE = Math.PI / 120;
 	
 	private RobotDrive firstpair;
 	private RobotDrive secondpair;
@@ -49,6 +53,9 @@ public class DriveTrain extends Subsystem {
 		
 		left = new Encoder(left_a_channel, left_b_channel, true, EncodingType.k4X);
 		right = new Encoder(right_a_channel, right_b_channel, false, EncodingType.k4X);
+		
+		left.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
+		right.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
 	}
 	
 	protected void initDefaultCommand() {
@@ -123,7 +130,7 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void drive(Joystick js){
-		drive(-js.getY(), js.getX());
+		drive(-js.getY(), -js.getX());
 	}
 	
 	// mode-independent methods

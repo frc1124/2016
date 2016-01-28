@@ -2,6 +2,7 @@ package org.usfirst.frc.team1124.robot;
 
 // commands
 import org.usfirst.frc.team1124.robot.commands.Autonomous;
+import org.usfirst.frc.team1124.robot.commands.PIDTuner;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
@@ -82,7 +83,7 @@ public class Robot extends IterativeRobot {
 		db_connection.initCamera();
 
         // instantiate the command used for the autonomous period
-        autonomousCommand = new Autonomous();
+        autonomousCommand = new PIDTuner();
     }
 	
 	public void disabledPeriodic() {

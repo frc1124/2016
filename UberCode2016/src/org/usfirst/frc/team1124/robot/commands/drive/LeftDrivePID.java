@@ -18,6 +18,8 @@ public class LeftDrivePID extends PIDCommand {
         requires(Robot.drivetrain);
         setInterruptible(true);
         
+        getPIDController().setAbsoluteTolerance(Robot.drivetrain.SETPOINT_TOLERANCE);
+        
         this.setpoint = setpoint;
     }
 
