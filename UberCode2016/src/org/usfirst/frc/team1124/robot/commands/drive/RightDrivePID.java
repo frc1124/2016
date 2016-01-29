@@ -2,6 +2,7 @@ package org.usfirst.frc.team1124.robot.commands.drive;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
 /**
@@ -49,6 +50,10 @@ public class RightDrivePID extends PIDCommand {
 
 	protected void usePIDOutput(double output) {
 		speed = output;
+	}
+	
+	public PIDController getPID(){
+		return this.getPIDController();
 	}
 	
 	public double getSpeed(){
