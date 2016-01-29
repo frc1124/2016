@@ -11,7 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class IntakeBelts extends Subsystem {
     
-	private Talon motor;
+	private Talon belt_motor;
+	private Talon arm_belts_motor;
 	
 	private DigitalInput light_sensor;
 	
@@ -22,7 +23,8 @@ public class IntakeBelts extends Subsystem {
 	public IntakeBelts(){
 		super("IntakeBelts");
 		
-		motor = new Talon(Robot.configIO.getIntVal("intake_belts"));
+		belt_motor = new Talon(Robot.configIO.getIntVal("intake_belts"));
+		arm_belts_motor = new Talon(Robot.configIO.getIntVal("arm_intake_belts"));
 		
 		light_sensor = new DigitalInput(Robot.configIO.getIntVal("intake_belts_light_sensor"));
 	}
@@ -37,29 +39,35 @@ public class IntakeBelts extends Subsystem {
     
     /** Intake a ball */
     public void intake(){
-    	motor.set(INTAKE_SPEED);
+    	belt_motor.set(INTAKE_SPEED);
+    	arm_belts_motor.set(INTAKE_SPEED);
     }
     
     /** Shoot a ball */
     public void shoot(){
-    	motor.set(SHOOT_SPEED);
+    	belt_motor.set(SHOOT_SPEED);
+    	arm_belts_motor.set(SHOOT_SPEED);
     }
     
     /** Spit the ball back out */
     public void spit(){
-    	motor.set(LOW_GOAL_SPEED);
+    	belt_motor.set(LOW_GOAL_SPEED);
+    	arm_belts_motor.set(LOW_GOAL_SPEED);
+
     }
     
     /** Stop the belts */
     public void stop(){
-    	motor.set(0);
+    	belt_motor.set(0);
+    	arm_belts_motor.set(0);
+
     }
     
     /** Manual control of the belts 
      *  @param speed The speed to run the belts (-1.0 to 1.0) 
      */
     public void manual(int speed){
-    	motor.set(speed);
+    	belt_motor.set(speed);
     }
 }
 
