@@ -2,6 +2,9 @@ package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmHoldPosition;
+import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
+import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.SafetySubsystem;
+import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.Error;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -107,12 +110,18 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		if(limit_switch.get() && output > 0){
 			// trying to go too far up, so only allow going down
 			safeOutput = 0;
+			
+			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.LimitSwitchDirection);
 		}else if(encoder.getDistance() >= MAX_UP && output > 0){
 			// trying to go to far up
 			safeOutput = 0;
+			
+			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.EncoderDirection);
 		}else if(encoder.getDistance() <= MAX_DOWN && output < 0){
 			// trying to go to far down
 			safeOutput = 0;
+			
+			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.EncoderDirection);
 		}
 		
 		// rate safeties
@@ -120,12 +129,16 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			// encoder was disconnected and is reading something around infinity
 			safeOutput = 0;
 			safetyTripped = true;
+			
+			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.HighRateDisconnection);
 		}
 		
 		if(Math.abs(output) > getRateCutoffThreshold() && encoder.getRate() == 0){
 			// we are moving it but the encoder isn't reading it, not good
 			safeOutput = 0;
 			safetyTripped = true;
+			
+			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.NoRateDisconnection);
 		}
 		
 		// permanent disable if safety is tripped
