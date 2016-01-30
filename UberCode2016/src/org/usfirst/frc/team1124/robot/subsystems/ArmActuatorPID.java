@@ -112,7 +112,11 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			safeOutput = 0;
 			
 			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.LimitSwitchDirection);
-		}else if(encoder.getDistance() >= MAX_UP && output > 0){
+		}else{
+			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.LimitSwitchDirection);
+		}
+
+		if(encoder.getDistance() >= MAX_UP && output > 0){
 			// trying to go to far up
 			safeOutput = 0;
 			
@@ -122,6 +126,8 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			safeOutput = 0;
 			
 			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.EncoderDirection);
+		}else{
+			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.EncoderDirection);
 		}
 		
 		// rate safeties
@@ -131,6 +137,8 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			safetyTripped = true;
 			
 			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.HighRateDisconnection);
+		}else{
+			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.HighRateDisconnection);
 		}
 		
 		if(Math.abs(output) > getRateCutoffThreshold() && encoder.getRate() == 0){
@@ -139,6 +147,8 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			safetyTripped = true;
 			
 			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.NoRateDisconnection);
+		}else{
+			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.NoRateDisconnection);
 		}
 		
 		// permanent disable if safety is tripped
