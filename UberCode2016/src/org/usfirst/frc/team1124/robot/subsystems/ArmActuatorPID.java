@@ -68,7 +68,11 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	}
 
 	protected void usePIDOutput(double output) {
-		actuator.set(output);
+		if(isSafetyEnabled()){
+			actuator.set(safeOutput(output));
+		}else{
+			actuator.set(output);
+		}
 	}
 	
 	/* Encoder Functions */
