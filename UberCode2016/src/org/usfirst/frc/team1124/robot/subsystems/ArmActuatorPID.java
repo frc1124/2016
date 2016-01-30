@@ -5,7 +5,7 @@ import org.usfirst.frc.team1124.robot.commands.arm.ArmHoldPosition;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
@@ -18,7 +18,7 @@ public class ArmActuatorPID extends PIDSubsystem {
 	public final static double I = 0.01;
 	public final static double D = 0;
 	
-	private Talon actuator;
+	private CANTalon actuator;
 	private Encoder encoder;
 	
 	private DigitalInput limit_switch;
@@ -30,7 +30,7 @@ public class ArmActuatorPID extends PIDSubsystem {
         // enable() - Enables the PID controller.
 		super("ArmActuators", P, I, D);
 		
-		actuator = new Talon(Robot.configIO.getIntVal("arm_actuator"));
+		actuator = new CANTalon(Robot.configIO.getIntVal("arm_actuator"));
 		
 		int port_a = Robot.configIO.getIntVal("arm_actuator_enc_a");
 		int port_b = Robot.configIO.getIntVal("arm_actuator_enc_b");
