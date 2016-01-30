@@ -11,6 +11,13 @@ import java.util.*;
  * This command analyzes step data in the form of a series of steps.
  * Data points are represented as time in seconds, output, and value.
  * 
+ * Derived based on: http://blog.opticontrols.com/archives/697
+ * 
+ * Ziegler-Nichols Open-Loop Tuning Method:
+ * https://controls.engin.umich.edu/wiki/index.php/PIDTuningClassical#Ziegler-Nichols_Open-Loop_Tuning_Method_or_Process_Reaction_Method
+ * 
+ * It would be best to have tests to determine if futher adjustments to coefficients are needed.
+ * 
  * @author	Mrs. Weston
  */
 public class CreatePIDFromStepTest extends Command {
