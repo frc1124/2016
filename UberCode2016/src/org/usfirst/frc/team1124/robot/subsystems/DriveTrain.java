@@ -168,7 +168,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public double getLeftMotor() {
-		return (this.left_1.get()+this.left_2.get()+this.left_3.get())/3;
+		return (this.left_1.getOutputVoltage()+this.left_2.getOutputVoltage()+this.left_3.getOutputVoltage())/3;
 	}
 
 	public void setRightMotor(double i) {
@@ -178,6 +178,6 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public double getRightMotor() {
-		return (this.right_1.get()+this.right_2.get()+this.right_3.get())/3;
+		return (this.right_1.getOutputVoltage()+this.right_2.getOutputVoltage()+this.right_3.getOutputVoltage())/3;
 	}
 }
