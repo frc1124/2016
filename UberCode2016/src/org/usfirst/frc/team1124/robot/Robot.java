@@ -66,7 +66,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     
     // this revision of code (displayed on dashboard)
-    public static String codeRevision = "[v1.0.6]:build-season";
+    public static String codeRevision = "[v1.0.7]:build-season";
 
     /**
      * This function is run when the robot is first started up and should be
@@ -79,12 +79,11 @@ public class Robot extends IterativeRobot {
     	// instantiate subsystems
 		drivetrain = new DriveTrain();
 		pdp = new PowerDistributionPanel();
-		arm_pistons = new ArmPistons();
-		arm_actuator_pid = new ArmActuatorPID();
-		ramp_belts_pid = new RampBeltsPID();
-		intake_belts = new IntakeBelts();
-		shooter_pid = new ShooterPID();
-		camera = new USBCamera();
+		//arm_pistons = new ArmPistons();
+		//arm_actuator_pid = new ArmActuatorPID();
+		//ramp_belts_pid = new RampBeltsPID();
+		//intake_belts = new IntakeBelts();
+		//shooter_pid = new ShooterPID();
 		
 		// instantiate operator interface
 		oi = new OI();
