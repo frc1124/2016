@@ -51,10 +51,6 @@ public class RampBeltsPID extends PIDSubsystem implements Safe {
     	return encoder.getRate();
     }
     
-    public void homeEncoder(){
-		encoder.reset();
-	}
-    
     /* PID Control */
     
     protected double returnPIDInput() {
@@ -62,7 +58,11 @@ public class RampBeltsPID extends PIDSubsystem implements Safe {
     }
     
     protected void usePIDOutput(double output) {
-        talon.set(output);
+        if(safetyEnabled){
+        	talon.set(safeOutput(output));
+        }else{
+        	talon.set(output);
+        }
     }
 
     /* Safeties */
