@@ -5,6 +5,7 @@ import org.usfirst.frc.team1124.robot.commands.Autonomous;
 import org.usfirst.frc.team1124.robot.commands.DriveWorkTest;
 import org.usfirst.frc.team1124.robot.commands.PIDTuner;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
+
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1124.robot.subsystems.IntakeBelts;
@@ -21,6 +22,7 @@ import org.usfirst.frc.team1124.robot.tools.ConfigIO;
 
 // dashboard
 import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
+import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
 
 // wpilib components
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -84,7 +86,6 @@ public class Robot extends IterativeRobot {
 		shooter_pid = new ShooterPID();
 		camera = new USBCamera();
 		
-		
 		// instantiate operator interface
 		oi = new OI();
 
@@ -94,6 +95,9 @@ public class Robot extends IterativeRobot {
 
         // instantiate the command used for the autonomous period
         autonomousCommand = new DriveWorkTest();
+        
+        // set up error logger
+        SafetyErrorLogger.init();
     }
 	
 	public void disabledPeriodic() {
