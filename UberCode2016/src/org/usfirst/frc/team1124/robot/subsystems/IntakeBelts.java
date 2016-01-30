@@ -2,8 +2,8 @@ package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class IntakeBelts extends Subsystem {
     
-	private Talon belt_motor;
-	private Talon arm_belts_motor;
+	private CANTalon belt_motor;
+	private CANTalon arm_belts_motor;
 	
 	private DigitalInput light_sensor;
 	
@@ -23,8 +23,8 @@ public class IntakeBelts extends Subsystem {
 	public IntakeBelts(){
 		super("IntakeBelts");
 		
-		belt_motor = new Talon(Robot.configIO.getIntVal("intake_belts"));
-		arm_belts_motor = new Talon(Robot.configIO.getIntVal("arm_intake_belts"));
+		belt_motor = new CANTalon(Robot.configIO.getIntVal("intake_belts"));
+		arm_belts_motor = new CANTalon(Robot.configIO.getIntVal("arm_intake_belts"));
 		
 		light_sensor = new DigitalInput(Robot.configIO.getIntVal("intake_belts_light_sensor"));
 	}

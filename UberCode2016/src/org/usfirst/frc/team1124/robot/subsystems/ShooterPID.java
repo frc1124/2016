@@ -3,7 +3,7 @@ package org.usfirst.frc.team1124.robot.subsystems;
 import org.usfirst.frc.team1124.robot.Robot;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
@@ -16,7 +16,7 @@ public class ShooterPID extends PIDSubsystem {
 	private final static double I = 0.01;
 	private final static double D = 0;
 	
-	private Talon actuator;
+	private CANTalon actuator;
 	private Encoder encoder;
 
     // Initialize your subsystem here
@@ -27,7 +27,7 @@ public class ShooterPID extends PIDSubsystem {
         // enable() - Enables the PID controller.
     	super("ShooterPID", P, I, D);
     	
-    	actuator = new Talon(Robot.configIO.getIntVal("shooter"));
+    	actuator = new CANTalon(Robot.configIO.getIntVal("shooter"));
     	
     	int port_a = Robot.configIO.getIntVal("shooter_enc_a");
     	int port_b = Robot.configIO.getIntVal("shooter_enc_b");
