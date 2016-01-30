@@ -1,15 +1,15 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.commands.belts.RampHoldPosition;
 
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
- *
+ * The belts inside the robot to store the ball and feed it to the shooter
  */
 public class RampBeltsPID extends PIDSubsystem {
 	
@@ -18,15 +18,12 @@ public class RampBeltsPID extends PIDSubsystem {
 	public final static double D = 0;
 	
 	private CANTalon talon;
-//	private DigitalInput lightSensor;
 	private Encoder encoder;
 
-    // Initialize your subsystem here
     public RampBeltsPID() {
     	super("RampBelts", P, I, D);
     	
     	talon = new CANTalon(Robot.configIO.getIntVal("ramp_conveyor_talon"));
-    	//lightSensor = new DigitalInput(Robot.configIO.getIntVal("ramp_belts_light_sensor"));
     	
     	int port_a = Robot.configIO.getIntVal("ramp_talon_enc_a");
 		int port_b = Robot.configIO.getIntVal("ramp_talon_enc_b");
@@ -37,13 +34,8 @@ public class RampBeltsPID extends PIDSubsystem {
     }
     
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new RampHoldPosition());
     }
-    
-//    public boolean getSensorState(){
-//    	return lightSensor.get();
-//    }
     
     public double getEncoderRate(){
     	return encoder.getRate();
