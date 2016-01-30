@@ -45,6 +45,14 @@ public class RampBeltsPID extends PIDSubsystem implements Safe {
         setDefaultCommand(new RampHoldPosition());
     }
     
+    public void stop(){
+    	// not used unless we want to disable the hold position
+    	disable();
+    	setSetpoint(0);
+    	
+    	talon.set(0);
+    }
+    
     /* Encoder Functions */
     
     public double getEncoderRate(){

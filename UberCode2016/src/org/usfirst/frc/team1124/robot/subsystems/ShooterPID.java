@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.commands.shooter.ShooterRest;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.Error;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.SafetySubsystem;
@@ -42,7 +43,14 @@ public class ShooterPID extends PIDSubsystem implements Safe {
     }
     
     public void initDefaultCommand() {
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new ShooterRest());
+    }
+    
+    public void stop(){
+    	disable();
+    	setSetpoint(0);
+    	
+    	shooter.set(0);
     }
     
     /* Encoder Functions */
