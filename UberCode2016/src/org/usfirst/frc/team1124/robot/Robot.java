@@ -8,6 +8,7 @@ import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1124.robot.subsystems.IntakeBelts;
+import org.usfirst.frc.team1124.robot.subsystems.RampBeltsPID;
 import org.usfirst.frc.team1124.robot.subsystems.ShooterPID;
 import org.usfirst.frc.team1124.robot.subsystems.ArmActuatorPID;
 import org.usfirst.frc.team1124.robot.subsystems.ArmPistons;
@@ -47,6 +48,7 @@ public class Robot extends IterativeRobot {
 	public static DriveTrain drivetrain;
 	public static ArmPistons arm_pistons;
 	public static ArmActuatorPID arm_actuator_pid;
+	public static RampBeltsPID ramp_belts_pid;
 	public static IntakeBelts intake_belts;
 	public static ShooterPID shooter_pid;
 	public static USBCamera camera;
@@ -75,6 +77,13 @@ public class Robot extends IterativeRobot {
     	// instantiate subsystems
 		drivetrain = new DriveTrain();
 		pdp = new PowerDistributionPanel();
+		arm_pistons = new ArmPistons();
+		arm_actuator_pid = new ArmActuatorPID();
+		ramp_belts_pid = new RampBeltsPID();
+		intake_belts = new IntakeBelts();
+		shooter_pid = new ShooterPID();
+		camera = new USBCamera();
+		
 		
 		// instantiate operator interface
 		oi = new OI();

@@ -1,18 +1,39 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
+import org.usfirst.frc.team1124.robot.Robot;
+
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
  *
  */
 public class RampBeltsPID extends PIDSubsystem {
+	
+	public final static double P = 1;
+	public final static double I = 0.01;
+	public final static double D = 0;
+	
+	private CANTalon talon;
+//	private DigitalInput lightSensor;
+	private Encoder encoder;
 
     // Initialize your subsystem here
     public RampBeltsPID() {
-        // Use these to get going:
-        // setSetpoint() -  Sets where the PID controller should move the system
-        //                  to
-        // enable() - Enables the PID controller.
+    	super("RampBelts", P, I, D);
+    	
+    	talon = new CANTalon(Robot.configIO.getIntVal("ramp_conveyor_talon"));
+    	//lightSensor = new DigitalInput(Robot.configIO.getIntVal("ramp_belts_light_sensor"));
+    	
+    	int port_a = Robot.configIO.getIntVal("ramp_talon_enc_a");
+		int port_b = Robot.configIO.getIntVal("ramp_talon_enc_b");
+		
+		encoder = new Encoder(port_a, port_b, false, EncodingType.k4X);
+
+		setSetpoint(0);
     }
     
     public void initDefaultCommand() {
@@ -20,15 +41,23 @@ public class RampBeltsPID extends PIDSubsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
+//    public boolean getSensorState(){
+//    	return lightSensor.get();
+//    }
+    
+    public double getEncoderRate(){
+    	return encoder.getRate();
+    }
+    
+    public void homeEncoder(){
+		encoder.reset();
+	}
+    
     protected double returnPIDInput() {
-        // Return your input value for the PID loop
-        // e.g. a sensor, like a potentiometer:
-        // yourPot.getAverageVoltage() / kYourMaxVoltage;
-    	return 0.0;
+        return encoder.getRate();
     }
     
     protected void usePIDOutput(double output) {
-        // Use output to drive your system, like a motor
-        // e.g. yourMotor.set(output);
+        talon.set(output);
     }
 }
