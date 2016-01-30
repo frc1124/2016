@@ -17,12 +17,12 @@ public interface Safe {
 	 */
 	public boolean isSafetyTripped();
 	
+	public void setRateCutoffThreshold(double threshold);
+	public double getRateCutoffThreshold();
+	
 	/** Use this method to process the disired output and make sure it is safe
 	 * @param output the output you want to write
 	 * @return the safe output
 	 */
 	public double safeOutput(double output);
-	
-	public void setRateCutoffThreshold(double threshold);
-	public double getRateCutoffThreshold();
 }
