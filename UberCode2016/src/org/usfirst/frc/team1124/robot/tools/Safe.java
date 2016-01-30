@@ -17,7 +17,14 @@ public interface Safe {
 	 */
 	public boolean isSafetyTripped();
 	
+	/** If an output exceeds the threshold, disable output if the encoder reads no rate 
+	 * @param threshold the threshold from 0 to 1 
+	 */
 	public void setRateCutoffThreshold(double threshold);
+	
+	/** If an output exceeds the threshold, disable output if the encoder reads no rate 
+	 * @return the threshold from 0 to 1
+	 */
 	public double getRateCutoffThreshold();
 	
 	/** Use this method to process the disired output and make sure it is safe
