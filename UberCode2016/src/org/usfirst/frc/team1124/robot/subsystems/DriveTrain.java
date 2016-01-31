@@ -10,6 +10,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+/**
+ * The Drive Train subsystem. Contains both the left and right gearboxes. </br>
+ * The safeties are contained in LeftDrivePID.java and RightDrivePID.java (commands).
+ */
 public class DriveTrain extends Subsystem {
 	
 	public CANTalon left_1, left_2, left_3, right_1, right_2, right_3;
@@ -141,7 +145,7 @@ public class DriveTrain extends Subsystem {
 		thirdpair.arcadeDrive(0, 0);
 	}
 	
-	// toggle break/coast
+	// Toggle Break/Coast
 	
 	public void setCoast(){
 		left_1.enableBrakeMode(false);
@@ -160,24 +164,26 @@ public class DriveTrain extends Subsystem {
 		right_2.enableBrakeMode(true);
 		right_3.enableBrakeMode(true);
 	}
-
-	public void setLeftMotor(double i) {
-		this.left_1.set(i);
-		this.left_2.set(i);
-		this.left_3.set(i);
+	
+	// Manual Control
+	
+	public void setLeftMotor(double speed) {
+		this.left_1.set(speed);
+		this.left_2.set(speed);
+		this.left_3.set(speed);
 	}
 
 	public double getLeftMotor() {
-		return (this.left_1.getOutputVoltage()+this.left_2.getOutputVoltage()+this.left_3.getOutputVoltage())/3;
+		return (this.left_1.getOutputVoltage() + this.left_2.getOutputVoltage() + this.left_3.getOutputVoltage()) / 3;
 	}
 
-	public void setRightMotor(double i) {
-		this.right_1.set(i);
-		this.right_2.set(i);
-		this.right_3.set(i);
+	public void setRightMotor(double speed) {
+		this.right_1.set(speed);
+		this.right_2.set(speed);
+		this.right_3.set(speed);
 	}
 
 	public double getRightMotor() {
-		return (this.right_1.getOutputVoltage()+this.right_2.getOutputVoltage()+this.right_3.getOutputVoltage())/3;
+		return (this.right_1.getOutputVoltage() + this.right_2.getOutputVoltage() + this.right_3.getOutputVoltage()) / 3;
 	}
 }

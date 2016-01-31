@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class IntakeBelts extends Subsystem {
     
 	private CANTalon belt_motor;
-	private CANTalon arm_belts_motor;
+	private CANTalon arm_wheels_motor;
 	
 	private DigitalInput light_sensor;
 	
@@ -24,7 +24,7 @@ public class IntakeBelts extends Subsystem {
 		super("IntakeBelts");
 		
 		belt_motor = new CANTalon(Robot.configIO.getIntVal("intake_belts"));
-		arm_belts_motor = new CANTalon(Robot.configIO.getIntVal("arm_intake_belts"));
+		arm_wheels_motor = new CANTalon(Robot.configIO.getIntVal("arm_intake_wheels"));
 		
 		light_sensor = new DigitalInput(Robot.configIO.getIntVal("intake_belts_light_sensor"));
 	}
@@ -40,26 +40,26 @@ public class IntakeBelts extends Subsystem {
     /** Intake a ball */
     public void intake(){
     	belt_motor.set(INTAKE_SPEED);
-    	arm_belts_motor.set(INTAKE_SPEED);
+    	arm_wheels_motor.set(INTAKE_SPEED);
     }
     
     /** Shoot a ball */
     public void shoot(){
     	belt_motor.set(SHOOT_SPEED);
-    	arm_belts_motor.set(SHOOT_SPEED);
+    	arm_wheels_motor.set(SHOOT_SPEED);
     }
     
     /** Spit the ball back out */
     public void spit(){
     	belt_motor.set(LOW_GOAL_SPEED);
-    	arm_belts_motor.set(LOW_GOAL_SPEED);
+    	arm_wheels_motor.set(LOW_GOAL_SPEED);
 
     }
     
     /** Stop the belts */
     public void stop(){
     	belt_motor.set(0);
-    	arm_belts_motor.set(0);
+    	arm_wheels_motor.set(0);
 
     }
     

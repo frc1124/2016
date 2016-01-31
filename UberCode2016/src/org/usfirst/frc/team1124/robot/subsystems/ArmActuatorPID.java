@@ -86,10 +86,11 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	public void enableSafety() {
 		safetyEnabled = true;
 	}
-
-	public void disableSafety() {
-		safetyEnabled = false;
-	}
+	
+	/** Manual control is forbidden for the arm.
+	 * @deprecated You may not disable te arm actuator's safety. 
+	 */
+	public void disableSafety() {}
 
 	public boolean isSafetyEnabled() {
 		return safetyEnabled;
