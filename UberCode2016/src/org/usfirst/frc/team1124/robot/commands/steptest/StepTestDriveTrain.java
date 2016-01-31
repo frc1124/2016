@@ -38,23 +38,19 @@ public class StepTestDriveTrain extends Command {
 
 	private StepTest leftData = new StepTest();
 	private StepTest rightData = new StepTest();
-	
+
+	public StepTestDriveTrain() {
+		requires(Robot.drivetrain);
+	}
+
 	/**
 	 * Sets up for the test and data gathering.
 	 */
 	@Override
 	protected void initialize() {
-		requires(Robot.drivetrain);
-
 		try {
 			// Initialize the step values
 			periodStart = System.currentTimeMillis();
-
-			// Set up the storage for each period
-			for (int i=0;i<this.output.length;i++) {
-				this.leftData.changeSignal();
-				this.rightData.changeSignal();
-			}
 
 			// Open the logs
 			SimpleDateFormat df = new SimpleDateFormat("YYYY-mm-dd-hh-MM");
@@ -76,6 +72,8 @@ public class StepTestDriveTrain extends Command {
 		long c = System.currentTimeMillis();
 		if (periodStart + this.period > c) {
 			this.periodStart = c;
+			this.leftData.changeSignal();
+			this.rightData.changeSignal();
 			this.currentStep++;
 		}
 
