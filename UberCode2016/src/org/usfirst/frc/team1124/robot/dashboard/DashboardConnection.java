@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.vision.AxisCamera.WhiteBalance;
 //import edu.wpi.first.wpilibj.vision.USBCamera;
 
 public class DashboardConnection {
-	private static boolean firstCall = false;
+	private static boolean firstCall = true;
     
 	Image frame;
     AxisCamera camera;
@@ -95,10 +95,10 @@ public class DashboardConnection {
 			SmartDashboard.putString("code_revision", Robot.codeRevision);
 			
 			// PDP port "map"
-			SmartDashboard.putString("pdp_can_key_port_0", "Center Drive Motor");
-			SmartDashboard.putString("pdp_can_key_port_1", "Container Arm Motor (CAN ID#5)");
-			SmartDashboard.putString("pdp_can_key_port_2", "Lift Motor 1 (CAN ID#6)");
-			SmartDashboard.putString("pdp_can_key_port_3", "Lift Motor 2 (CAN ID#7)");
+			SmartDashboard.putString("pdp_can_key_port_0", "Right Drive [Rear] (CAN ID#6)");
+			SmartDashboard.putString("pdp_can_key_port_1", "Right Drive [Top] (CAN ID#5)");
+			SmartDashboard.putString("pdp_can_key_port_2", "null");
+			SmartDashboard.putString("pdp_can_key_port_3", "null");
 			SmartDashboard.putString("pdp_can_key_port_4", "null");
 			SmartDashboard.putString("pdp_can_key_port_5", "null");
 			SmartDashboard.putString("pdp_can_key_port_6", "null");
@@ -107,10 +107,10 @@ public class DashboardConnection {
 			SmartDashboard.putString("pdp_can_key_port_9", "null");
 			SmartDashboard.putString("pdp_can_key_port_10", "null");
 			SmartDashboard.putString("pdp_can_key_port_11", "null");
-			SmartDashboard.putString("pdp_can_key_port_12", "Front Left Drive Motor (CAN ID#2)");
-			SmartDashboard.putString("pdp_can_key_port_13", "Front Right Drive Motor (CAN ID#1)");
-			SmartDashboard.putString("pdp_can_key_port_14", "Back Left Drive Motor (CAN ID#3)");
-			SmartDashboard.putString("pdp_can_key_port_15", "Back Right Drive Motor (CAN ID#4)");
+			SmartDashboard.putString("pdp_can_key_port_12", "Right Drive [Front] (CAN ID#4)");
+			SmartDashboard.putString("pdp_can_key_port_13", "Left Drive [Top] (CAN ID#2)");
+			SmartDashboard.putString("pdp_can_key_port_14", "Left Drive [Front] (CAN ID#1)");
+			SmartDashboard.putString("pdp_can_key_port_15", "Left Drive [Rear] (CAN ID#3)");
 			
 			firstCall = false;
 		}
