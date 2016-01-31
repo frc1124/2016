@@ -6,8 +6,6 @@ import java.text.SimpleDateFormat;
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.tools.StepTest;
 import org.usfirst.frc.team1124.robot.tools.StepTestPoint;
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Command;
 import java.util.*;
 
@@ -38,7 +36,6 @@ public class StepTestDriveTrain extends Command {
 	private PrintWriter leftLog;
 	private PrintWriter rightLog;
 	private long periodStart = 0;
-	private TalonControlMode backupMode = null;
 
 	private StepTest leftData;
 	private StepTest rightData;
@@ -54,8 +51,6 @@ public class StepTestDriveTrain extends Command {
 	protected void initialize() {
 		try {
 			// Initialize the step values
-			this.backupMode = Robot.drivetrain.getControlMode();
-			Robot.drivetrain.setControlMode(CANTalon.TalonControlMode.Speed.getValue());
 			periodStart = System.currentTimeMillis();
 			this.currentStep = 0;
 			this.leftData = new StepTest();
@@ -100,6 +95,9 @@ public class StepTestDriveTrain extends Command {
 		t.setScale(5);
 		t = t.divide(new BigDecimal(1000)); // Find the number of elapsed seconds for the period
 		double lo = Robot.drivetrain.getLeftMotor();
+		if (lo == 0 && !t.equals(BigDecimal.ZERO)) {
+			return;
+		}
 		double le = Robot.drivetrain.getLeftEncoderDistance();
 		this.leftLog.println(t+"\t"+lo+"\t"+le);
 
@@ -128,7 +126,6 @@ public class StepTestDriveTrain extends Command {
 		// Close the logs
 		this.leftLog.close();
 		this.rightLog.close();
-		Robot.drivetrain.setControlMode(this.backupMode.getValue());
 	}
 
 	/**
@@ -139,7 +136,6 @@ public class StepTestDriveTrain extends Command {
 		// Close the logs
 		this.leftLog.close();
 		this.rightLog.close();
-		Robot.drivetrain.setControlMode(this.backupMode.getValue());
 	}
 
 	public StepTest getLeftData() {
