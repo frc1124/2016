@@ -129,6 +129,6 @@ public class StepTestSegment {
 		int offset = this.getTdOffset();
 
 		// Subtract the start time from the offset time to get the period
-		return (this.getPoint(offset).getTimestamp() - this.getPoint(0).getTimestamp())/60; // divide by 60 to convert to minutes
+		return (this.getPoint(offset).getTimestamp() - this.getPoint(0).getTimestamp());// // divide by 60 to convert to minutes
 	}
 }
