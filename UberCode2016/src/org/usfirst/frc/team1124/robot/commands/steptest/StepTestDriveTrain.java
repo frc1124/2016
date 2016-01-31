@@ -7,6 +7,7 @@ import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.tools.StepTest;
 import org.usfirst.frc.team1124.robot.tools.StepTestPoint;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Command;
 import java.util.*;
 
@@ -37,7 +38,7 @@ public class StepTestDriveTrain extends Command {
 	private PrintWriter leftLog;
 	private PrintWriter rightLog;
 	private long periodStart = 0;
-	private int backupMode = -1;
+	private TalonControlMode backupMode = null;
 
 	private StepTest leftData;
 	private StepTest rightData;
@@ -53,7 +54,7 @@ public class StepTestDriveTrain extends Command {
 	protected void initialize() {
 		try {
 			// Initialize the step values
-			this.backupMode = CANTalon.TalonControlMode.Current.getValue();
+			this.backupMode = Robot.drivetrain.getControlMode();
 			Robot.drivetrain.setControlMode(CANTalon.TalonControlMode.Speed.getValue());
 			periodStart = System.currentTimeMillis();
 			this.currentStep = 0;
@@ -127,7 +128,7 @@ public class StepTestDriveTrain extends Command {
 		// Close the logs
 		this.leftLog.close();
 		this.rightLog.close();
-		Robot.drivetrain.setControlMode(this.backupMode);
+		Robot.drivetrain.setControlMode(this.backupMode.getValue());
 	}
 
 	/**
@@ -138,7 +139,7 @@ public class StepTestDriveTrain extends Command {
 		// Close the logs
 		this.leftLog.close();
 		this.rightLog.close();
-		Robot.drivetrain.setControlMode(this.backupMode);
+		Robot.drivetrain.setControlMode(this.backupMode.getValue());
 	}
 
 	public StepTest getLeftData() {

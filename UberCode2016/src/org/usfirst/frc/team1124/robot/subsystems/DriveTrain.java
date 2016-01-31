@@ -4,6 +4,7 @@ import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
@@ -166,6 +167,18 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	// Manual Control
+	public TalonControlMode getControlMode() {
+		return left_1.getControlMode();
+	}
+	
+	public void setControlMode(int mode) {
+		left_1.setControlMode(mode);
+		left_2.setControlMode(mode);
+		left_3.setControlMode(mode);
+		right_1.setControlMode(mode);
+		right_2.setControlMode(mode);
+		right_3.setControlMode(mode);
+	}
 	
 	public void setLeftMotor(double speed) {
 		this.left_1.set(speed);
