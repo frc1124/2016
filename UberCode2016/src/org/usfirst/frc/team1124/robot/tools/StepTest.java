@@ -165,7 +165,7 @@ public class StepTest {
 		// Read in log
 		String line;
 		try {
-			InputStream fis = new FileInputStream("/Users/jenniferweston/git/2016/drivetrain-right-2016-31-31-06-01.log");
+			InputStream fis = new FileInputStream("/Users/jenniferweston/git/2016/drivetrain-right.log");
 		    InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
 			BufferedReader br = new BufferedReader(isr);
 			double last = 5;

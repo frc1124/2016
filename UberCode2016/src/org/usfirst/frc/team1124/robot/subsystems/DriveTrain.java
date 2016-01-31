@@ -186,6 +186,12 @@ public class DriveTrain extends Subsystem {
 		this.left_3.set(speed);
 	}
 
+	public void setTankMotors(double left, double right) {
+		firstpair.tankDrive(left, right,false);
+		secondpair.tankDrive(left, right,false);
+		thirdpair.tankDrive(left, right,false);
+	}
+
 	public double getLeftMotor() {
 		return (this.left_1.getOutputVoltage() + this.left_2.getOutputVoltage() + this.left_3.getOutputVoltage()) / 3;
 	}

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.tools.StepTest;
 import org.usfirst.frc.team1124.robot.tools.StepTestPoint;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
 import java.util.*;
 
@@ -35,6 +36,7 @@ public class StepTestDriveTrain extends Command {
 	private int currentStep = 0;
 	private PrintWriter leftLog;
 	private PrintWriter rightLog;
+	private long testStart = 0;
 	private long periodStart = 0;
 
 	private StepTest leftData;
@@ -53,7 +55,7 @@ public class StepTestDriveTrain extends Command {
 	protected void initialize() {
 		try {
 			// Initialize the step values
-			periodStart = System.currentTimeMillis();
+			testStart = periodStart = System.currentTimeMillis();
 			this.currentStep = 0;
 			this.leftData = new StepTest();
 			this.rightData = new StepTest();
@@ -81,6 +83,7 @@ public class StepTestDriveTrain extends Command {
 			this.leftData.changeSignal();
 			this.rightData.changeSignal();
 			this.currentStep++;
+			Robot.drivetrain.setTankMotors(this.output[this.currentStep],this.output[this.currentStep]);
 		}
 
 		// If at the end, schedule a command to analyze the results
@@ -89,11 +92,11 @@ public class StepTestDriveTrain extends Command {
 		}
 
 		// Set the motors
-		Robot.drivetrain.setLeftMotor(this.output[this.currentStep]);
-		Robot.drivetrain.setRightMotor(-1*this.output[this.currentStep]);
+//		Robot.drivetrain.setLeftMotor(this.output[this.currentStep]);
+//		Robot.drivetrain.setRightMotor(-1*this.output[this.currentStep]);
 
 		// Log the encoders
-		BigDecimal t = new BigDecimal(c - this.periodStart);
+		BigDecimal t = new BigDecimal(c - this.testStart);
 		t.setScale(5);
 		t = t.divide(new BigDecimal(1000)); // Find the number of elapsed seconds for the period
 		double lo = Robot.drivetrain.getLeftMotor();
