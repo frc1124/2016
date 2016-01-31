@@ -92,7 +92,7 @@ public class StepTest {
 		for (int i=1;i<this.data.size();i++) {
 			StepTestSegment seg1 = this.data.get(i-1);
 			StepTestSegment seg2 = this.data.get(i);
-			if (seg1.size() == 0 || seg2.size() == 0) {
+			if (seg1.size() < 2 || seg2.size() < 2) {
 				continue;
 			}
 			ri += this.calculateRi(seg1,seg2);
@@ -174,7 +174,6 @@ public class StepTest {
 			InputStream fis = new FileInputStream("/Users/jenniferweston/git/2016/drivetrain-left.log");
 		    InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
 			BufferedReader br = new BufferedReader(isr);
-			double last = 5;
 		    while ((line = br.readLine()) != null) {
 				String[] s = line.split("\t");
 				double o = new Double(s[1]).doubleValue();
@@ -184,10 +183,10 @@ public class StepTest {
 				double t = new Double(s[0]).doubleValue();
 				double v = new Double(s[2]).doubleValue();
 				StepTestPoint p = new StepTestPoint(t,o,v);
-				if (t < last) {
+				int period = ((int)t)/5;
+				if (period >= data.size) {
 					data.changeSignal();
 				}
-				last = t;
 				data.addPoint(p);
 		    }
 
