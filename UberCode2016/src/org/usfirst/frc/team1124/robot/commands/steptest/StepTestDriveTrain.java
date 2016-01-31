@@ -84,7 +84,7 @@ public class StepTestDriveTrain extends Command {
 
 		// Set the motors
 		Robot.drivetrain.setLeftMotor(this.output[this.currentStep]);
-		Robot.drivetrain.setRightMotor(this.output[this.currentStep]);
+		Robot.drivetrain.setRightMotor(-1*this.output[this.currentStep]);
 
 		// Log the encoders
 		double t = (c - this.periodStart)/1000; // Find the number of elapsed seconds for the period
