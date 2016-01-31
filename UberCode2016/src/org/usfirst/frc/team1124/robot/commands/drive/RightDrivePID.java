@@ -19,7 +19,7 @@ public class RightDrivePID extends PIDCommand implements Safe {
 	
 	private boolean safetyEnabled = false;
 	private boolean safetyTripped = false;
-	private double rate_threshold = 0.2;
+	private double rate_threshold = 0.266;
 
     public RightDrivePID(double setpoint) {
 		super("RightDrivePID", Robot.drivetrain.P, Robot.drivetrain.I, Robot.drivetrain.D);
