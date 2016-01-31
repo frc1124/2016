@@ -4,7 +4,10 @@ package org.usfirst.frc.team1124.robot.tools;
  * This is implimented in subsystems where safeties are used. 
  */
 public interface Safe {
+	/** Enables the safety */
 	public void enableSafety();
+	
+	/** Disables the safety (allowing for uninterrupted control)*/
 	public void disableSafety();
 	
 	/** Is the safety protecting activity? 

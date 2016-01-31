@@ -3,7 +3,7 @@ package org.usfirst.frc.team1124.robot.dashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SafetyErrorLogger {
-	private static boolean[][] errorStates = new boolean[4][4];
+	private static boolean[][] errorStates = new boolean[5][4];
 	
 	public static void log(SafetySubsystem subsystem, Error error){
 		long timestamp = System.currentTimeMillis();
@@ -39,6 +39,6 @@ public class SafetyErrorLogger {
 	}
 	
 	public enum SafetySubsystem {
-		DriveTrain, ArmActuator, RampBelts, Shooter
+		DriveTrainLeft, DriveTrainRight, ArmActuator, RampBelts, Shooter
 	}
 }
