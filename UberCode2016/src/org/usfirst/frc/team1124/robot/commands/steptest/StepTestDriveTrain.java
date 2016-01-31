@@ -3,6 +3,8 @@ package org.usfirst.frc.team1124.robot.commands.steptest;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.tools.StepTest;
+import org.usfirst.frc.team1124.robot.tools.StepTestPoint;
 import edu.wpi.first.wpilibj.command.Command;
 import java.util.*;
 
@@ -18,11 +20,11 @@ public class StepTestDriveTrain extends Command {
 	/**
 	 * Test outputs for each step test.
 	 */
-	private double[] output = { 0.25,
-								0.22,
-								0.24,
-								0.27,
-								0.21
+	private double[] output = { 0.45,
+								0.52,
+								0.44,
+								0.37,
+								0.61
 							  };
 	/**
 	 * Number of milliseconds for each step test.
@@ -34,8 +36,8 @@ public class StepTestDriveTrain extends Command {
 	private PrintWriter rightLog;
 	private long periodStart = 0;
 
-	private List<List<double[]>> leftData = new ArrayList<List<double[]>>();
-	private List<List<double[]>> rightData = new ArrayList<List<double[]>>();
+	private StepTest leftData = new StepTest();
+	private StepTest rightData = new StepTest();
 	
 	/**
 	 * Sets up for the test and data gathering.
@@ -50,8 +52,8 @@ public class StepTestDriveTrain extends Command {
 
 			// Set up the storage for each period
 			for (int i=0;i<this.output.length;i++) {
-				this.leftData.add(new ArrayList<double[]>());
-				this.rightData.add(new ArrayList<double[]>());
+				this.leftData.changeSignal();
+				this.rightData.changeSignal();
 			}
 
 			// Open the logs
@@ -97,8 +99,8 @@ public class StepTestDriveTrain extends Command {
 		this.rightLog.println(t+"\t"+ro+"\t"+re);
 
 		// Add to the live data
-		this.leftData.get(this.currentStep).add(new double[]{t, ro, re});
-		this.rightData.get(this.currentStep).add(new double[]{t, ro, re});
+		this.leftData.addPoint(new StepTestPoint(t, ro, re));
+		this.rightData.addPoint(new StepTestPoint(t, ro, re));
 	}
 
 	/**
@@ -129,11 +131,11 @@ public class StepTestDriveTrain extends Command {
 		this.rightLog.close();
 	}
 
-	public List<List<double[]>> getLeftData() {
+	public StepTest getLeftData() {
 		return this.leftData;
 	}
 
-	public List<List<double[]>> getRightData() {
+	public StepTest getRightData() {
 		return this.rightData;
 	}
 }
