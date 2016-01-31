@@ -20,11 +20,11 @@ public class StepTestDriveTrain extends Command {
 	/**
 	 * Test outputs for each step test.
 	 */
-	private double[] output = { 0.35,
-								0.42,
-								0.34,
+	private double[] output = { 0.20,
 								0.27,
-								0.31
+								0.19,
+								0.12,
+								0.16
 							  };
 	/**
 	 * Number of milliseconds for each step test.

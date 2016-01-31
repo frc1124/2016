@@ -90,7 +90,7 @@ public class Robot extends IterativeRobot {
 
 		// start camera stream to driver station
 		//camera = db_connection.initCamera();
-		db_connection.initCamera();
+		//db_connection.initCamera();
 
         // instantiate the command used for the autonomous period
         autonomousCommand = new StepTestDriveTrain();
@@ -120,7 +120,7 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
     	db_connection.updateDashboard();
     	
-    	db_connection.getImage();
+    	//db_connection.getImage();
     	
         Scheduler.getInstance().run();
     }
@@ -143,8 +143,7 @@ public class Robot extends IterativeRobot {
      * This function is called when the disabled button is hit.
      * You can use it to reset subsystems before shutting down.
      */
-    public void disabledInit(){
-    }
+    public void disabledInit(){}
 
     /**
      * This function is called periodically during operator control
@@ -152,7 +151,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	db_connection.updateDashboard();
     	
-    	db_connection.getImage();
+    	//db_connection.getImage();
     	
         Scheduler.getInstance().run();
     }

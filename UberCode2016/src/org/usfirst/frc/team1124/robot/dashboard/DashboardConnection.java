@@ -27,22 +27,23 @@ public class DashboardConnection {
 	//private USBCamera camera;
 	
 	public void initCamera(){
-	    
 		//srv = CameraServer.getInstance();
-		
-        frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-        camera = new AxisCamera("10.11.24.81");
-        
-        camera.writeColorLevel(50);
-        camera.writeBrightness(50);
-        
-        camera.writeCompression(30);
-        
-        camera.writeResolution(Resolution.k320x240);
-        camera.writeExposureControl(ExposureControl.kHold);
-        
-        camera.writeWhiteBalance(WhiteBalance.kFixedFluorescent1);
-        camera.writeMaxFPS(20);
+	    
+		try{
+	        frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+	        camera = new AxisCamera("10.11.24.81");
+	        
+	        camera.writeColorLevel(50);
+	        camera.writeBrightness(50);
+	        
+	        camera.writeCompression(30);
+	        
+	        camera.writeResolution(Resolution.k320x240);
+	        camera.writeExposureControl(ExposureControl.kHold);
+	        
+	        camera.writeWhiteBalance(WhiteBalance.kFixedFluorescent1);
+	        camera.writeMaxFPS(20);
+		}catch(Exception e) {}
 		
 		//camera = new USBCamera("cam0");
         //camera.openCamera();
@@ -203,9 +204,7 @@ public class DashboardConnection {
 				
 				SmartDashboard.putBoolean("update_config", false);
 			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		}catch(Exception e) {}
 		
 		ArrayList<String> list = Robot.configIO.getConfigText();
 		
