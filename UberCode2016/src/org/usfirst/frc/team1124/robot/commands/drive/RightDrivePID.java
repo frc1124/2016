@@ -8,7 +8,6 @@ import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.SafetySubsyste
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.PIDCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * A PID command for the right drive train
@@ -31,7 +30,6 @@ public class RightDrivePID extends PIDCommand implements Safe {
 		
         setInterruptible(true);
         
-        getPIDController().setAbsoluteTolerance(Robot.drivetrain.SETPOINT_TOLERANCE);
         getPIDController().setOutputRange(-0.75, 0.75);
         
         this.setpoint = setpoint;
@@ -44,7 +42,6 @@ public class RightDrivePID extends PIDCommand implements Safe {
 		
         setInterruptible(true);
         
-        getPIDController().setAbsoluteTolerance(Robot.drivetrain.SETPOINT_TOLERANCE);
         getPIDController().setOutputRange(minOutput, maxOutput);
         
         this.setpoint = setpoint;
@@ -58,12 +55,10 @@ public class RightDrivePID extends PIDCommand implements Safe {
     	setSetpoint(setpoint);
     }
 
-    protected void execute() {
-    	SmartDashboard.putNumber("r_avg_error", getPID().getAvgError());
-    }
+    protected void execute() {}
 
     protected boolean isFinished() {
-        return getPIDController().onTarget();
+        return (Robot.drivetrain.getRightEncoderDistance() - getSetpoint()) <= Robot.drivetrain.SETPOINT_TOLERANCE;
     }
 
     protected void end() {

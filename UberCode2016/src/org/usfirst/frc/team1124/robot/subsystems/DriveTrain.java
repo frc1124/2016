@@ -19,7 +19,7 @@ public class DriveTrain extends Subsystem {
 	
 	public CANTalon left_1, left_2, left_3, right_1, right_2, right_3;
 	
-	public final double SETPOINT_TOLERANCE = 0;
+	public final double SETPOINT_TOLERANCE = Math.PI / 60;
 	
 	private final double ENCODER_DIST_PER_PULSE = Math.PI / 120;
 	
