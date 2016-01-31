@@ -56,7 +56,7 @@ public class StepTestSegment {
 			BigDecimal last = null;
 			for (int x=0;x<this.data.size();x++) {
 				// Get the output and round to the nearest hundreth
-				BigDecimal o = new BigDecimal(this.data.get(x).getOutput());
+				BigDecimal o = new BigDecimal(this.data.get(x).getOutput()*StepTest.OUTPUT_CONVERSION);
 				o.setScale(2,RoundingMode.HALF_UP);
 	
 				// If there is no last or if the last output doesn't equal the current, reset
@@ -97,8 +97,8 @@ public class StepTestSegment {
 			double Y = 0;
 			for (int i=offset;i<this.data.size();i++) {
 				StepTestPoint point = this.data.get(i);
-				X += point.getTimestamp();
-				Y +=  point.getValue();
+				X += point.getTimestamp()*StepTest.TIME_CONVERSION;
+				Y +=  point.getValue()*StepTest.VALUE_CONVERSION;
 			}
 			int s = this.data.size() - offset;
 			X /= s;
@@ -109,8 +109,8 @@ public class StepTestSegment {
 			double sX2 = 0;
 			for (int i=offset;i<this.data.size();i++) {
 				StepTestPoint point = this.data.get(i);
-				double sX = point.getTimestamp() - X;
-				double sY = point.getValue() - Y;
+				double sX = point.getTimestamp()*StepTest.TIME_CONVERSION - X;
+				double sY = point.getValue()*StepTest.VALUE_CONVERSION - Y;
 				sXY += sX * sY;
 				sX2 += sX*sX;
 			}
@@ -128,6 +128,6 @@ public class StepTestSegment {
 		int offset = this.getTdOffset();
 
 		// Subtract the start time from the offset time to get the period
-		return (this.getPoint(offset).getTimestamp() - this.getPoint(0).getTimestamp());// // divide by 60 to convert to minutes
+		return (this.getPoint(offset).getTimestamp() - this.getPoint(0).getTimestamp())*StepTest.TIME_CONVERSION;
 	}
 }

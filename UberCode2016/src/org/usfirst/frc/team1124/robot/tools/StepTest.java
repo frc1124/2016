@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import org.usfirst.frc.team1124.robot.commands.steptest.CreatePIDFromStepTest;
 
 /**
  * This represents the data from a step test.
@@ -20,6 +19,10 @@ public class StepTest {
 	private Double p = null;
 	private Double i = null;
 	private Double d = null;
+
+	public static double VALUE_CONVERSION = 1.0/12.0;
+	public static double TIME_CONVERSION = 1.0/3600.0;
+	public static double OUTPUT_CONVERSION = 0.12;
 
 	public StepTest() {
 	}
@@ -122,8 +125,8 @@ public class StepTest {
 
 		// Find the min and max of each segment
 		int offset1 = seg1.getTdOffset();
-		Double p1a = seg1.getPoint(offset1).getValue();
-		Double t1 = seg1.getPoint(seg1.size()-1).getTimestamp() - seg1.getPoint(offset1).getTimestamp();
+		Double p1a = seg1.getPoint(offset1).getValue()*StepTest.VALUE_CONVERSION;
+		Double t1 = (seg1.getPoint(seg1.size()-1).getTimestamp() - seg1.getPoint(offset1).getTimestamp())*StepTest.TIME_CONVERSION;
 		Double p1b = (seg1.getSlope() * t1) + p1a; // theoretical p1b based on y = mx+b
 		Double min1;
 		Double max1;
@@ -135,8 +138,8 @@ public class StepTest {
 			max1 = p1b;
 		}
 		int offset2 = seg2.getTdOffset();
-		Double p2a = seg2.getPoint(offset2).getValue();
-		Double t2 = seg2.getPoint(seg2.size()-1).getTimestamp() - seg2.getPoint(offset2).getTimestamp();
+		Double p2a = seg2.getPoint(offset2).getValue()*StepTest.VALUE_CONVERSION;
+		Double t2 = (seg2.getPoint(seg2.size()-1).getTimestamp() - seg2.getPoint(offset2).getTimestamp())*StepTest.TIME_CONVERSION;
 		Double p2b = (seg2.getSlope() * t2) + p2a; // theoretical p2b based on y = mx+b
 		Double min2;
 		Double max2;
@@ -154,8 +157,8 @@ public class StepTest {
 		double dmp = (100 * dm)/(max - min);
 
 		// 	Get the change in controller outputs between each difference
-		double output1 = seg1.getPoint(offset1).getOutput();
-		double output2 = seg2.getPoint(offset2).getOutput();
+		double output1 = seg1.getPoint(offset1).getOutput()*StepTest.OUTPUT_CONVERSION;
+		double output2 = seg2.getPoint(offset2).getOutput()*StepTest.OUTPUT_CONVERSION;
 		double cod = output2 - output1;
 
 		// 	Calculate ri
@@ -171,7 +174,7 @@ public class StepTest {
 		// Read in log
 		String line;
 		try {
-			InputStream fis = new FileInputStream("/Users/jenniferweston/git/2016/drivetrain-left.log");
+			InputStream fis = new FileInputStream("/Users/jenniferweston/git/2016/drivetrain-right.log");
 		    InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
 			BufferedReader br = new BufferedReader(isr);
 		    while ((line = br.readLine()) != null) {
