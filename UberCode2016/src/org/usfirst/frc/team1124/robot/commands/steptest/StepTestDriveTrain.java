@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.tools.StepTest;
 import org.usfirst.frc.team1124.robot.tools.StepTestPoint;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
 import java.util.*;
 
@@ -57,8 +56,6 @@ public class StepTestDriveTrain extends Command {
 			// Initialize the step values
 			testStart = periodStart = System.currentTimeMillis();
 			this.currentStep = 0;
-			this.leftData = new StepTest();
-			this.rightData = new StepTest();
 
 			// Open the logs
 			SimpleDateFormat df = new SimpleDateFormat("YYYY-mm-dd-hh-MM");
@@ -83,7 +80,6 @@ public class StepTestDriveTrain extends Command {
 			this.leftData.changeSignal();
 			this.rightData.changeSignal();
 			this.currentStep++;
-			Robot.drivetrain.setTankMotors(this.output[this.currentStep],this.output[this.currentStep]);
 		}
 
 		// If at the end, schedule a command to analyze the results
@@ -92,6 +88,7 @@ public class StepTestDriveTrain extends Command {
 		}
 
 		// Set the motors
+		Robot.drivetrain.setTankMotors(this.output[this.currentStep],this.output[this.currentStep]);
 //		Robot.drivetrain.setLeftMotor(this.output[this.currentStep]);
 //		Robot.drivetrain.setRightMotor(-1*this.output[this.currentStep]);
 
