@@ -55,8 +55,8 @@ public class StepTestDriveTrain extends Command {
 			// Open the logs
 			SimpleDateFormat df = new SimpleDateFormat("YYYY-mm-dd-hh-MM");
 			String dt = df.format(new Date());
-			this.leftLog = new PrintWriter("drivetrain-left-"+dt+".log");
-			this.rightLog = new PrintWriter("drivetrain-right-"+dt+".log");
+			this.leftLog = new PrintWriter("/home/lvuser/log/drivetrain-left-"+dt+".log");
+			this.rightLog = new PrintWriter("/home/lvuser/log/drivetrain-right-"+dt+".log");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
