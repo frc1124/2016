@@ -40,8 +40,10 @@ public class StepTestDriveTrain extends Command {
 	private StepTest leftData;
 	private StepTest rightData;
 
-	public StepTestDriveTrain() {
+	public StepTestDriveTrain(StepTest leftData, StepTest rightData) {
 		requires(Robot.drivetrain);
+		this.leftData = leftData;
+		this.rightData = rightData;
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1124.robot.commands.steptest;
 
+import org.usfirst.frc.team1124.robot.tools.StepTest;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,13 +15,15 @@ public class GeneratePIDDriveTrain extends CommandGroup {
 	private CreatePIDFromStepTest rightPidFromStep;
 
 	public GeneratePIDDriveTrain() {
-		StepTestDriveTrain driveTrainStepTest = new StepTestDriveTrain();
+		StepTest leftDrive = new StepTest();
+		StepTest rightDrive = new StepTest();
+		StepTestDriveTrain driveTrainStepTest = new StepTestDriveTrain(leftDrive,rightDrive);
 		this.addSequential(driveTrainStepTest);
 
-		leftPidFromStep = new CreatePIDFromStepTest(driveTrainStepTest.getLeftData());
+		leftPidFromStep = new CreatePIDFromStepTest(leftDrive);
 		this.addSequential(leftPidFromStep);
 
-		rightPidFromStep = new CreatePIDFromStepTest(driveTrainStepTest.getRightData());
+		rightPidFromStep = new CreatePIDFromStepTest(rightDrive);
 		this.addSequential(rightPidFromStep);
 	}
 
