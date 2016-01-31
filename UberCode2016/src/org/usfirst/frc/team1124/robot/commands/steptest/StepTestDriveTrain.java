@@ -70,7 +70,7 @@ public class StepTestDriveTrain extends Command {
 	protected void execute() {
 		// Check to change period
 		long c = System.currentTimeMillis();
-		if (periodStart + this.period > c) {
+		if (this.periodStart + this.period < c) {
 			this.periodStart = c;
 			this.leftData.changeSignal();
 			this.rightData.changeSignal();
@@ -106,7 +106,7 @@ public class StepTestDriveTrain extends Command {
 	 */
 	@Override
 	protected boolean isFinished() {
-		return (currentStep > output.length);
+		return (currentStep >= output.length);
 	}
 
 	/**
