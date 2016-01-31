@@ -20,11 +20,11 @@ public class StepTestDriveTrain extends Command {
 	/**
 	 * Test outputs for each step test.
 	 */
-	private double[] output = { 0.45,
-								0.52,
-								0.44,
-								0.37,
-								0.61
+	private double[] output = { 0.35,
+								0.42,
+								0.34,
+								0.27,
+								0.31
 							  };
 	/**
 	 * Number of milliseconds for each step test.
@@ -36,8 +36,8 @@ public class StepTestDriveTrain extends Command {
 	private PrintWriter rightLog;
 	private long periodStart = 0;
 
-	private StepTest leftData = new StepTest();
-	private StepTest rightData = new StepTest();
+	private StepTest leftData;
+	private StepTest rightData;
 
 	public StepTestDriveTrain() {
 		requires(Robot.drivetrain);
@@ -51,6 +51,9 @@ public class StepTestDriveTrain extends Command {
 		try {
 			// Initialize the step values
 			periodStart = System.currentTimeMillis();
+			this.currentStep = 0;
+			this.leftData = new StepTest();
+			this.rightData = new StepTest();
 
 			// Open the logs
 			SimpleDateFormat df = new SimpleDateFormat("YYYY-mm-dd-hh-MM");
