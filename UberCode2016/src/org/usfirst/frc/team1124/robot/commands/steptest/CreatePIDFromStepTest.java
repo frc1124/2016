@@ -69,19 +69,4 @@ public class CreatePIDFromStepTest extends Command {
 	public double getD() {
 		return this.d;
 	}
-
-	/**
-	 * Tests the analysis portion of the command.
-	 */
-	public void main(String[] args) {
-		StepTest data = new StepTest();
-		// TODO: fake data to test
-		CreatePIDFromStepTest test = new CreatePIDFromStepTest(data);
-		test.execute();
-
-		// check coefficients
-		System.out.println("P: "+test.getP());
-		System.out.println("I: "+test.getI());
-		System.out.println("D: "+test.getD());
-	}
 }

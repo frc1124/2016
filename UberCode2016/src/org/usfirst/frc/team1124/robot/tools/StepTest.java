@@ -1,7 +1,13 @@
 package org.usfirst.frc.team1124.robot.tools;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import org.usfirst.frc.team1124.robot.commands.steptest.CreatePIDFromStepTest;
 
 /**
  * This represents the data from a step test.
@@ -148,5 +154,43 @@ public class StepTest {
 
 		// 	Calculate ri
 		return dmp/cod;
+	}
+
+	/**
+	 * Tests the analysis portion of the command.
+	 */
+	public static void main(String[] args) {
+		StepTest data = new StepTest();
+	
+		// Read in log
+		String line;
+		try {
+			InputStream fis = new FileInputStream("/Users/jenniferweston/git/2016/drivetrain-right-2016-31-31-06-01.log");
+		    InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
+			BufferedReader br = new BufferedReader(isr);
+			double last = 5;
+		    while ((line = br.readLine()) != null) {
+				String[] s = line.split("\t");
+				double o = new Double(s[1]).doubleValue();
+				if (o == 0.0) {
+					continue;
+				}
+				double t = new Double(s[0]).doubleValue();
+				double v = new Double(s[2]).doubleValue();
+				StepTestPoint p = new StepTestPoint(t,o,v);
+				if (t < last) {
+					data.changeSignal();
+				}
+				last = t;
+				data.addPoint(p);
+		    }
+
+		    // check coefficients
+			System.out.println("P: "+data.getP());
+			System.out.println("I: "+data.getI());
+			System.out.println("D: "+data.getD());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 }

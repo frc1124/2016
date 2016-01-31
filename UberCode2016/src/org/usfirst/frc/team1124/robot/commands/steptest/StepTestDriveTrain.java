@@ -22,10 +22,10 @@ public class StepTestDriveTrain extends Command {
 	 * Test outputs for each step test.
 	 */
 	private double[] output = { 0.20,
-								0.27,
-								0.19,
-								0.12,
-								0.16
+								0.22,
+								0.20,
+								0.18,
+								0.19
 							  };
 	/**
 	 * Number of milliseconds for each step test.
@@ -95,7 +95,7 @@ public class StepTestDriveTrain extends Command {
 		t.setScale(5);
 		t = t.divide(new BigDecimal(1000)); // Find the number of elapsed seconds for the period
 		double lo = Robot.drivetrain.getLeftMotor();
-		if (lo == 0 && !t.equals(BigDecimal.ZERO)) {
+		if (lo == 0.0 && !t.equals(BigDecimal.ZERO)) {
 			return;
 		}
 		double le = Robot.drivetrain.getLeftEncoderDistance();
