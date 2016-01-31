@@ -78,7 +78,7 @@ public class StepTestDriveTrain extends Command {
 		}
 
 		// If at the end, schedule a command to analyze the results
-		if (this.currentStep > this.output.length) {
+		if (this.currentStep >= this.output.length) {
 			return;
 		}
 
