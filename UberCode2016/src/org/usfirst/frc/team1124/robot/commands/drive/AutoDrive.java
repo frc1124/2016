@@ -10,10 +10,27 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * You should NOT directly use the LeftDrivePID or RightDrivePID classes since they need to be executed in PARALLEL.
  */
 public class AutoDrive extends CommandGroup {
-    public  AutoDrive(double leftSetpoint, double rightSetpoint) {
+	private LeftDrivePID left;
+	private RightDrivePID right;
+	
+	public  AutoDrive(double leftSetpoint, double rightSetpoint) {
     	requires(Robot.drivetrain);
     	
-    	addParallel(new LeftDrivePID(leftSetpoint));
-    	addParallel(new RightDrivePID(rightSetpoint));
+    	left = new LeftDrivePID(leftSetpoint);
+    	right = new RightDrivePID(rightSetpoint);
+    	
+    	addParallel(left);
+    	addParallel(right);
+    }
+    
+    protected void execute(){
+    	double left_speed = left.getSpeed();
+    	double right_speed = right.getSpeed();
+    	
+    	Robot.drivetrain.drive_tank_auto(left_speed, right_speed);
+    }
+    
+    protected void end(){
+    	Robot.drivetrain.stop();
     }
 }

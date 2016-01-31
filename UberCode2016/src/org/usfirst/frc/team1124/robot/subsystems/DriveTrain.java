@@ -19,11 +19,6 @@ public class DriveTrain extends Subsystem {
 	
 	public CANTalon left_1, left_2, left_3, right_1, right_2, right_3;
 	
-	// PID constants used for auto targeting and hold position
-	public final double P = 1;
-	public final double I = 0;
-	public final double D = 0;
-	
 	public final double SETPOINT_TOLERANCE = Math.PI / 60;
 	
 	private final double ENCODER_DIST_PER_PULSE = Math.PI / 120;
@@ -186,7 +181,7 @@ public class DriveTrain extends Subsystem {
 		this.left_3.set(speed);
 	}
 
-	public void setTankMotors(double left, double right) {
+	public void drive_tank_auto(double left, double right) {
 		firstpair.tankDrive(left, right,false);
 		secondpair.tankDrive(left, right,false);
 		thirdpair.tankDrive(left, right,false);

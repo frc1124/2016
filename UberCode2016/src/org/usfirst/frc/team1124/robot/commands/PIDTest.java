@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class PIDTuner extends CommandGroup {
+public class PIDTest extends CommandGroup {
     
-    public  PIDTuner() {
+    public  PIDTest() {
         addSequential(new AutoDrive(50, 50));
     }
 }

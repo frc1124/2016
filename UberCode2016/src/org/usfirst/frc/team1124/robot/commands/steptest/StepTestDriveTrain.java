@@ -88,7 +88,7 @@ public class StepTestDriveTrain extends Command {
 		}
 
 		// Set the motors
-		Robot.drivetrain.setTankMotors(this.output[this.currentStep],this.output[this.currentStep]);
+		Robot.drivetrain.drive_tank_auto(this.output[this.currentStep],this.output[this.currentStep]);
 //		Robot.drivetrain.setLeftMotor(this.output[this.currentStep]);
 //		Robot.drivetrain.setRightMotor(-1*this.output[this.currentStep]);
 

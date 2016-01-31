@@ -21,8 +21,12 @@ public class LeftDrivePID extends PIDCommand implements Safe {
 	private boolean safetyTripped = false;
 	private double rate_threshold = 0.266;
 	
+	private static final double P = 0.5584615089283822;
+	private static final double I = 1.21;
+	private static final double D = 0.0968;
+	
 	public LeftDrivePID(double setpoint) {
-		super(Robot.drivetrain.P, Robot.drivetrain.I, Robot.drivetrain.D);
+		super("LeftDrivePID", P, I, D);
         
         requires(Robot.drivetrain);
         setInterruptible(true);
