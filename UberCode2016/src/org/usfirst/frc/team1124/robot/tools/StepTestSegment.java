@@ -44,7 +44,6 @@ public class StepTestSegment {
 		return this.data.size();
 	}
 
-
 	/**
 	 * Figure out at what offset the output stablizes.
 	 * 

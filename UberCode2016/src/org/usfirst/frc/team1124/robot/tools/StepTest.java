@@ -88,13 +88,19 @@ public class StepTest {
 		// For each transition:
 		double td = 0;
 		double ri = 0;
+		int p = 0;
 		for (int i=1;i<this.data.size();i++) {
-			ri += this.calculateRi(this.data.get(i-1),this.data.get(i));
-			td += this.data.get(i).calculateTd();
+			StepTestSegment seg1 = this.data.get(i-1);
+			StepTestSegment seg2 = this.data.get(i);
+			if (seg1.size() == 0 || seg2.size() == 0) {
+				continue;
+			}
+			ri += this.calculateRi(seg1,seg2);
+			td += seg2.calculateTd();
+			p++;
 		}
 
 		// average td(s) and ri(s)
-		int p = this.data.size()-1;
 		td /= p;
 		ri /= p;
 
@@ -165,7 +171,7 @@ public class StepTest {
 		// Read in log
 		String line;
 		try {
-			InputStream fis = new FileInputStream("/Users/jenniferweston/git/2016/drivetrain-right.log");
+			InputStream fis = new FileInputStream("/Users/jenniferweston/git/2016/drivetrain-left.log");
 		    InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
 			BufferedReader br = new BufferedReader(isr);
 			double last = 5;
