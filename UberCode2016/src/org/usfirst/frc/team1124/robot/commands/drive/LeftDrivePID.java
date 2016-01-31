@@ -8,6 +8,7 @@ import org.usfirst.frc.team1124.robot.tools.Safe;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * A PID command for the left drive train
@@ -21,17 +22,30 @@ public class LeftDrivePID extends PIDCommand implements Safe {
 	private boolean safetyTripped = false;
 	private double rate_threshold = 0.266;
 	
-	private static final double P = 0.5584615089283822;
-	private static final double I = 1.21;
-	private static final double D = 0.0968;
+	private static final double P = 0.0545; //0.5584615089283822
+	private static final double I = 0.012; //1.21
+	private static final double D = 0.0; //0.0968
 	
 	public LeftDrivePID(double setpoint) {
 		super("LeftDrivePID", P, I, D);
-        
-        requires(Robot.drivetrain);
+		
         setInterruptible(true);
         
         getPIDController().setAbsoluteTolerance(Robot.drivetrain.SETPOINT_TOLERANCE);
+        getPIDController().setOutputRange(-0.75, 0.75);
+        
+        this.setpoint = setpoint;
+        
+        enableSafety();
+    }
+	
+	public LeftDrivePID(double setpoint, double minOutput, double maxOutput) {
+		super("LeftDrivePID", P, I, D);
+		
+        setInterruptible(true);
+        
+        getPIDController().setAbsoluteTolerance(Robot.drivetrain.SETPOINT_TOLERANCE);
+        getPIDController().setOutputRange(minOutput, maxOutput);
         
         this.setpoint = setpoint;
         
@@ -44,7 +58,9 @@ public class LeftDrivePID extends PIDCommand implements Safe {
     	setSetpoint(setpoint);
     }
 
-    protected void execute() {}
+    protected void execute() {
+    	SmartDashboard.putNumber("l_avg_error", getPID().getAvgError());
+    }
 
     protected boolean isFinished() {
         return getPIDController().onTarget();

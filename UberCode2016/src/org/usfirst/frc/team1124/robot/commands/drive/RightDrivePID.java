@@ -8,6 +8,7 @@ import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.SafetySubsyste
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * A PID command for the right drive train
@@ -21,17 +22,30 @@ public class RightDrivePID extends PIDCommand implements Safe {
 	private boolean safetyTripped = false;
 	private double rate_threshold = 0.266;
 	
-	private static final double P = 0.5416359899890196;
-	private static final double I = 1.21875;
-	private static final double D = 0.0975;
+	private static final double P = 0.048; //0.05416359899890196
+	private static final double I = 0.012; //1.21875
+	private static final double D = 0.0; //0.0975
 	
     public RightDrivePID(double setpoint) {
 		super("RightDrivePID", P, I, D);
 		
-        requires(Robot.drivetrain);
         setInterruptible(true);
         
         getPIDController().setAbsoluteTolerance(Robot.drivetrain.SETPOINT_TOLERANCE);
+        getPIDController().setOutputRange(-0.75, 0.75);
+        
+        this.setpoint = setpoint;
+        
+        enableSafety();
+    }
+	
+    public RightDrivePID(double setpoint, double minOutput, double maxOutput) {
+		super("RightDrivePID", P, I, D);
+		
+        setInterruptible(true);
+        
+        getPIDController().setAbsoluteTolerance(Robot.drivetrain.SETPOINT_TOLERANCE);
+        getPIDController().setOutputRange(minOutput, maxOutput);
         
         this.setpoint = setpoint;
         
@@ -44,7 +58,9 @@ public class RightDrivePID extends PIDCommand implements Safe {
     	setSetpoint(setpoint);
     }
 
-    protected void execute() {}
+    protected void execute() {
+    	SmartDashboard.putNumber("r_avg_error", getPID().getAvgError());
+    }
 
     protected boolean isFinished() {
         return getPIDController().onTarget();

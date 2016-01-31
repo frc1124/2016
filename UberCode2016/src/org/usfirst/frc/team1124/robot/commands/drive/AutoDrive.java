@@ -3,6 +3,7 @@ package org.usfirst.frc.team1124.robot.commands.drive;
 import org.usfirst.frc.team1124.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Use this to control autonomous driving, it manages both halves of the drive train.
@@ -21,6 +22,8 @@ public class AutoDrive extends CommandGroup {
     	
     	addParallel(left);
     	addParallel(right);
+    	
+    	SmartDashboard.putString("auto-state", "running");
     }
     
     protected void execute(){
@@ -31,6 +34,8 @@ public class AutoDrive extends CommandGroup {
     }
     
     protected void end(){
+    	SmartDashboard.putString("auto-state", "done");
+    	
     	Robot.drivetrain.stop();
     }
 }
