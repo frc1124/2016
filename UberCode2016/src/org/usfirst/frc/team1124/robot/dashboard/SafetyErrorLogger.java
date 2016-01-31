@@ -6,8 +6,6 @@ public class SafetyErrorLogger {
 	private static boolean[][] errorStates = new boolean[5][4];
 	
 	public static void log(SafetySubsystem subsystem, Error error){
-		long timestamp = System.currentTimeMillis();
-		
 		int subsystem_id = subsystem.ordinal();
 		int error_id = error.ordinal();
 		
