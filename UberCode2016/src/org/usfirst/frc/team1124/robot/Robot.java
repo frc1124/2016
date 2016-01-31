@@ -5,7 +5,7 @@ import org.usfirst.frc.team1124.robot.commands.Autonomous;
 import org.usfirst.frc.team1124.robot.commands.DriveWorkTest;
 import org.usfirst.frc.team1124.robot.commands.PIDTuner;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
-
+import org.usfirst.frc.team1124.robot.commands.steptest.StepTestDriveTrain;
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1124.robot.subsystems.IntakeBelts;
@@ -93,7 +93,7 @@ public class Robot extends IterativeRobot {
 		db_connection.initCamera();
 
         // instantiate the command used for the autonomous period
-        autonomousCommand = new DriveWorkTest();
+        autonomousCommand = new StepTestDriveTrain();
         
         // set up error logger
         SafetyErrorLogger.init();
