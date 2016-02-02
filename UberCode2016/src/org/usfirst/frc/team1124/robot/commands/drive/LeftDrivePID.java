@@ -22,9 +22,9 @@ public class LeftDrivePID extends PIDCommand implements Safe {
 	private boolean safetyTripped = false;
 	private double rate_threshold = 0.266;
 	
-	private static final double P = 0.033; //0.0545
-	private static final double I = 0.0002361; //0.012
-	private static final double D = 0.00002689; //0.0
+	private static final double P = 0.305; //0.0545
+	private static final double I = 0.0;//0.00026611111111111146; //0.012
+	private static final double D = 0.00001;//0.000026988888888888918; //0.00002689; //0.0
 	
 	public LeftDrivePID(double setpoint) {
 		super("LeftDrivePID", P, I, D);

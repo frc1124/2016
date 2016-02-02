@@ -33,8 +33,8 @@ public class AutoDrive extends CommandGroup {
     	Robot.drivetrain.drive_tank_auto(left_speed, right_speed);
     	
     	if(left.isSideFinished() && right.isSideFinished()){
-    		left.stop();
-    		right.stop();
+    		//left.stop();
+    		//right.stop();
     	}
     	
     	if(left.isFinished()){

@@ -22,9 +22,9 @@ public class RightDrivePID extends PIDCommand implements Safe {
 	private boolean safetyTripped = false;
 	private double rate_threshold = 0.266;
 	
-	private static final double P = 0.027; //0.048
-	private static final double I = 0.00023854167; //0.012
-	private static final double D = 0.000027083; //0.0
+	private static final double P = 0.304; //0.048
+	private static final double I = 0.0;//0.0002724126666666657; //0.012
+	private static final double D = 0.00001;//0.00002718333333333333; //0.000027083; //0.0
 	
     public RightDrivePID(double setpoint) {
 		super("RightDrivePID", P, I, D);
