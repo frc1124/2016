@@ -10,7 +10,7 @@ import java.util.List;
  * It can also find the slope of the value-timestamp. These values are used to calculate PID coefficients.
  */
 public class StepTestSegment {
-	public static int STABLITY_SAMPLE_MIN = 3;
+	public static int STABLITY_SAMPLE_MIN = 5;
 	private List<StepTestPoint> data = new ArrayList<StepTestPoint>();
 	private Double slope = null;
 	private Integer tdOffset = null;
@@ -57,7 +57,7 @@ public class StepTestSegment {
 			for (int x=0;x<this.data.size();x++) {
 				// Get the output and round to the nearest hundreth
 				BigDecimal o = new BigDecimal(this.data.get(x).getOutput()*StepTest.OUTPUT_CONVERSION);
-				o.setScale(2,RoundingMode.HALF_UP);
+				o.setScale(3,RoundingMode.HALF_UP);
 	
 				// If there is no last or if the last output doesn't equal the current, reset
 				if (last == null || !last.equals(o)) {
@@ -70,7 +70,11 @@ public class StepTestSegment {
 	
 				// If we've seen the same value rounded to the nearest, hundreth at least 3 times, we're considered stable
 				if (i >= StepTestSegment.STABLITY_SAMPLE_MIN) {
-					return x;
+					this.tdOffset = x - i;
+					if (this.tdOffset < 1) {
+						this.tdOffset = 1;
+					}
+					return this.tdOffset.intValue();
 				}
 			}
 			this.tdOffset = data.size()-1;

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +21,11 @@ public class StepTest {
 	private Double i = null;
 	private Double d = null;
 
-	public static double VALUE_CONVERSION = 1.0/12.0;
-	public static double TIME_CONVERSION = 1.0/3600.0;
-	public static double OUTPUT_CONVERSION = 0.12;
+	public static double VALUE_CONVERSION = 1.0;
+//	public static double TIME_CONVERSION = 1.0/3600.0;
+//	public static double TIME_CONVERSION = 1.0/60.0;
+	public static double TIME_CONVERSION = 1.0;
+	public static double OUTPUT_CONVERSION = 4.5/100.0; // output is given as percentage of bus voltage which operates at 4.5V
 
 	public StepTest() {
 	}
@@ -108,9 +111,9 @@ public class StepTest {
 		ri /= p;
 
 		// Calculate constants for each side
-		this.p = 0.75 / (ri * td);
-		this.i = 5 * td;
-		this.d = 0.4 * td;
+		this.p = Math.abs(0.75 / (ri * td));
+		this.i = Math.abs(5 * td);
+		this.d = Math.abs(0.4 * td);
 	}
 
 	/**
@@ -165,16 +168,13 @@ public class StepTest {
 		return dmp/cod;
 	}
 
-	/**
-	 * Tests the analysis portion of the command.
-	 */
-	public static void main(String[] args) {
+	private static void runTest(String filename) {	
 		StepTest data = new StepTest();
-	
+
 		// Read in log
 		String line;
 		try {
-			InputStream fis = new FileInputStream("/Users/jenniferweston/git/2016/drivetrain-right.log");
+			InputStream fis = new FileInputStream(filename);
 		    InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
 			BufferedReader br = new BufferedReader(isr);
 		    while ((line = br.readLine()) != null) {
@@ -195,10 +195,27 @@ public class StepTest {
 
 		    // check coefficients
 			System.out.println("P: "+data.getP());
-			System.out.println("I: "+data.getI());
-			System.out.println("D: "+data.getD());
+			BigDecimal f = new BigDecimal(data.getI());
+			System.out.println("I: "+f.toPlainString());
+			f = new BigDecimal(data.getD());
+			System.out.println("D: "+f.toPlainString());
+			isr.close();
+			fis.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	/**
+	 * Tests the analysis portion of the command.
+	 */
+	public static void main(String[] args) {
+		String leftFile = "/Users/jenniferweston/git/2016/drivetrain-left.log";
+		String rightFile = "/Users/jenniferweston/git/2016/drivetrain-right.log";
+		System.out.println("Left: ");
+		StepTest.runTest(leftFile);
+		System.out.println();
+		System.out.println("Right: ");
+		StepTest.runTest(rightFile);
 	}
 }
