@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
  * A PID command for the right drive train
  */
 public class RightDrivePID extends PIDCommand implements Safe {
+	private boolean done = false;
 	
 	private double speed = 0;
 	private double setpoint = 0;
@@ -21,9 +22,9 @@ public class RightDrivePID extends PIDCommand implements Safe {
 	private boolean safetyTripped = false;
 	private double rate_threshold = 0.266;
 	
-	private static final double P = 0.048; //0.05416359899890196
-	private static final double I = 0.012; //1.21875
-	private static final double D = 0.0; //0.0975
+	private static final double P = 0.027; //0.048
+	private static final double I = 0.00023854167; //0.012
+	private static final double D = 0.000027083; //0.0
 	
     public RightDrivePID(double setpoint) {
 		super("RightDrivePID", P, I, D);
@@ -57,8 +58,16 @@ public class RightDrivePID extends PIDCommand implements Safe {
 
     protected void execute() {}
 
+    public boolean isSideFinished() {
+        return Math.abs(Robot.drivetrain.getRightEncoderDistance() - getSetpoint()) <= Robot.drivetrain.SETPOINT_TOLERANCE;
+    }
+    
+    public void stop() {
+    	done = true;
+    }
+    
     protected boolean isFinished() {
-        return (Robot.drivetrain.getRightEncoderDistance() - getSetpoint()) <= Robot.drivetrain.SETPOINT_TOLERANCE;
+    	return done;
     }
 
     protected void end() {

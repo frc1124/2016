@@ -31,6 +31,27 @@ public class AutoDrive extends CommandGroup {
     	double right_speed = right.getSpeed();
     	
     	Robot.drivetrain.drive_tank_auto(left_speed, right_speed);
+    	
+    	if(left.isSideFinished() && right.isSideFinished()){
+    		left.stop();
+    		right.stop();
+    	}
+    	
+    	if(left.isFinished()){
+    		SmartDashboard.putString("LEFT_STATE", "FINISHED");
+    	}else{
+    		SmartDashboard.putString("LEFT_STATE", "RUNNING");
+    	}
+    	
+    	if(right.isFinished()){
+    		SmartDashboard.putString("RIGHT_STATE", "FINISHED");
+    	}else{
+    		SmartDashboard.putString("RIGHT_STATE", "RUNNING");
+    	}
+    }
+    
+    protected boolean isFinished(){
+    	return left.isFinished() && right.isFinished();
     }
     
     protected void end(){
