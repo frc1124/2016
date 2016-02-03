@@ -14,11 +14,11 @@ public class AutoDrive extends CommandGroup {
 	private LeftDrivePID left;
 	private RightDrivePID right;
 	
-	public  AutoDrive(double leftSetpoint, double rightSetpoint) {
+	public  AutoDrive(double leftSetpoint, double rightSetpoint, boolean visionTargeting) {
     	requires(Robot.drivetrain);
     	
-    	left = new LeftDrivePID(leftSetpoint);
-    	right = new RightDrivePID(rightSetpoint);
+    	left = new LeftDrivePID(leftSetpoint, visionTargeting);
+    	right = new RightDrivePID(rightSetpoint, visionTargeting);
     	
     	addParallel(left);
     	addParallel(right);

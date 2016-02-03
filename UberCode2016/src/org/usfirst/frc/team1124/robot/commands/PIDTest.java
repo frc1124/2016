@@ -10,6 +10,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class PIDTest extends CommandGroup {
     
     public  PIDTest() {
-        addSequential(new AutoDrive(50, 50));
+        addSequential(new AutoDrive(18, -18, true));
     }
 }

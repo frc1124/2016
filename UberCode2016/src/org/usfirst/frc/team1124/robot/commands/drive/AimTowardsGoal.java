@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 
 /** 
- * I sexually identify as an Attack Helicopter. Ever since I was a boy I dreamed of soaring over the oil fields, dropping packets on Fischler like they're hot, cause Snoop said to.
+ * 
  */
 public class AimTowardsGoal extends Command {
 
@@ -31,11 +31,11 @@ public class AimTowardsGoal extends Command {
     	distanceToTurn = (angleFromGoal/2)*Math.pow(ROBOT_LENGTH/2, 2); // if the math is different feel free to change lol
     	if (angleFromGoal < 0)
     	{
-    		turnCommand = new AutoDrive(distanceToTurn, 0);
+    		turnCommand = new AutoDrive(distanceToTurn, 0, true);
     	}
     	else if (angleFromGoal > 0)
     	{
-    		turnCommand = new AutoDrive(0, distanceToTurn);
+    		turnCommand = new AutoDrive(0, distanceToTurn, true);
     	}
 		Scheduler.getInstance().add(turnCommand);
     }

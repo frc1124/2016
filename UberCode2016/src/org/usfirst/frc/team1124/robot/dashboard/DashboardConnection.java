@@ -31,7 +31,7 @@ public class DashboardConnection {
 	    
 		try{
 	        frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-	        camera = new AxisCamera("10.11.24.81");
+	        camera = new AxisCamera("10.11.24.78");
 	        
 	        camera.writeColorLevel(50);
 	        camera.writeBrightness(50);

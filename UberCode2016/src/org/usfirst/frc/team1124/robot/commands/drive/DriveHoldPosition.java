@@ -35,8 +35,8 @@ public class DriveHoldPosition extends CommandGroup {
     	
     	setInterruptible(true);
     	
-    	left_drive = new LeftDrivePID(left_setpoint);
-    	right_drive = new RightDrivePID(right_setpoint);
+    	left_drive = new LeftDrivePID(left_setpoint, false);
+    	right_drive = new RightDrivePID(right_setpoint, false);
     	
     	addParallel(left_drive);
     	addParallel(right_drive);
@@ -48,8 +48,8 @@ public class DriveHoldPosition extends CommandGroup {
     	
     	setInterruptible(true);
     	
-    	left_drive = new LeftDrivePID(left_setpoint);
-    	right_drive = new RightDrivePID(right_setpoint);
+    	left_drive = new LeftDrivePID(left_setpoint, false);
+    	right_drive = new RightDrivePID(right_setpoint, false);
     	
     	addParallel(left_drive);
     	addParallel(right_drive);
@@ -64,8 +64,8 @@ public class DriveHoldPosition extends CommandGroup {
     	
     	setInterruptible(true);
     	
-    	left_drive = new LeftDrivePID(left_setpoint);
-    	right_drive = new RightDrivePID(right_setpoint);
+    	left_drive = new LeftDrivePID(left_setpoint, false);
+    	right_drive = new RightDrivePID(right_setpoint, false);
     	
     	addParallel(left_drive);
     	addParallel(right_drive);

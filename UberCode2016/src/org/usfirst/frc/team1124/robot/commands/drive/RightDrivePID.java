@@ -26,8 +26,12 @@ public class RightDrivePID extends PIDCommand implements Safe {
 	private static final double I = 0.0;//0.0002724126666666657; //0.012
 	private static final double D = 0.00001;//0.00002718333333333333; //0.000027083; //0.0
 	
-    public RightDrivePID(double setpoint) {
-		super("RightDrivePID", P, I, D);
+	private static final double P_vision = 0.04;
+	private static final double I_vision = 0.001;
+	private static final double D_vision = 0.00000025;
+	
+    public RightDrivePID(double setpoint, boolean vision) {
+		super("RightDrivePID", vision ? P_vision : P, vision ? I_vision : I, vision ? D_vision : D);
 		
         setInterruptible(true);
         
@@ -38,8 +42,8 @@ public class RightDrivePID extends PIDCommand implements Safe {
         enableSafety();
     }
 	
-    public RightDrivePID(double setpoint, double minOutput, double maxOutput) {
-		super("RightDrivePID", P, I, D);
+    public RightDrivePID(double setpoint, double minOutput, double maxOutput, boolean vision) {
+		super("RightDrivePID", vision ? P_vision : P, vision ? I_vision : I, vision ? D_vision : D);
 		
         setInterruptible(true);
         
