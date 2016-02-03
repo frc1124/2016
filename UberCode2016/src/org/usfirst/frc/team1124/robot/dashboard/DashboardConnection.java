@@ -65,6 +65,26 @@ public class DashboardConnection {
         }catch(Exception e){}
 	}
 	
+	/** 
+	 * Polls the target dimensions from the dashboard.
+	 * If they are not present, it returns {-1, -1}.
+	 * 
+	 * @return An array of { width, height }
+	 * */
+	public double[] getTargetDimensions(){
+		double width = -1;
+		double height = -1;
+		
+		try{
+			width = SmartDashboard.getNumber("vision_target_width");
+			height = SmartDashboard.getNumber("vision_target_height");
+		}catch(Exception e){}
+		
+		double data[] = {width, height};
+		
+		return data;
+	}
+	
 	/*
 	public void configCamera(){
         camera.setWhiteBalanceManual(4500);
