@@ -2,48 +2,44 @@ package org.usfirst.frc.team1124.robot.commands.drive;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
 
 /** 
- * 
+ * The code to turn towards the goal.
  */
-public class AimTowardsGoal extends Command {
+public class AimTowardsGoal extends CommandGroup {
 
 	private double angleFromGoal = 0; // in radians
 	private double distanceToTurn = 0;
+	
 	private AutoDrive turnCommand;
+	
 	private final double ROBOT_LENGTH = 0; // for distance purposes, set this plssss
 	
-    public AimTowardsGoal(double angle) // WHOEVER SEES THIS FOR REFERENCE, MAKE NEGATIVE ANGLES TO THE RIGHT AND POSITIVE TO THE LEFT (e.g. -.785 would mean 90 degrees to the right of the goal, but that better not happen)
-    {
-    	// take angle
-    	// do wizard to find what distance to turn (PID)
-    	// turn based on that.
-    	
+	/** @param angle The angle the robot needs to turn; left is negative, right is positive */
+    public AimTowardsGoal(double angle) {
     	angleFromGoal = angle;
-    	requires(Robot.drivetrain);
     }
 
-    protected void initialize()
-    {
-    	distanceToTurn = (angleFromGoal/2)*Math.pow(ROBOT_LENGTH/2, 2); // if the math is different feel free to change lol
-    	if (angleFromGoal < 0)
-    	{
-    		turnCommand = new AutoDrive(distanceToTurn, 0, true);
+    protected void initialize() {
+    	distanceToTurn = (angleFromGoal / 2) * Math.pow(ROBOT_LENGTH / 2, 2); // if the math is different feel free to change lol
+    	
+    	if (angleFromGoal < 0){
+    		turnCommand = new AutoDrive(distanceToTurn, -distanceToTurn, true);
+    	}else if(angleFromGoal > 0){
+    		turnCommand = new AutoDrive(-distanceToTurn, distanceToTurn, true);
+    	}else{
+    		end();
     	}
-    	else if (angleFromGoal > 0)
-    	{
-    		turnCommand = new AutoDrive(0, distanceToTurn, true);
-    	}
-		Scheduler.getInstance().add(turnCommand);
+    	
+		addSequential(turnCommand);
     }
 
     protected void execute() {}
 
     protected boolean isFinished() {
-    		return !turnCommand.isRunning();
+    	return turnCommand.isFinished();
     }
 
     protected void end() {}
