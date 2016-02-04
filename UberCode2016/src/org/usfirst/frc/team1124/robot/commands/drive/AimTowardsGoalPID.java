@@ -36,7 +36,7 @@ public class AimTowardsGoalPID extends PIDCommand {
 	}
 
 	protected void usePIDOutput(double output) {
-		Robot.drivetrain.drive_tank_auto((-1) * output, output);
+		Robot.drivetrain.drive_tank_auto(output, (-1) * output);
 	}
 
 	protected void end() {}
