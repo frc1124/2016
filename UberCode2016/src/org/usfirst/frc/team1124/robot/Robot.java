@@ -61,7 +61,7 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp;
 	
 	// camera
-	public DashboardConnection db_connection = new DashboardConnection();
+	public static DashboardConnection db_connection = new DashboardConnection();
 	
 	// autonomous
     Command autonomousCommand;
