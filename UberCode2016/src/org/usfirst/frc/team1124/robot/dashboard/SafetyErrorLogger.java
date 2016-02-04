@@ -33,7 +33,7 @@ public class SafetyErrorLogger {
 	}
 	
 	public enum Error {
-		LimitSwitchDirection, EncoderDirection, HighRateDisconnection, NoRateDisconnection
+		LimitSwitchDirection, PotentiometerDirection, HighRateDisconnection, NoRateDisconnection
 	}
 	
 	public enum SafetySubsystem {

@@ -7,9 +7,8 @@ import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.SafetySubsyste
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.Error;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import org.usfirst.frc.team1124.robot.tools.Safe;
 
@@ -24,14 +23,14 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	public final static double D = 0;
 	
 	private CANTalon actuator;
-	private Encoder encoder;
+	private AnalogPotentiometer potentiometer;
 	
 	private boolean safetyEnabled = false;
 	private boolean safetyTripped = false;
 	private double rate_threshold = 0.2;
 	
-	private final double MAX_UP = 0;
-	private final double MAX_DOWN = -100; // PLS CHANGE THIS!!!!!!!!!!!
+	private final double MAX_UP = 1; // pls change this!
+	private final double MAX_DOWN = 0; // PLS CHANGE THIS!!!!!!!!!!!
 	
 	private DigitalInput limit_switch;
 	
@@ -47,7 +46,7 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		int port_a = Robot.configIO.getIntVal("arm_actuator_enc_a");
 		int port_b = Robot.configIO.getIntVal("arm_actuator_enc_b");
 		
-		encoder = new Encoder(port_a, port_b, false, EncodingType.k4X);
+		potentiometer = new AnalogPotentiometer(0, 1, 0); //input 1, 0-1 range, no offset
 		
 		limit_switch = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit"));
 		
@@ -64,7 +63,8 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
     /* PID Control */
     
 	protected double returnPIDInput() {
-		return encoder.getDistance();
+//		return encoder.getDistance();
+		return potentiometer.get();
 	}
 
 	protected void usePIDOutput(double output) {
@@ -75,11 +75,11 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		}
 	}
 	
-	/* Encoder Functions */
+	/* Potentiometer Functions */
 	
-	public void homeEncoder(){
-		encoder.reset();
-	}
+/*	public void homePotentiometer(){
+		potentiometer.goddamnitTheresNoSetCommand();
+	} */
 	
 	/* Safety Code */
 	
@@ -121,22 +121,22 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.LimitSwitchDirection);
 		}
 
-		if(encoder.getDistance() >= MAX_UP && output > 0){
+		if(potentiometer.get() >= MAX_UP && output > 0){
 			// trying to go to far up
 			safeOutput = 0;
 			
-			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.EncoderDirection);
-		}else if(encoder.getDistance() <= MAX_DOWN && output < 0){
+			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.PotentiometerDirection);
+		}else if(potentiometer.get() <= MAX_DOWN && output < 0){
 			// trying to go to far down
 			safeOutput = 0;
 			
-			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.EncoderDirection);
+			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.PotentiometerDirection);
 		}else{
-			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.EncoderDirection);
+			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.PotentiometerDirection);
 		}
 		
 		// rate safeties
-		if(Math.abs(encoder.getRate()) > Double.MAX_VALUE / 4){
+/*		if(Math.abs(encoder.getRate()) > Double.MAX_VALUE / 4){
 			// encoder was disconnected and is reading something around infinity
 			safeOutput = 0;
 			safetyTripped = true;
@@ -144,9 +144,9 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.HighRateDisconnection);
 		}else{
 			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.HighRateDisconnection);
-		}
+		} */
 		
-		if(Math.abs(output) > getRateCutoffThreshold() && encoder.getRate() == 0){
+/*		if(Math.abs(output) > getRateCutoffThreshold() && encoder.getRate() == 0){
 			// we are moving it but the encoder isn't reading it, not good
 			safeOutput = 0;
 			safetyTripped = true;
@@ -154,7 +154,7 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.NoRateDisconnection);
 		}else{
 			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.NoRateDisconnection);
-		}
+		} */
 		
 		// permanent disable if safety is tripped
 		if(safetyTripped){
