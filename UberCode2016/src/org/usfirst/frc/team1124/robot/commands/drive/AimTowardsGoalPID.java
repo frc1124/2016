@@ -16,42 +16,39 @@ public class AimTowardsGoalPID extends PIDCommand {
 	private static final int cam_width = 320;
 	private static boolean isDone = false;
 	
-    // Initialize your subsystem here
     public AimTowardsGoalPID() {
     	super("AimTowardsGoalPID", P, I, D);
+    	
+    	requires(Robot.drivetrain);
     	setInterruptible(true);
     }
 
-	@Override
 	protected double returnPIDInput() {
 		double center = Robot.db_connection.getTargetCenterOfMass()[0];
+		
 		if(center == -1){
 			isDone = true;
+			
 			return this.getSetpoint();
+		}else{ 
+			return Robot.db_connection.getTargetCenterOfMass()[0];
 		}
-		else return Robot.db_connection.getTargetCenterOfMass()[0];
 	}
 
-	@Override
 	protected void usePIDOutput(double output) {
 		Robot.drivetrain.drive_tank_auto(output, (-1) * output);
 	}
 
-	@Override
 	protected void end() {}
 
-	@Override
 	protected void execute() {}
 
-	@Override
 	protected void initialize() {
 		setSetpoint(cam_width / 2);
 	}
 
-	@Override
 	protected void interrupted() {}
 
-	@Override
 	protected boolean isFinished() {
 		return isDone;
 	}

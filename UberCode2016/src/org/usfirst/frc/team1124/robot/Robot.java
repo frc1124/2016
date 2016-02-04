@@ -4,6 +4,7 @@ package org.usfirst.frc.team1124.robot;
 import org.usfirst.frc.team1124.robot.commands.Autonomous;
 import org.usfirst.frc.team1124.robot.commands.DriveWorkTest;
 import org.usfirst.frc.team1124.robot.commands.PIDTest;
+import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoalPID;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.steptest.GeneratePIDDriveTrain;
 import org.usfirst.frc.team1124.robot.commands.steptest.StepTestDriveTrain;
@@ -96,7 +97,7 @@ public class Robot extends IterativeRobot {
 		db_connection.initCamera();
 
         // instantiate the command used for the autonomous period
-        autonomousCommand = new PIDTest();
+        autonomousCommand = new AimTowardsGoalPID();
         
         // set up error logger
         SafetyErrorLogger.init();
