@@ -85,6 +85,26 @@ public class DashboardConnection {
 		return data;
 	}
 	
+	/** 
+	 * Polls the target dimensions from the dashboard.
+	 * If they are not present, it returns {-1, -1}.
+	 * 
+	 * @return an array of the {x center of mass, y center of mass}
+	 * */
+	public double[] getTargetCenterOfMass(){
+		double x = -1;
+		double y = -1;
+		
+		try{
+			x = SmartDashboard.getNumber("vision_target_x_cm");
+			y = SmartDashboard.getNumber("vision_target_y_cm");
+		}catch(Exception e){}
+		
+		double data[] = {x, y};
+		
+		return data;
+	}
+	
 	/*
 	public void configCamera(){
         camera.setWhiteBalanceManual(4500);
