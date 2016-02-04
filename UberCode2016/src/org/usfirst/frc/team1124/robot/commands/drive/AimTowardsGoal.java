@@ -12,6 +12,7 @@ public class AimTowardsGoal extends CommandGroup {
 
 	private double angleFromGoal = 0; // in radians
 	private double distanceToTurn = 0;
+	private final int res_width = 240;
 	
 	private AutoDrive turnCommand;
 	
