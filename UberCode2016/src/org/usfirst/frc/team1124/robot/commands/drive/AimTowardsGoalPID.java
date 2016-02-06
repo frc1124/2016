@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  *
  */
 public class AimTowardsGoalPID extends PIDCommand {
-	private static final double P = 0.0015;
-	private static final double I = 0.000042;
-	private static final double D = 0;
+	private static final double P = 0.0013999;
+	private static final double I = 0.0002578;
+	private static final double D = 0.0048184;
 	
 	private static final int cam_width = 320;
 	private static boolean isDone = false;
