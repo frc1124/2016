@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * TODO test this code
  */
 public class DriveHoldPosition extends CommandGroup {
-	
 	private LeftDrivePID left_drive;
 	private RightDrivePID right_drive;
 	
@@ -28,7 +27,7 @@ public class DriveHoldPosition extends CommandGroup {
 	
 	
 	private boolean arcade = true;
-	private double threshold = 0.4;
+	private double threshold = 0.2;
 	
 	/** New hold position command, arcade drive = true, threshold = 0.4*/
     public DriveHoldPosition() {
@@ -56,7 +55,7 @@ public class DriveHoldPosition extends CommandGroup {
     	addParallel(right_drive);
     	
     	this.arcade = arcade;
-    	this.threshold = arcade ? 0.4 : 0.05;
+    	this.threshold = arcade ? 0.2 : 0.05;
     }
     
     /** New hold position command*/
@@ -78,12 +77,15 @@ public class DriveHoldPosition extends CommandGroup {
     // Called just before this Command runs the first time
     protected void initialize() {
 		timer = new Timer();
+		
+		left_drive.disableSafety();
+		right_drive.disableSafety();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double y = Robot.oi.getController().getY() * -1;
-    	double x = Robot.oi.getController().getX();
+    	double y = Robot.oi.getJS1().getY() * -1;
+    	double x = Robot.oi.getJS1().getX() * -1;
     	
     	if(Math.abs(y) > threshold || Math.abs(x) > threshold){
     		if(!wasActive){
@@ -94,9 +96,9 @@ public class DriveHoldPosition extends CommandGroup {
     			
     			left_dist = 0;
     			right_dist = 0;
+        		
+        		wasActive = true;
     		}
-    		
-    		wasActive = true;
     		
     		if(this.arcade){
     			double[] vals = arcade(x, y);
@@ -113,18 +115,20 @@ public class DriveHoldPosition extends CommandGroup {
     		
     		left_drive.updateSetpoint(left_dist);
     		right_drive.updateSetpoint(right_dist);
+    		
+    		Robot.drivetrain.drive_tank_auto(left_drive.getSpeed(), right_drive.getSpeed());
     	}else{
     		if(wasActive){
     			Robot.drivetrain.resetEncoders();
+        		
+        		left_drive.updateSetpoint(0);
+        		right_drive.updateSetpoint(0);
     		}
     		
     		wasActive = false;
     		
-    		left_drive.updateSetpoint(0);
-    		right_drive.updateSetpoint(0);
+    		Robot.drivetrain.drive_tank_auto(left_drive.getSpeed(), right_drive.getSpeed());
     	}
-    	
-    	
     }
 
     /** 
@@ -179,6 +183,8 @@ public class DriveHoldPosition extends CommandGroup {
     
     protected void end() {
     	Robot.drivetrain.stop();
+    	
+    	System.out.println("command ended");
     }
 
     protected void interrupted() {

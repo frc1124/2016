@@ -16,7 +16,7 @@ public class ArcadeDriveJoystick extends Command {
 	protected void initialize() {}
 
 	protected void execute() {
-		Joystick js = Robot.oi.getController();
+		Joystick js = Robot.oi.getJS1();
 		
 		Robot.drivetrain.drive(js);
 	}

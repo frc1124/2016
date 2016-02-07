@@ -10,7 +10,6 @@ import org.usfirst.frc.team1124.robot.subsystems.Intake;
 import org.usfirst.frc.team1124.robot.subsystems.RampBeltsPID;
 import org.usfirst.frc.team1124.robot.subsystems.ShooterPID;
 import org.usfirst.frc.team1124.robot.subsystems.ArmActuatorPID;
-import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoalPID;
 import org.usfirst.frc.team1124.robot.subsystems.ArmPistons;
 
 // cameras
@@ -97,9 +96,6 @@ public class Robot extends IterativeRobot {
 		camera_system.initIntakeCamera();
 		
 		camera_system.selectCamera(CameraSelect.Shooter);
-
-        // instantiate the command used for the autonomous period
-        autonomousCommand = new AimTowardsGoalPID();
         
         // set up error logger
         SafetyErrorLogger.init();
@@ -114,6 +110,9 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command
     	drivetrain.setBrake();
+
+        // instantiate the command used for the autonomous period
+        autonomousCommand = new Autonomous();
     	
         if(autonomousCommand != null){
         	autonomousCommand.start();

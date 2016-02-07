@@ -63,4 +63,8 @@ public class AutoDrive extends CommandGroup {
     	
     	Robot.drivetrain.stop();
     }
+    
+    protected void interrupted(){
+    	end();
+    }
 }

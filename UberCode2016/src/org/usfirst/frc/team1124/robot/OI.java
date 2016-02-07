@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1124.robot;
 
-import org.usfirst.frc.team1124.robot.commands.arm.MoveArm;
-import org.usfirst.frc.team1124.robot.enums.ArmState;
+import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
+import org.usfirst.frc.team1124.robot.commands.drive.DriveHoldPosition;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -43,29 +43,28 @@ public class OI {
 	private Joystick js2 = new Joystick(1);
 	private Joystick js3 = new Joystick(2);
 	
-	private Button button_1 = new JoystickButton(js1, 1);
-	private Button button_10 = new JoystickButton(js1, 10);
-	private Button button_11 = new JoystickButton(js1, 11);
+	private Button[] js1_buttons = { 	new JoystickButton(js1, 1),
+										new JoystickButton(js1, 2),
+										new JoystickButton(js1, 3)
+								   };
 	
-	public int id = 1;
 	
 	public OI(){
 		// setup drive mode control (bind buttons)
-
-		//button_10.whenReleased(new MoveArm(ArmState.Up));
-		//button_11.whenReleased(new MoveArm(ArmState.Down));
-	}
-	
-	// joysticks/controllers
-	public Joystick getController(){
-		return js1;
+		
+		js1_buttons[1].whenPressed(new DriveHoldPosition(true));
+		js1_buttons[2].whenPressed(new ArcadeDriveJoystick());
 	}
 	
 	public Joystick getJS1(){
-		return js2;
+		return js1;
 	}
 	
 	public Joystick getJS2(){
+		return js2;
+	}
+	
+	public Joystick getJS3(){
 		return js3;
 	}
 }

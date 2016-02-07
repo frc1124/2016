@@ -7,26 +7,28 @@ import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
 import org.usfirst.frc.team1124.robot.tools.Safe;
 
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
 /**
  * A PID command for the left drive train
  */
 public class LeftDrivePID extends PIDCommand implements Safe {
-	private boolean done = false;
-	
 	private double speed = 0;
 	private double setpoint = 0;
 	
+	private Timer safetyTimer = new Timer();
+	private boolean timerFirstCall = true;
+	private final double TIME_DELAY = 0.2;
+	
 	private boolean safetyEnabled = false;
 	private boolean safetyTripped = false;
-	/** TODO tune this correctly */
-	private double rate_threshold = 0.266;
+	private double rate_threshold = 0.112;
 
 	/** TODO tune these */
-	private static final double P = 0.305; //0.0545
-	private static final double I = 0.0;//0.00026611111111111146; //0.012
-	private static final double D = 0.00001;//0.000026988888888888918; //0.00002689; //0.0
+	private static final double P = 0.25;
+	private static final double I = 0.0;
+	private static final double D = 0.0025;
 	
 	public LeftDrivePID(double setpoint) {
 		super("LeftDrivePID", P, I, D);
@@ -64,16 +66,14 @@ public class LeftDrivePID extends PIDCommand implements Safe {
         return Math.abs(Robot.drivetrain.getLeftEncoderDistance() - getSetpoint()) <= Robot.drivetrain.SETPOINT_TOLERANCE;
     }
     
-    public void stop() {
-    	done = true;
-    }
-    
     protected boolean isFinished() {
-    	return done;
+    	return false;
     }
 
     protected void end() {
     	Robot.drivetrain.stop();
+    	
+    	System.out.println("left drive command ended");
     }
 
     protected void interrupted() {
@@ -85,7 +85,11 @@ public class LeftDrivePID extends PIDCommand implements Safe {
 	}
 
 	protected void usePIDOutput(double output) {
-		speed = output;
+		if(isSafetyEnabled()){
+			speed = safeOutput(output);
+		}else{
+			speed = output;
+		}
 	}
 	
 	public PIDController getPID(){
@@ -98,12 +102,14 @@ public class LeftDrivePID extends PIDCommand implements Safe {
 	
 	public void updateSetpoint(double setpoint){
 		setSetpoint(setpoint);
+		safetyTimer.reset();
 	}
 
 	// Safeties
 	
 	public void enableSafety() {
 		safetyEnabled = true;
+		safetyTimer.reset();
 	}
 
 	public void disableSafety() {
@@ -127,7 +133,13 @@ public class LeftDrivePID extends PIDCommand implements Safe {
 	}
 
 	public double safeOutput(double output) {
-		double safeOutput = 0;
+		double safeOutput = output;
+		
+		if(timerFirstCall){
+			safetyTimer.start();
+			
+			timerFirstCall = false;
+		}
 		
 		// rate safeties
 		if(Math.abs(Robot.drivetrain.getLeftEncoderRate()) > Double.MAX_VALUE / 4){
@@ -140,12 +152,14 @@ public class LeftDrivePID extends PIDCommand implements Safe {
 			SafetyErrorLogger.reportNoError(SafetySubsystem.DriveTrainLeft, SafetyError.HighRateDisconnection);
 		}
 		
-		if(Math.abs(output) > getRateCutoffThreshold() && Robot.drivetrain.getLeftEncoderRate() == 0){
+		if(Math.abs(output) > getRateCutoffThreshold() && Robot.drivetrain.getLeftEncoderRate() == 0 && safetyTimer.get() >= TIME_DELAY){
 			// we are moving it but the encoder isn't reading it, not good
 			safeOutput = 0;
 			safetyTripped = true;
 			
 			SafetyErrorLogger.log(SafetySubsystem.DriveTrainLeft, SafetyError.NoRateDisconnection);
+		}else if(safetyTimer.get() >= TIME_DELAY){
+			safetyTimer.reset();
 		}else{
 			SafetyErrorLogger.reportNoError(SafetySubsystem.DriveTrainLeft, SafetyError.NoRateDisconnection);
 		}
