@@ -7,6 +7,7 @@ import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
 import org.usfirst.frc.team1124.robot.tools.Safe;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -24,6 +25,10 @@ public class ShooterPID extends PIDSubsystem implements Safe {
 	
 	private CANTalon shooter;
 	private Encoder encoder;
+	
+	private Timer safetyTimer = new Timer();
+	private boolean timerFirstCall = true;
+	private final double TIME_DELAY = 0.2;
 	
 	private boolean safetyEnabled = false;
 	private boolean safetyTripped = false;
@@ -101,6 +106,12 @@ public class ShooterPID extends PIDSubsystem implements Safe {
 	public double safeOutput(double output) {
 		double safeOutput = 0;
 		
+		if(timerFirstCall){
+			safetyTimer.start();
+			
+			timerFirstCall = false;
+		}
+		
 		// rate safeties
 		if(Math.abs(encoder.getRate()) > Double.MAX_VALUE / 4){
 			// encoder was disconnected and is reading something around infinity
@@ -112,12 +123,14 @@ public class ShooterPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.reportNoError(SafetySubsystem.Shooter, SafetyError.HighRateDisconnection);
 		}
 		
-		if(Math.abs(output) > getRateCutoffThreshold() && encoder.getRate() == 0){
+		if(Math.abs(output) > getRateCutoffThreshold() && encoder.getRate() == 0 && safetyTimer.get() >= TIME_DELAY){
 			// we are moving it but the encoder isn't reading it, not good
 			safeOutput = 0;
 			safetyTripped = true;
 			
 			SafetyErrorLogger.log(SafetySubsystem.Shooter, SafetyError.NoRateDisconnection);
+		}else if(safetyTimer.get() >= TIME_DELAY){
+			safetyTimer.reset();
 		}else{
 			SafetyErrorLogger.reportNoError(SafetySubsystem.Shooter, SafetyError.NoRateDisconnection);
 		}
