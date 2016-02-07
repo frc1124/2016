@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import org.usfirst.frc.team1124.robot.tools.Safe;
 
 /**
- * The linear actuator on the arm used to actuate the arm; implements PID subsystem. PID control for distance.
+ * The linear actuator on the arm used to actuate the arm; implements PID subsystem. PID control for distance. </br>
  * Positive = Arm Up, Negative = Arm Down
  */
 public class ArmActuatorPID extends PIDSubsystem implements Safe {
@@ -27,26 +27,18 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	
 	private boolean safetyEnabled = false;
 	private boolean safetyTripped = false;
-	private double rate_threshold = 0.2;
 	
-	private final double MAX_UP = 1; // pls change this!
-	private final double MAX_DOWN = 0; // PLS CHANGE THIS!!!!!!!!!!!
+	private final double MAX_UP = 1; // tune
+	private final double MAX_DOWN = 0; // tune
 	
 	private DigitalInput limit_switch;
 	
 	public ArmActuatorPID() {
-        // Use these to get going:
-        // setSetpoint() -  Sets where the PID controller should move the system
-        //                  to
-        // enable() - Enables the PID controller.
 		super("ArmActuators", P, I, D);
 		
 		actuator = new CANTalon(Robot.configIO.getIntVal("arm_actuator"));
 		
-		int port_a = Robot.configIO.getIntVal("arm_actuator_enc_a");
-		int port_b = Robot.configIO.getIntVal("arm_actuator_enc_b");
-		
-		potentiometer = new AnalogPotentiometer(0, 1, 0); //input 1, 0-1 range, no offset
+		potentiometer = new AnalogPotentiometer(Robot.configIO.getIntVal("arm_potentiometer"), 1, 0); // 0-1 range, no offset
 		
 		limit_switch = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit"));
 		
@@ -63,7 +55,6 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
     /* PID Control */
     
 	protected double returnPIDInput() {
-//		return encoder.getDistance();
 		return potentiometer.get();
 	}
 
@@ -74,12 +65,6 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			actuator.set(output);
 		}
 	}
-	
-	/* Potentiometer Functions */
-	
-/*	public void homePotentiometer(){
-		potentiometer.goddamnitTheresNoSetCommand();
-	} */
 	
 	/* Safety Code */
 	
@@ -100,12 +85,18 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		return safetyTripped;
 	}
 	
-	public void setRateCutoffThreshold(double threshold){
-		rate_threshold = threshold;
-	}
+	/** 
+	 * This subsystem does not have rate control.
+	 * @deprecated cannot use rate safeties with a potentiometer
+	 */
+	public void setRateCutoffThreshold(double threshold) {}
 
+	/** 
+	 * This subsystem does not have rate control.
+	 * @deprecated cannot use rate safeties with a potentiometer
+	 */
 	public double getRateCutoffThreshold() {
-		return rate_threshold;
+		return 0.0;
 	}
 	
 	public double safeOutput(double output){
@@ -133,32 +124,6 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.PotentiometerDirection);
 		}else{
 			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.PotentiometerDirection);
-		}
-		
-		// rate safeties
-/*		if(Math.abs(encoder.getRate()) > Double.MAX_VALUE / 4){
-			// encoder was disconnected and is reading something around infinity
-			safeOutput = 0;
-			safetyTripped = true;
-			
-			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.HighRateDisconnection);
-		}else{
-			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.HighRateDisconnection);
-		} */
-		
-/*		if(Math.abs(output) > getRateCutoffThreshold() && encoder.getRate() == 0){
-			// we are moving it but the encoder isn't reading it, not good
-			safeOutput = 0;
-			safetyTripped = true;
-			
-			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.NoRateDisconnection);
-		}else{
-			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.NoRateDisconnection);
-		} */
-		
-		// permanent disable if safety is tripped
-		if(safetyTripped){
-			safeOutput = 0;
 		}
 		
 		return safeOutput;

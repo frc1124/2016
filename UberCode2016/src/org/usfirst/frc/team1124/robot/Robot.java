@@ -1,22 +1,20 @@
 package org.usfirst.frc.team1124.robot;
 
 // commands
-import org.usfirst.frc.team1124.robot.commands.Autonomous;
-import org.usfirst.frc.team1124.robot.commands.DriveWorkTest;
-import org.usfirst.frc.team1124.robot.commands.PIDTest;
-import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoalPID;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
-import org.usfirst.frc.team1124.robot.commands.steptest.GeneratePIDDriveTrain;
-import org.usfirst.frc.team1124.robot.commands.steptest.StepTestDriveTrain;
+import org.usfirst.frc.team1124.robot.commands.macro.Autonomous;
+
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team1124.robot.subsystems.IntakeBelts;
+import org.usfirst.frc.team1124.robot.subsystems.Intake;
 import org.usfirst.frc.team1124.robot.subsystems.RampBeltsPID;
 import org.usfirst.frc.team1124.robot.subsystems.ShooterPID;
 import org.usfirst.frc.team1124.robot.subsystems.ArmActuatorPID;
+import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoalPID;
 import org.usfirst.frc.team1124.robot.subsystems.ArmPistons;
-import edu.wpi.first.wpilibj.Compressor;
 
+// cameras
+import edu.wpi.first.wpilibj.vision.AxisCamera;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 
 // tools
@@ -24,7 +22,9 @@ import org.usfirst.frc.team1124.robot.tools.ConfigIO;
 
 // dashboard
 import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
+import org.usfirst.frc.team1124.robot.dashboard.CameraSystem;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
+import org.usfirst.frc.team1124.robot.enums.CameraSelect;
 
 // wpilib components
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -53,24 +53,24 @@ public class Robot extends IterativeRobot {
 	public static ArmPistons arm_pistons;
 	public static ArmActuatorPID arm_actuator_pid;
 	public static RampBeltsPID ramp_belts_pid;
-	public static IntakeBelts intake_belts;
+	public static Intake intake;
 	public static ShooterPID shooter_pid;
-	public static USBCamera camera;
+	
+	public static USBCamera intake_camera;
+	public static AxisCamera shooter_camera;
 	
 	// components
-	public static Compressor compressor;
 	public static PowerDistributionPanel pdp;
 	
-	// camera
+	// dashboard and camera
 	public static DashboardConnection db_connection = new DashboardConnection();
+	public static CameraSystem camera_system = new CameraSystem();
 	
 	// autonomous
     Command autonomousCommand;
     
     // this revision of code (displayed on dashboard)
-    public static String codeRevision = "[v1.0.8]:build-season";
-	
-	public final static double ROBOT_LENGTH = 0.0; //SET THIS
+    public static String codeRevision = "[v2.0.0]:build-season";
 
     /**
      * This function is run when the robot is first started up and should be
@@ -92,9 +92,11 @@ public class Robot extends IterativeRobot {
 		// instantiate operator interface
 		oi = new OI();
 
-		// start camera stream to driver station
-		//camera = db_connection.initCamera();
-		db_connection.initCamera();
+		// set up cameras
+		camera_system.initShooterCamera();
+		camera_system.initIntakeCamera();
+		
+		camera_system.selectCamera(CameraSelect.Shooter);
 
         // instantiate the command used for the autonomous period
         autonomousCommand = new AimTowardsGoalPID();
@@ -124,7 +126,7 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
     	db_connection.updateDashboard();
     	
-    	db_connection.getImage();
+    	camera_system.getImage();
     	
         Scheduler.getInstance().run();
     }
@@ -155,7 +157,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	db_connection.updateDashboard();
     	
-    	db_connection.getImage();
+    	camera_system.getImage();
     	
         Scheduler.getInstance().run();
     }
