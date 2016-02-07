@@ -16,6 +16,7 @@ public class Intake extends Subsystem {
 	
 	private DigitalInput light_sensor;
 	
+	/** TODO tune these */
 	private final int INTAKE_SPEED = 1;
 	private final int LOW_GOAL_SPEED = -1;
 	

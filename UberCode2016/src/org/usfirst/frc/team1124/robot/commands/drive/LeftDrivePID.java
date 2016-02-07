@@ -2,8 +2,8 @@ package org.usfirst.frc.team1124.robot.commands.drive;
 
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
-import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.Error;
-import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.SafetySubsystem;
+import org.usfirst.frc.team1124.robot.enums.SafetyError;
+import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
 import org.usfirst.frc.team1124.robot.tools.Safe;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -20,18 +20,16 @@ public class LeftDrivePID extends PIDCommand implements Safe {
 	
 	private boolean safetyEnabled = false;
 	private boolean safetyTripped = false;
+	/** TODO tune this correctly */
 	private double rate_threshold = 0.266;
-	
+
+	/** TODO tune these */
 	private static final double P = 0.305; //0.0545
 	private static final double I = 0.0;//0.00026611111111111146; //0.012
 	private static final double D = 0.00001;//0.000026988888888888918; //0.00002689; //0.0
 	
-	private static final double P_vision = 0.04;
-	private static final double I_vision = 0.001;
-	private static final double D_vision = 0.00000025;
-	
-	public LeftDrivePID(double setpoint, boolean vision) {
-		super("LeftDrivePID", vision ? P_vision : P, vision ? I_vision : I, vision ? D_vision : D);
+	public LeftDrivePID(double setpoint) {
+		super("LeftDrivePID", P, I, D);
 		
         setInterruptible(true);
         
@@ -42,8 +40,8 @@ public class LeftDrivePID extends PIDCommand implements Safe {
         enableSafety();
     }
 	
-	public LeftDrivePID(double setpoint, double minOutput, double maxOutput, boolean vision) {
-		super("LeftDrivePID", vision ? P_vision : P, vision ? I_vision : I, vision ? D_vision : D);
+	public LeftDrivePID(double setpoint, double minOutput, double maxOutput) {
+		super("LeftDrivePID", P, I, D);
 		
         setInterruptible(true);
         
@@ -137,9 +135,9 @@ public class LeftDrivePID extends PIDCommand implements Safe {
 			safeOutput = 0;
 			safetyTripped = true;
 			
-			SafetyErrorLogger.log(SafetySubsystem.DriveTrainLeft, Error.HighRateDisconnection);
+			SafetyErrorLogger.log(SafetySubsystem.DriveTrainLeft, SafetyError.HighRateDisconnection);
 		}else{
-			SafetyErrorLogger.reportNoError(SafetySubsystem.DriveTrainLeft, Error.HighRateDisconnection);
+			SafetyErrorLogger.reportNoError(SafetySubsystem.DriveTrainLeft, SafetyError.HighRateDisconnection);
 		}
 		
 		if(Math.abs(output) > getRateCutoffThreshold() && Robot.drivetrain.getLeftEncoderRate() == 0){
@@ -147,9 +145,9 @@ public class LeftDrivePID extends PIDCommand implements Safe {
 			safeOutput = 0;
 			safetyTripped = true;
 			
-			SafetyErrorLogger.log(SafetySubsystem.DriveTrainLeft, Error.NoRateDisconnection);
+			SafetyErrorLogger.log(SafetySubsystem.DriveTrainLeft, SafetyError.NoRateDisconnection);
 		}else{
-			SafetyErrorLogger.reportNoError(SafetySubsystem.DriveTrainLeft, Error.NoRateDisconnection);
+			SafetyErrorLogger.reportNoError(SafetySubsystem.DriveTrainLeft, SafetyError.NoRateDisconnection);
 		}
 		
 		// permanent disable if safety is tripped

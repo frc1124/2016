@@ -25,25 +25,17 @@ public class FindStableP extends CommandGroup {
 		try {
 			Constructor constructor = this.classType.getDeclaredConstructor(Double.class,Double.class);
 			return (TryP)constructor.newInstance(offset,p);
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
+		} catch (NoSuchMethodException e){
 			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
+		} catch (SecurityException e){
 			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
+		} catch (InstantiationException e){
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
+		} catch (IllegalAccessException e){
 			e.printStackTrace();
-		} catch (IllegalArgumentException e)
-		{
-			// TODO Auto-generated catch block
+		} catch (IllegalArgumentException e){
 			e.printStackTrace();
-		} catch (InvocationTargetException e)
-		{
-			// TODO Auto-generated catch block
+		} catch (InvocationTargetException e){
 			e.printStackTrace();
 		}
 		return null;

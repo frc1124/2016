@@ -17,6 +17,7 @@ public class RampBeltsFeedToShooter extends Command {
     	setInterruptible(true);
     	
     	// it should take about 1 second
+    	/** TODO tune this */
     	setTimeout(1);
     }
 

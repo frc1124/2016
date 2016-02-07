@@ -35,8 +35,8 @@ public class ConfigIO {
 		}
 
 		reloadConfig();
-		//		for(int v = 0; v < config.size(); v++)
-		//			System.out.println(config.keySet().toArray()[v] + " = " + config.get(config.keySet().toArray()[v]));
+		//for(int v = 0; v < config.size(); v++)
+		//System.out.println(config.keySet().toArray()[v] + " = " + config.get(config.keySet().toArray()[v]));
 	}
 
 	/** Get the string value from the config file.*/

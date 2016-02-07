@@ -3,8 +3,8 @@ package org.usfirst.frc.team1124.robot.subsystems;
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.ramp.RampHoldPosition;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
-import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.Error;
-import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.SafetySubsystem;
+import org.usfirst.frc.team1124.robot.enums.SafetyError;
+import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
 import org.usfirst.frc.team1124.robot.tools.Safe;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  */
 public class RampBeltsPID extends PIDSubsystem implements Safe {
 	
+	/** TODO tune these */
 	public final static double P = 0.00001;
 	public final static double I = 0.0;
 	public final static double D = 0.0;
@@ -23,10 +24,12 @@ public class RampBeltsPID extends PIDSubsystem implements Safe {
 	
 	private boolean safetyEnabled = false;
 	private boolean safetyTripped = false;
+	/** TODO tune this */
 	private double rate_threshold = 0.2;
 	
-	private double FEED_TO_INTAKE_RATE = -100; //tune this
-	private double FEED_TO_SHOOTER_RATE = 100; //tune this
+	/** TODO tune these */
+	private double FEED_TO_INTAKE_RATE = -100;
+	private double FEED_TO_SHOOTER_RATE = 100;
 
     public RampBeltsPID() {
     	super("RampBelts", P, I, D);
@@ -124,9 +127,9 @@ public class RampBeltsPID extends PIDSubsystem implements Safe {
 			safeOutput = 0;
 			safetyTripped = true;
 			
-			SafetyErrorLogger.log(SafetySubsystem.RampBelts, Error.HighRateDisconnection);
+			SafetyErrorLogger.log(SafetySubsystem.RampBelts, SafetyError.HighRateDisconnection);
 		}else{
-			SafetyErrorLogger.reportNoError(SafetySubsystem.RampBelts, Error.HighRateDisconnection);
+			SafetyErrorLogger.reportNoError(SafetySubsystem.RampBelts, SafetyError.HighRateDisconnection);
 		}
 		
 		if(Math.abs(output) > getRateCutoffThreshold() && talon.getEncVelocity() == 0){
@@ -134,9 +137,9 @@ public class RampBeltsPID extends PIDSubsystem implements Safe {
 			safeOutput = 0;
 			safetyTripped = true;
 			
-			SafetyErrorLogger.log(SafetySubsystem.RampBelts, Error.NoRateDisconnection);
+			SafetyErrorLogger.log(SafetySubsystem.RampBelts, SafetyError.NoRateDisconnection);
 		}else{
-			SafetyErrorLogger.reportNoError(SafetySubsystem.RampBelts, Error.NoRateDisconnection);
+			SafetyErrorLogger.reportNoError(SafetySubsystem.RampBelts, SafetyError.NoRateDisconnection);
 		}
 		
 		// permanent disable if safety is tripped

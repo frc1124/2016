@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
  * Use PID and pixel data to turn towards the target
  */
 public class AimTowardsGoalPID extends PIDCommand {
+	/** TODO finish tuning these */
 	private static final double P = 0.0023666;
 	private static final double I = 0.00021213;
 	private static final double D = 0.002804366760;
@@ -32,7 +33,8 @@ public class AimTowardsGoalPID extends PIDCommand {
 	
 	protected void execute() {
 		double center = Robot.camera_system.getTargetCenterOfMass()[0];
-		
+
+		/** TODO change this later? */
 		if(center == 0){
 			getPIDController().disable();
 			getPIDController().reset();

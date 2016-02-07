@@ -2,8 +2,8 @@ package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
-import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.Error;
-import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.SafetySubsystem;
+import org.usfirst.frc.team1124.robot.enums.SafetyError;
+import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
 import org.usfirst.frc.team1124.robot.tools.Safe;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -15,10 +15,10 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  * The shooter subsystem; extends PIDSubsystem. This PID controls rate, not distance.
  */
 public class ShooterPID extends PIDSubsystem implements Safe {
-
-	private final static double P = 1;
-	private final static double I = 0.01;
-	private final static double D = 0;
+	/** TODO tune these */
+	private final static double P = 0.00001;
+	private final static double I = 0.0;
+	private final static double D = 0.0;
 	
 	public final double SETPOINT_TOLERANCE = 2.0;
 	
@@ -107,9 +107,9 @@ public class ShooterPID extends PIDSubsystem implements Safe {
 			safeOutput = 0;
 			safetyTripped = true;
 			
-			SafetyErrorLogger.log(SafetySubsystem.Shooter, Error.HighRateDisconnection);
+			SafetyErrorLogger.log(SafetySubsystem.Shooter, SafetyError.HighRateDisconnection);
 		}else{
-			SafetyErrorLogger.reportNoError(SafetySubsystem.Shooter, Error.HighRateDisconnection);
+			SafetyErrorLogger.reportNoError(SafetySubsystem.Shooter, SafetyError.HighRateDisconnection);
 		}
 		
 		if(Math.abs(output) > getRateCutoffThreshold() && encoder.getRate() == 0){
@@ -117,9 +117,9 @@ public class ShooterPID extends PIDSubsystem implements Safe {
 			safeOutput = 0;
 			safetyTripped = true;
 			
-			SafetyErrorLogger.log(SafetySubsystem.Shooter, Error.NoRateDisconnection);
+			SafetyErrorLogger.log(SafetySubsystem.Shooter, SafetyError.NoRateDisconnection);
 		}else{
-			SafetyErrorLogger.reportNoError(SafetySubsystem.Shooter, Error.NoRateDisconnection);
+			SafetyErrorLogger.reportNoError(SafetySubsystem.Shooter, SafetyError.NoRateDisconnection);
 		}
 		
 		// permanent disable if safety is tripped

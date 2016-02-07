@@ -71,6 +71,7 @@ public class CameraSystem {
 	
 	/**
 	 * Calculates the speed needed to shoot a high goal using the current image data
+	 * TODO fill out this function with christian's code
 	 * @return the rate for the shooter motor
 	 */
 	public double getRateForShooterToScore(){

@@ -33,6 +33,7 @@ public class DashboardConnection {
 			SmartDashboard.putString("code_revision", Robot.codeRevision);
 			
 			// PDP port "map"
+	    	/** TODO update these with final robot ports */
 			SmartDashboard.putString("pdp_can_key_port_0", "Right Drive [Rear] (CAN ID#6)");
 			SmartDashboard.putString("pdp_can_key_port_1", "Right Drive [Top] (CAN ID#5)");
 			SmartDashboard.putString("pdp_can_key_port_2", "null");
@@ -55,6 +56,7 @@ public class DashboardConnection {
 	}
 	
 	private void updateEncoders(){
+    	/** TODO do this for all encoders */
 		// drive encoders
 		SmartDashboard.putNumber("left_drive_encoder_dist", Robot.drivetrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("left_drive_encoder_rate", Robot.drivetrain.getLeftEncoderRate());

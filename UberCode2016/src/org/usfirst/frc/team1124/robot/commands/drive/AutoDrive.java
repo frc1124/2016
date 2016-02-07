@@ -14,15 +14,16 @@ public class AutoDrive extends CommandGroup {
 	private LeftDrivePID left;
 	private RightDrivePID right;
 	
-	public  AutoDrive(double leftSetpoint, double rightSetpoint, boolean visionTargeting) {
+	public  AutoDrive(double leftSetpoint, double rightSetpoint) {
     	requires(Robot.drivetrain);
     	
-    	left = new LeftDrivePID(leftSetpoint, visionTargeting);
-    	right = new RightDrivePID(rightSetpoint, visionTargeting);
+    	left = new LeftDrivePID(leftSetpoint);
+    	right = new RightDrivePID(rightSetpoint);
     	
     	addParallel(left);
     	addParallel(right);
-    	
+
+    	/** TODO remove this when done tuning */
     	SmartDashboard.putString("auto-state", "running");
     }
     
@@ -33,10 +34,12 @@ public class AutoDrive extends CommandGroup {
     	Robot.drivetrain.drive_tank_auto(left_speed, right_speed);
     	
     	if(left.isSideFinished() && right.isSideFinished()){
+    		/** TODO re-enable this when we are done tuning */
     		//left.stop();
     		//right.stop();
     	}
-    	
+
+    	/** TODO remove this when done tuning */
     	if(left.isFinished()){
     		SmartDashboard.putString("LEFT_STATE", "FINISHED");
     	}else{
@@ -55,6 +58,7 @@ public class AutoDrive extends CommandGroup {
     }
     
     protected void end(){
+    	/** TODO remove dashboard stuff when done tuning */
     	SmartDashboard.putString("auto-state", "done");
     	
     	Robot.drivetrain.stop();

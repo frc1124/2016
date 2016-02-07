@@ -16,9 +16,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * The safeties are contained in LeftDrivePID.java and RightDrivePID.java (commands).
  */
 public class DriveTrain extends Subsystem {
-	
 	public CANTalon left_1, left_2, left_3, right_1, right_2, right_3;
 	
+	/** TODO tune this */
 	public final double SETPOINT_TOLERANCE = Math.PI / 60;
 	
 	private final double ENCODER_DIST_PER_PULSE = Math.PI / 120;

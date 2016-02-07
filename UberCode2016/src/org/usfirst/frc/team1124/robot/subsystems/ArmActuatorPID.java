@@ -3,8 +3,8 @@ package org.usfirst.frc.team1124.robot.subsystems;
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmHoldPosition;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
-import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.SafetySubsystem;
-import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.Error;
+import org.usfirst.frc.team1124.robot.enums.SafetyError;
+import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
@@ -18,9 +18,10 @@ import org.usfirst.frc.team1124.robot.tools.Safe;
  */
 public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	
-	public final static double P = 1;
-	public final static double I = 0.01;
-	public final static double D = 0;
+	/** TODO tune these */
+	public final static double P = 0.00001;
+	public final static double I = 0.0;
+	public final static double D = 0.0;
 	
 	private CANTalon actuator;
 	private AnalogPotentiometer potentiometer;
@@ -28,8 +29,9 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	private boolean safetyEnabled = false;
 	private boolean safetyTripped = false;
 	
-	private final double MAX_UP = 1; // tune
-	private final double MAX_DOWN = 0; // tune
+	/** TODO tune these */
+	private final double MAX_UP = 1;
+	private final double MAX_DOWN = 0;
 	
 	private DigitalInput limit_switch;
 	
@@ -107,23 +109,23 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			// trying to go too far up, so only allow going down
 			safeOutput = 0;
 			
-			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.LimitSwitchDirection);
+			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, SafetyError.LimitSwitchDirection);
 		}else{
-			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.LimitSwitchDirection);
+			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, SafetyError.LimitSwitchDirection);
 		}
 
 		if(potentiometer.get() >= MAX_UP && output > 0){
 			// trying to go to far up
 			safeOutput = 0;
 			
-			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.PotentiometerDirection);
+			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, SafetyError.PotentiometerDirection);
 		}else if(potentiometer.get() <= MAX_DOWN && output < 0){
 			// trying to go to far down
 			safeOutput = 0;
 			
-			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, Error.PotentiometerDirection);
+			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, SafetyError.PotentiometerDirection);
 		}else{
-			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, Error.PotentiometerDirection);
+			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, SafetyError.PotentiometerDirection);
 		}
 		
 		return safeOutput;

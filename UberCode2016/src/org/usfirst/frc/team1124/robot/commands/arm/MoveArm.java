@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class MoveArm extends Command {
 
 	// list of setpoints, can be amended of course
+	/** TODO set these */
 	private final double UP_SETPOINT = 0.00;
 	private final double DOWN_SETPOINT = 0.00;
 	private final double CLIMB_SETPOINT = 0.00;
