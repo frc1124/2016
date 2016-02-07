@@ -32,8 +32,14 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	private CANTalon actuator;
 	private AnalogPotentiometer potentiometer;
 	
+	private Timer safetyTimer = new Timer();
+	private boolean timerFirstCall = true;
+	private final double TIME_DELAY = 0.2;
+	
 	private boolean safetyEnabled = false;
 	private boolean safetyTripped = false;
+	/** TODO tune this */
+	private double rate_threshold = 1.0;
 	
 	/** TODO tune these */
 	private final double MAX_UP = 1;
@@ -83,9 +89,10 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	}
 	
 	//measures in changer per millisecond
-	public double getRateChange(){
+	public double getRate(){
 		double voltChange = potentiometer.get() - lastVoltage;
 		double timeChange = timer.get() - lastTime;
+		
 		return voltChange / timeChange;
 	}
 	
@@ -108,22 +115,22 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		return safetyTripped;
 	}
 	
-	/** 
-	 * This subsystem does not have rate control.
-	 * @deprecated cannot use rate safeties with a potentiometer
-	 */
-	public void setRateCutoffThreshold(double threshold) {}
+	public void setRateCutoffThreshold(double threshold) {
+		rate_threshold = threshold;
+	}
 
-	/** 
-	 * This subsystem does not have rate control.
-	 * @deprecated cannot use rate safeties with a potentiometer
-	 */
 	public double getRateCutoffThreshold() {
-		return 0.0;
+		return rate_threshold;
 	}
 	
 	public double safeOutput(double output){
-		double safeOutput = 0;
+		double safeOutput = output;
+		
+		if(timerFirstCall){
+			safetyTimer.start();
+			
+			timerFirstCall = false;
+		}
 		
 		// directional safety
 		if(limit_switch.get() && output > 0){
@@ -147,6 +154,23 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, SafetyError.PotentiometerDirection);
 		}else{
 			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, SafetyError.PotentiometerDirection);
+		}
+		
+		if(Math.abs(output) > getRateCutoffThreshold() && getRate() == 0 && safetyTimer.get() >= TIME_DELAY){
+			// we are moving it but the encoder isn't reading it, not good
+			safeOutput = 0;
+			safetyTripped = true;
+			
+			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, SafetyError.NoRateDisconnection);
+		}else if(safetyTimer.get() >= TIME_DELAY){
+			safetyTimer.reset();
+		}else{
+			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, SafetyError.NoRateDisconnection);
+		}
+		
+		// permanent disable if safety is tripped
+		if(safetyTripped){
+			safeOutput = 0;
 		}
 		
 		return safeOutput;
