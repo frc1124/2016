@@ -50,7 +50,7 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		
 		actuator = new CANTalon(Robot.configIO.getIntVal("arm_actuator"));
 		
-		potentiometer = new AnalogPotentiometer(Robot.configIO.getIntVal("arm_potentiometer"), 1, 0); // 0-1 range, no offset
+		potentiometer = new AnalogPotentiometer(Robot.configIO.getIntVal("arm_potentiometer"), 1000, 0); // 0-1 range, no offset
 		lastVoltage = potentiometer.get();
 		
 		limit_switch = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit"));
