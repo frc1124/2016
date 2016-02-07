@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.commands.shooter.ShooterRest;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.Error;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.SafetySubsystem;
@@ -16,10 +15,12 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  * The shooter subsystem; extends PIDSubsystem. This PID controls rate, not distance.
  */
 public class ShooterPID extends PIDSubsystem implements Safe {
-	
+
 	private final static double P = 1;
 	private final static double I = 0.01;
 	private final static double D = 0;
+	
+	public final double SETPOINT_TOLERANCE = 2.0;
 	
 	private CANTalon shooter;
 	private Encoder encoder;
@@ -42,9 +43,7 @@ public class ShooterPID extends PIDSubsystem implements Safe {
     	setSetpoint(0);
     }
     
-    public void initDefaultCommand() {
-        setDefaultCommand(new ShooterRest());
-    }
+    public void initDefaultCommand() {}
     
     public void stop(){
     	disable();

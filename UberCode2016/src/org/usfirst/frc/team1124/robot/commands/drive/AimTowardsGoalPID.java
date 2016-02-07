@@ -3,18 +3,17 @@ package org.usfirst.frc.team1124.robot.commands.drive;
 import org.usfirst.frc.team1124.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
-import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
- * 
+ * Use PID and pixel data to turn towards the target
  */
 public class AimTowardsGoalPID extends PIDCommand {
 	private static final double P = 0.0023666;
 	private static final double I = 0.00021213;
 	private static final double D = 0.002804366760;
 	
-	private static final int cam_width = 320;
-	private static boolean isDone = false;
+	private static final int image_width = 320;
+	private static boolean is_done = false;
 	
     public AimTowardsGoalPID() {
     	super("AimTowardsGoalPID", P, I, D);
@@ -24,19 +23,15 @@ public class AimTowardsGoalPID extends PIDCommand {
     }
     
 	protected double returnPIDInput() {
-		double center = Robot.db_connection.getTargetCenterOfMass()[0];
-		
-		return center;
+		return Robot.camera_system.getTargetCenterOfMass()[0];
 	}
 	
 	protected void usePIDOutput(double output) {
 		Robot.drivetrain.drive_tank_auto((-1) * output, output);
 	}
 	
-	protected void end() {}
-	
 	protected void execute() {
-		double center = Robot.db_connection.getTargetCenterOfMass()[0];
+		double center = Robot.camera_system.getTargetCenterOfMass()[0];
 		
 		if(center == 0){
 			getPIDController().disable();
@@ -47,12 +42,14 @@ public class AimTowardsGoalPID extends PIDCommand {
 	}
 	
 	protected void initialize() {
-		setSetpoint(cam_width / 2);
+		setSetpoint(image_width / 2);
 	}
-
-	protected void interrupted() {}
 
 	protected boolean isFinished() {
-		return isDone;
+		return is_done;
 	}
+	
+	protected void end() {}
+
+	protected void interrupted() {}
 }

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1124.robot.commands;
+package org.usfirst.frc.team1124.robot.commands.macro;
 
 import org.usfirst.frc.team1124.robot.commands.drive.TimedAutoDrive;
 

@@ -1,48 +1,64 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.commands.belts.RampHoldPosition;
+import org.usfirst.frc.team1124.robot.commands.ramp.RampHoldPosition;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.Error;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger.SafetySubsystem;
 import org.usfirst.frc.team1124.robot.tools.Safe;
 
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
- * The belts inside the robot to store the ball and feed it to the shooter
+ * The belts inside the robot to store the ball and feed it to the shooter. Uses a rate based PID.
  */
 public class RampBeltsPID extends PIDSubsystem implements Safe {
 	
-	public final static double P = 1;
-	public final static double I = 0.01;
-	public final static double D = 0;
+	public final static double P = 0.00001;
+	public final static double I = 0.0;
+	public final static double D = 0.0;
 	
 	private CANTalon talon;
-	private Encoder encoder;
 	
 	private boolean safetyEnabled = false;
 	private boolean safetyTripped = false;
 	private double rate_threshold = 0.2;
+	
+	private double FEED_TO_INTAKE_RATE = -100; //tune this
+	private double FEED_TO_SHOOTER_RATE = 100; //tune this
 
     public RampBeltsPID() {
     	super("RampBelts", P, I, D);
     	
     	talon = new CANTalon(Robot.configIO.getIntVal("ramp_conveyor_talon"));
-    	
-    	int port_a = Robot.configIO.getIntVal("ramp_talon_enc_a");
-		int port_b = Robot.configIO.getIntVal("ramp_talon_enc_b");
-		
-		encoder = new Encoder(port_a, port_b, false, EncodingType.k4X);
 
 		setSetpoint(0);
     }
     
     public void initDefaultCommand() {
         setDefaultCommand(new RampHoldPosition());
+    }
+    
+    /** Feed a ball back to the intake to score a low goal */
+    public void feedToIntake(){
+    	this.getPIDController().reset();
+    	enable();
+    	setSetpoint(FEED_TO_INTAKE_RATE);
+    }
+    
+    /** Feed a ball to the shooter to score a high goal */
+    public void feedToShooter(){
+    	this.getPIDController().reset();
+    	enable();
+    	setSetpoint(FEED_TO_SHOOTER_RATE);
+    }
+    
+    /** Hold the belts at a rate of 0 */
+    public void holdPosition(){
+    	this.getPIDController().reset();
+    	enable();
+    	setSetpoint(0);
     }
     
     public void stop(){
@@ -56,13 +72,13 @@ public class RampBeltsPID extends PIDSubsystem implements Safe {
     /* Encoder Functions */
     
     public double getEncoderRate(){
-    	return encoder.getRate();
+    	return talon.getEncVelocity();
     }
     
     /* PID Control */
     
     protected double returnPIDInput() {
-        return encoder.getRate();
+        return getEncoderRate();
     }
     
     protected void usePIDOutput(double output) {
@@ -103,7 +119,7 @@ public class RampBeltsPID extends PIDSubsystem implements Safe {
 		double safeOutput = 0;
 		
 		// rate safeties
-		if(Math.abs(encoder.getRate()) > Double.MAX_VALUE / 4){
+		if(Math.abs(talon.getEncVelocity()) > Double.MAX_VALUE / 4){
 			// encoder was disconnected and is reading something around infinity
 			safeOutput = 0;
 			safetyTripped = true;
@@ -113,7 +129,7 @@ public class RampBeltsPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.reportNoError(SafetySubsystem.RampBelts, Error.HighRateDisconnection);
 		}
 		
-		if(Math.abs(output) > getRateCutoffThreshold() && encoder.getRate() == 0){
+		if(Math.abs(output) > getRateCutoffThreshold() && talon.getEncVelocity() == 0){
 			// we are moving it but the encoder isn't reading it, not good
 			safeOutput = 0;
 			safetyTripped = true;

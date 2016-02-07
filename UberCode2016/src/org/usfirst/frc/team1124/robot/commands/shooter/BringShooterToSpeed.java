@@ -7,10 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Shoots a ball at a specific rate (using PID)
  */
-public class ShootBall extends Command {
+public class BringShooterToSpeed extends Command {
 	
-    public ShootBall(double setpoint){
+	private double setpoint = 0;
+	
+    public BringShooterToSpeed(){
     	requires(Robot.shooter_pid);
+    	
+    	setpoint = Robot.camera_system.getRateForShooterToScore();
     	
     	Robot.shooter_pid.setSetpoint(setpoint);
     	
@@ -24,7 +28,7 @@ public class ShootBall extends Command {
     protected void execute() {}
 
     protected boolean isFinished(){
-    	return Robot.shooter_pid.onTarget();
+    	return Math.abs(Robot.shooter_pid.getRate() - setpoint) >= Robot.shooter_pid.SETPOINT_TOLERANCE;
     }
 
     protected void end(){

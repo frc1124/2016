@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1124.robot.commands.steptest;
+package org.usfirst.frc.team1124.robot.commands.test.steptest;
 
 import java.io.PrintWriter;
 import java.math.BigDecimal;

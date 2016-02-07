@@ -5,14 +5,7 @@ import org.usfirst.frc.team1124.robot.enums.ArmState;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-
-// _____  _____  ______   ________  _______           _       _______     ____    ____  
-//|_   _||_   _||_   _ \ |_   __  ||_   __ \         / \     |_   __ \   |_   \  /   _| 
-// | |    | |    | |_) |  | |_ \_|  | |__) |       / _ \      | |__) |    |   \/   |   
-// | '    ' |    |  __'.  |  _| _   |  __ /       / ___ \     |  __ /     | |\  /| |   
-//  \ \__/ /    _| |__) |_| |__/ | _| |  \ \_   _/ /   \ \_  _| |  \ \_  _| |_\/_| |_  
-//   `.__.'    |_______/|________||____| |___| |____| |____||____| |___||_____||_____| 
-//                                                                                     
+                                                                                
 /**
  * This command moves the arm to certain setpoints using joystick commands.
  */

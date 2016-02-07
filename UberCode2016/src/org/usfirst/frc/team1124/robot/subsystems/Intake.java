@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * The subsystem to manage the intake belts
+ * The subsystem to manage the intake belts and the wheels on the arm
  */
-public class IntakeBelts extends Subsystem {
+public class Intake extends Subsystem {
     
 	private CANTalon belt_motor;
 	private CANTalon arm_wheels_motor;
@@ -18,10 +18,9 @@ public class IntakeBelts extends Subsystem {
 	
 	private final int INTAKE_SPEED = 1;
 	private final int LOW_GOAL_SPEED = -1;
-	private final int SHOOT_SPEED = 1; // belts to shooter
 	
-	public IntakeBelts(){
-		super("IntakeBelts");
+	public Intake(){
+		super("Intake");
 		
 		belt_motor = new CANTalon(Robot.configIO.getIntVal("intake_belts"));
 		arm_wheels_motor = new CANTalon(Robot.configIO.getIntVal("arm_intake_wheels"));
@@ -29,24 +28,17 @@ public class IntakeBelts extends Subsystem {
 		light_sensor = new DigitalInput(Robot.configIO.getIntVal("intake_belts_light_sensor"));
 	}
 	
-    public void initDefaultCommand() {
-        //setDefaultCommand(new Command());
-    }
+    public void initDefaultCommand() {}
     
-    public boolean getSensorState(){
-    	return light_sensor.get();
+    /** Already inverted, since roboRIO uses pull-up resistors on its DIO ports*/
+    public boolean getBallDetected(){
+    	return !light_sensor.get();
     }
     
     /** Intake a ball */
     public void intake(){
     	belt_motor.set(INTAKE_SPEED);
     	arm_wheels_motor.set(INTAKE_SPEED);
-    }
-    
-    /** Shoot a ball */
-    public void shoot(){
-    	belt_motor.set(SHOOT_SPEED);
-    	arm_wheels_motor.set(SHOOT_SPEED);
     }
     
     /** Spit the ball back out */
@@ -60,7 +52,6 @@ public class IntakeBelts extends Subsystem {
     public void stop(){
     	belt_motor.set(0);
     	arm_wheels_motor.set(0);
-
     }
     
     /** Manual control of the belts 
@@ -68,6 +59,7 @@ public class IntakeBelts extends Subsystem {
      */
     public void manual(int speed){
     	belt_motor.set(speed);
+    	arm_wheels_motor.set(speed);
     }
 }
 

@@ -1,17 +1,11 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsRetract;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
-//_____  _____  ______   ________  _______      _______  _____   ______   _________    ___   ____  _____   ______   
-//|_   _||_   _||_   _ \ |_   __  ||_   __ \    |_   __ \|_   _|.' ____ \ |  _   _  | .'   `.|_   \|_   _|.' ____ \  
-//| |    | |    | |_) |  | |_ \_|  | |__) |     | |__) | | |  | (___ \_||_/ | | \_|/  .-.  \ |   \ | |  | (___ \_| 
-//| '    ' |    |  __'.  |  _| _   |  __ /      |  ___/  | |   _.____`.     | |    | |   | | | |\ \| |   _.____`.  
-//\ \__/ /    _| |__) |_| |__/ | _| |  \ \_   _| |_    _| |_ | \____) |   _| |_   \  `-'  /_| |_\   |_ | \____) | 
-// `.__.'    |_______/|________||____| |___| |_____|  |_____| \______.'  |_____|   `.___.'|_____|\____| \______.' 
-//      
+     
 /**
  * The two pistons that are used for climbing
  */
@@ -33,7 +27,7 @@ public class ArmPistons extends Subsystem {
 	}
 
     public void initDefaultCommand() {
-        //setDefaultCommand(new Command());
+        setDefaultCommand(new ArmPistonsRetract());
     }
     
     /** Extend the arm pistons */

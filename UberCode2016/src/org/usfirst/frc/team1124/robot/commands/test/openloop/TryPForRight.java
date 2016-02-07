@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1124.robot.commands.openloop;
+package org.usfirst.frc.team1124.robot.commands.test.openloop;
 
 import org.usfirst.frc.team1124.robot.Robot;
 

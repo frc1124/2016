@@ -18,7 +18,7 @@ public class LoadIntoShooter extends Command {
 
     public LoadIntoShooter()
     {
-        requires(Robot.intake_belts);
+        requires(Robot.intake);
         requires(Robot.shooter_pid);
         
         setInterruptible(true);
@@ -26,7 +26,7 @@ public class LoadIntoShooter extends Command {
 
     protected void initialize()
     {
-    	Robot.intake_belts.intake();
+    	Robot.intake.intake();
     	setTimeout(2); // whatever duration required to get ball into the wheels
     }
 
@@ -39,7 +39,7 @@ public class LoadIntoShooter extends Command {
 
     protected void end()
     {
-    	Robot.intake_belts.stop();
+    	Robot.intake.stop();
     	Robot.shooter_pid.disable();
     }
 

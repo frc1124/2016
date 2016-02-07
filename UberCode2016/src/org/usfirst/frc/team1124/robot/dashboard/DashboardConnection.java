@@ -1,117 +1,14 @@
 package org.usfirst.frc.team1124.robot.dashboard;
 
-import edu.wpi.first.wpilibj.CameraServer;
-
 import java.util.ArrayList;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
-import com.ni.vision.NIVision;
-import com.ni.vision.NIVision.Image;
-
 import edu.wpi.first.wpilibj.ControllerPower;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.AxisCamera;
-import edu.wpi.first.wpilibj.vision.AxisCamera.ExposureControl;
-import edu.wpi.first.wpilibj.vision.AxisCamera.Resolution;
-import edu.wpi.first.wpilibj.vision.AxisCamera.WhiteBalance;
-//import edu.wpi.first.wpilibj.vision.USBCamera;
 
 public class DashboardConnection {
 	private static boolean firstCall = true;
-    
-	Image frame;
-    AxisCamera camera;
-	
-	//private CameraServer srv;
-	//private USBCamera camera;
-	
-	public void initCamera(){
-		//srv = CameraServer.getInstance();
-	    
-		try{
-	        frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-	        camera = new AxisCamera("10.11.24.78");
-	        
-	        camera.writeColorLevel(50);
-	        camera.writeBrightness(50);
-	        
-	        camera.writeCompression(30);
-	        
-	        camera.writeResolution(Resolution.k320x240);
-	        camera.writeExposureControl(ExposureControl.kHold);
-	        
-	        camera.writeWhiteBalance(WhiteBalance.kFixedFluorescent1);
-	        camera.writeMaxFPS(20);
-		}catch(Exception e) {}
-		
-		//camera = new USBCamera("cam0");
-        //camera.openCamera();
-		
-        //camera.setWhiteBalanceManual(4500);
-        //camera.setExposureManual(0);
-		//camera.setBrightness(100);
-        
-        //srv.setSize(1); // 320x240
-        
-        //return camera;
-	}
-	
-	/** Only run this method while the robot is ENABLED! This method gets the image and sends it to the dashboard for display and processing. */
-	public void getImage(){
-        try{
-        	camera.getImage(frame);
-            CameraServer.getInstance().setImage(frame);
-        }catch(Exception e){}
-	}
-	
-	/** 
-	 * Polls the target dimensions from the dashboard.
-	 * If they are not present, it returns {-1, -1}.
-	 * 
-	 * @return An array of { width, height }
-	 * */
-	public double[] getTargetDimensions(){
-		double width = -1;
-		double height = -1;
-		
-		try{
-			width = SmartDashboard.getNumber("vision_target_width");
-			height = SmartDashboard.getNumber("vision_target_height");
-		}catch(Exception e){}
-		
-		double data[] = {width, height};
-		
-		return data;
-	}
-	
-	/** 
-	 * Polls the target dimensions from the dashboard.
-	 * If they are not present, it returns {-1, -1}.
-	 * 
-	 * @return an array of the {x center of mass, y center of mass}
-	 * */
-	public double[] getTargetCenterOfMass(){
-		double x = -1;
-		double y = -1;
-		
-		try{
-			x = SmartDashboard.getNumber("vision_target_x_cm");
-			y = SmartDashboard.getNumber("vision_target_y_cm");
-		}catch(Exception e){}
-		
-		double data[] = {x, y};
-		
-		return data;
-	}
-	
-	/*
-	public void configCamera(){
-        camera.setWhiteBalanceManual(4500);
-        camera.setExposureManual(0);
-		camera.setBrightness(100);
-	}
-	*/
 	
 	public void updateDashboard(){
 		// one-time operations

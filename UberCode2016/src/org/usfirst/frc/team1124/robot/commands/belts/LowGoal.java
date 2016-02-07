@@ -5,41 +5,34 @@ import org.usfirst.frc.team1124.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
-                                                           __          
-                                                         [  |         
- .---.  __   _   _ .--.  _ .--.  .---.  _ .--.    _ .--.  | |  .--.   
-/ /'`\][  | | | [ `/'`\][ `/'`\]/ /__\\[ `.-. |  [ '/'`\ \| | ( (`\]  
-| \__.  | \_/ |, | |     | |    | \__., | | | |   | \__/ || |  `'.'.  
-'.___.' '.__.'_/[___]   [___]    '.__.'[___||__]  | ;.__/[___][\__) ) 
-                                                 [__|          `---'       
+ * A timed command that spits the ball out of the robot into the low goal.
  */
 public class LowGoal extends Command {
 
-    public LowGoal()
-    {
-    	requires(Robot.intake_belts);
+    public LowGoal(){
+    	requires(Robot.intake);
     	
     	setInterruptible(true);
     	
-    	setTimeout(2); // they said two seconds would be long enough so i'll take their word for it
+    	// approximatly 2 seconds
+    	setTimeout(2);
     }
 
-    // Called just before this Command runs the first time
-    protected void initialize()
-    {
-    	Robot.intake_belts.spit();
-    }
+    protected void initialize() {}
 
-    protected void execute() {}
+    protected void execute() {
+    	Robot.intake.spit();
+    }
 
     protected boolean isFinished() {
         return isTimedOut();
     }
 
-    protected void end()
-    {
-    	Robot.intake_belts.stop();
+    protected void end(){
+    	Robot.intake.stop();
     }
 
-    protected void interrupted() {}
+    protected void interrupted() {
+    	end();
+    }
 }
