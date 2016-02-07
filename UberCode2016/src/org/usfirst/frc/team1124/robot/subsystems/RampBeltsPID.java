@@ -119,7 +119,7 @@ public class RampBeltsPID extends PIDSubsystem implements Safe {
 	}
 
 	public double safeOutput(double output) {
-		double safeOutput = 0;
+		double safeOutput = output;
 		
 		// rate safeties
 		if(Math.abs(talon.getEncVelocity()) > Double.MAX_VALUE / 4){
