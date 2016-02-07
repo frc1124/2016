@@ -7,6 +7,7 @@ import org.usfirst.frc.team1124.robot.enums.SafetyError;
 import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -23,6 +24,11 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	public final static double I = 0.0;
 	public final static double D = 0.0;
 	
+	private Timer timer;
+	private double lastVoltage;
+	private double lastTime;
+	private double rate;
+	
 	private CANTalon actuator;
 	private AnalogPotentiometer potentiometer;
 	
@@ -38,9 +44,14 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	public ArmActuatorPID() {
 		super("ArmActuators", P, I, D);
 		
+		timer = new Timer();
+		timer.start();
+		lastTime = timer.get();
+		
 		actuator = new CANTalon(Robot.configIO.getIntVal("arm_actuator"));
 		
 		potentiometer = new AnalogPotentiometer(Robot.configIO.getIntVal("arm_potentiometer"), 1, 0); // 0-1 range, no offset
+		lastVoltage = potentiometer.get();
 		
 		limit_switch = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit"));
 		
@@ -61,11 +72,21 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	}
 
 	protected void usePIDOutput(double output) {
+		lastVoltage = potentiometer.get();
+		lastTime = timer.get();
+		
 		if(isSafetyEnabled()){
 			actuator.set(safeOutput(output));
 		}else{
 			actuator.set(output);
 		}
+	}
+	
+	//measures in changer per millisecond
+	public double getRateChange(){
+		double voltChange = potentiometer.get() - lastVoltage;
+		double timeChange = timer.get() - lastTime;
+		return voltChange / timeChange;
 	}
 	
 	/* Safety Code */
