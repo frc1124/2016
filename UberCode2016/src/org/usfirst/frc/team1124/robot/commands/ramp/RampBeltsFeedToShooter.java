@@ -32,7 +32,7 @@ public class RampBeltsFeedToShooter extends Command {
     }
 
     protected void end() {
-    	Scheduler.getInstance().add(new RampHoldPosition());
+    	Scheduler.getInstance().add(new RampHoldPosition());	//why hold position at end? Do we gain anything from this?
     }
 
     protected void interrupted() {

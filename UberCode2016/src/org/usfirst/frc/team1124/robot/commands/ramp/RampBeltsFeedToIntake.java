@@ -22,7 +22,7 @@ public class RampBeltsFeedToIntake extends Command {
     }
 
     protected void initialize() {
-    	Robot.ramp_belts_pid.feedToShooter();
+    	Robot.ramp_belts_pid.feedToShooter();	//should this not be Robot.ramp_belts_pid.feedToIntake(); ?
     }
 
     protected void execute() {}
@@ -32,7 +32,7 @@ public class RampBeltsFeedToIntake extends Command {
     }
 
     protected void end() {
-    	Scheduler.getInstance().add(new RampHoldPosition());
+    	Scheduler.getInstance().add(new RampHoldPosition());	//see comment in RampBeltsFeedToShooter.java
     }
 
     protected void interrupted() {

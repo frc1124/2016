@@ -90,6 +90,7 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	
 	//measures in changer per millisecond
 	public double getRate(){
+		//changer = change in voltage?
 		double voltChange = potentiometer.get() - lastVoltage;
 		double timeChange = timer.get() - lastTime;
 		
@@ -103,7 +104,7 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	}
 	
 	/** Manual control is forbidden for the arm.
-	 * @deprecated You may not disable te arm actuator's safety. 
+	 * @deprecated You may not disable the arm actuator's safety. 
 	 */
 	public void disableSafety() {}
 
@@ -133,7 +134,7 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		}
 		
 		// directional safety
-		if(limit_switch.get() && output > 0){
+		if(limit_switch.get() && output > 0){	//We need to be sure that this is >/< when we have the actual mechanism.
 			// trying to go too far up, so only allow going down
 			safeOutput = 0;
 			
@@ -142,12 +143,12 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, SafetyError.LimitSwitchDirection);
 		}
 
-		if(potentiometer.get() >= MAX_UP && output > 0){
+		if(potentiometer.get() >= MAX_UP && output > 0){	//Do we need a potentiometer threshold for max if we already have a limit switch?
 			// trying to go to far up
 			safeOutput = 0;
 			
 			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, SafetyError.PotentiometerDirection);
-		}else if(potentiometer.get() <= MAX_DOWN && output < 0){
+		}else if(potentiometer.get() <= MAX_DOWN && output < 0){	//If we have a limit switch for max, why not min? Mechanical decision?
 			// trying to go to far down
 			safeOutput = 0;
 			
@@ -164,6 +165,7 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, SafetyError.NoRateDisconnection);
 		}else if(safetyTimer.get() >= TIME_DELAY){
 			safetyTimer.reset();
+			//See comment about time delay in ShooterPID.java
 		}else{
 			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, SafetyError.NoRateDisconnection);
 		}

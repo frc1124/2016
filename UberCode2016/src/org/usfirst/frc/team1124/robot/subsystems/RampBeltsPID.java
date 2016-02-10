@@ -138,6 +138,9 @@ public class RampBeltsPID extends PIDSubsystem implements Safe {
 			safetyTripped = true;
 			
 			SafetyErrorLogger.log(SafetySubsystem.RampBelts, SafetyError.NoRateDisconnection);
+			
+			//The NoRateDisconnection safety on the shooter has a timer. Shouldn't they both be the same?
+			//See comment on NoRateDisconnection timer in ShooterPID.java
 		}else{
 			SafetyErrorLogger.reportNoError(SafetySubsystem.RampBelts, SafetyError.NoRateDisconnection);
 		}
