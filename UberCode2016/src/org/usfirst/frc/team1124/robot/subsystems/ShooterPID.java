@@ -131,21 +131,6 @@ public class ShooterPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.log(SafetySubsystem.Shooter, SafetyError.NoRateDisconnection);
 		}else if(safetyTimer.get() >= TIME_DELAY){
 			safetyTimer.reset();
-			//I think this system of just resetting the safety timer when rate is not zero and the timer
-			//has gone over might be flawed. This is only called when a new setpoint is set (as far as I understand),
-			//so this safety will never fire as intended. What I think you want is to check whether the set rate is
-			//nonzero and the encoder rate is zero very frequently, and if this is the case, start (or continue) a
-			//timer. Once that timer reaches a certain time, then stop the motor. As is, if you set a setpoint once,
-			//this safety can't trigger even if the motor doesn't move.
-			
-			//In fact, I think you might want to accumulate speed setpoint over all time periods when encoder rate
-			//is 0 and setpoint is nonzero, and trigger the safety once the accumulated speed setpoints get over
-			//a certain threshold. This way, if you tell the motor to go really fast, it will trigger the safety 
-			//quicker than if you just tell it to move slowly. I think this is good, because I think it is easier
-			//to kill a motor with a high speed setpoint and no movement than with a low one, but I'm not sure...
-			
-			//Of course, this safety doesn't even really matter for the shooter wheel--I can't imagine it'll ever
-			//trip it :P
 		}else{
 			SafetyErrorLogger.reportNoError(SafetySubsystem.Shooter, SafetyError.NoRateDisconnection);
 		}

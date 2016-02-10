@@ -16,13 +16,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * The safeties are contained in LeftDrivePID.java and RightDrivePID.java (commands).
  */
 public class DriveTrain extends Subsystem {
-	//Why are the safeties implemented in the commands for the drive train, but not for anything else? What is
-	//in the way of implementing the safeties in the subsystem? If it's the fact that the left and right
-	//gearboxes and associated encoders need to work independently, then shouldn't the left and right gearboxes
-	//each have their own subsystem, both of which are controlled by commands? A "turn t degrees" command, for
-	//example, require the Left Gearbox and Right Gearbox subsystems, and give a setpoint to each of them?
-	//That way, they could each be implemented as their own independent PIDs with safeties, though we'll have
-	//to do some trickery to make the whole drivetrain disable if either safety is tripped.
 	public CANTalon left_1, left_2, left_3, right_1, right_2, right_3;
 	
 	/** TODO tune this */
