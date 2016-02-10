@@ -7,7 +7,7 @@ import org.usfirst.frc.team1124.robot.commands.macro.Autonomous;
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1124.robot.subsystems.Intake;
-import org.usfirst.frc.team1124.robot.subsystems.RampBeltsPID;
+import org.usfirst.frc.team1124.robot.subsystems.RampBelts;
 import org.usfirst.frc.team1124.robot.subsystems.ShooterPID;
 import org.usfirst.frc.team1124.robot.subsystems.ArmActuatorPID;
 import org.usfirst.frc.team1124.robot.subsystems.ArmPistons;
@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 	public static DriveTrain drivetrain;
 	public static ArmPistons arm_pistons;
 	public static ArmActuatorPID arm_actuator_pid;
-	public static RampBeltsPID ramp_belts_pid;
+	public static RampBelts ramp_belts;
 	public static Intake intake;
 	public static ShooterPID shooter_pid;
 	
