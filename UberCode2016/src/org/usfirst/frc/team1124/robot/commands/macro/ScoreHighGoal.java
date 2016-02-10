@@ -13,5 +13,8 @@ public class ScoreHighGoal extends CommandGroup {
     	addSequential(new AimTowardsGoalPID());
     	
     	addSequential(new Shoot());
+    	//Will we ever need to shoot other than when we are trying to score a high goal?
+    	//I guess there's manual shooting, but will we ever really do that? If not, why not just combine the
+    	//contents of Shoot to this?
     }
 }

@@ -10,7 +10,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * The subsystem to manage the intake belts and the wheels on the arm
  */
 public class Intake extends Subsystem {
-    
+    //Is this likely to need a NoRateDisconnection or a HighRateDisconnection safety? Does it even have an
+	//encoder? If we care whether this breaks, shouldn't it have an encoder?
 	private CANTalon belt_motor;
 	private CANTalon arm_wheels_motor;
 	

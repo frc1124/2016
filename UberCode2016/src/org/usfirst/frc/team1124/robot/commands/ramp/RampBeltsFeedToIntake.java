@@ -19,8 +19,9 @@ public class RampBeltsFeedToIntake extends Command {
     	/** TODO tune this */
     	setTimeout(1);
     }
-
-    protected void initialize() {}
+    protected void initialize() {
+    	Robot.ramp_belts.feedToShooter();
+    }
 
     protected void execute() {
     	Robot.ramp_belts.feedToShooter();

@@ -11,7 +11,7 @@ public class BringShooterToSpeed extends Command {
 	
 	private double setpoint = 0;
 	
-    public BringShooterToSpeed(){
+    public BringShooterToSpeed(){	//shouln't this take the speed setpoint as an argument? Our speed is going to need to vary, afaik
     	requires(Robot.shooter_pid);
     	
     	setpoint = Robot.camera_system.getRateForShooterToScore();

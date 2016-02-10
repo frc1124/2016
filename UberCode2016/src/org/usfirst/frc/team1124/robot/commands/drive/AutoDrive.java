@@ -28,9 +28,9 @@ public class AutoDrive extends CommandGroup {
     }
     
     protected void execute(){
-    	double left_speed = left.getSpeed();
-    	double right_speed = right.getSpeed();
-    	
+    	double left_speed = left.getSpeed();		//So this gets the speed setpoints of the right and left
+    	double right_speed = right.getSpeed();		//drive PIDs, and then sets the auto tank drive to drive
+    												//at those speeds? I feel like I'm missing something.
     	Robot.drivetrain.drive_tank_auto(left_speed, right_speed);
     	
     	if(left.isSideFinished() && right.isSideFinished()){
