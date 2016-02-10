@@ -45,7 +45,10 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	private final double MAX_UP = 1;
 	private final double MAX_DOWN = 0;
 	
-	private DigitalInput limit_switch;
+	private DigitalInput limit_switch_back_left;
+	private DigitalInput limit_switch_back_right;
+	private DigitalInput limit_switch_forward_left;
+	private DigitalInput limit_switch_forward_right;
 	
 	public ArmActuatorPID() {
 		super("ArmActuators", P, I, D);
@@ -59,7 +62,10 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		potentiometer = new AnalogPotentiometer(Robot.configIO.getIntVal("arm_potentiometer"), 1000, 0); // 0-1 range, no offset
 		lastVoltage = potentiometer.get();
 		
-		limit_switch = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit"));
+		limit_switch_back_left = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_b_l"));
+		limit_switch_back_right = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_b_r"));
+		limit_switch_forward_left = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_f_l"));
+		limit_switch_forward_right = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_f_r"));
 		
 		// will be the default position at start
 		setSetpoint(0);
@@ -69,6 +75,23 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	
     public void initDefaultCommand() {
         setDefaultCommand(new ArmHoldPosition());
+    }
+    
+    /* Limit Switches */
+    
+    /**
+     * Get the arm's limit switches.
+     * @return a 1 dimensional boolean array of back left, back right, forward left, and forward right limit switches (in that order).
+     */
+    public boolean[] getLimitSwitchStates(){
+    	boolean[] switches = {
+    			!limit_switch_back_left.get(),
+    			!limit_switch_back_right.get(),
+    			!limit_switch_forward_left.get(),
+    			!limit_switch_forward_right.get()
+    		};
+    	
+    	return switches;
     }
     
     /* PID Control */
@@ -133,7 +156,7 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		}
 		
 		// directional safety
-		if(limit_switch.get() && output > 0){
+		if((!limit_switch_forward_left.get() || !limit_switch_forward_right.get()) && output > 0 || (!limit_switch_back_left.get() || !limit_switch_back_right.get()) && output < 0){
 			// trying to go too far up, so only allow going down
 			safeOutput = 0;
 			
