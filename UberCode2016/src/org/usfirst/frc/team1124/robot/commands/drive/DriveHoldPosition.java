@@ -176,9 +176,8 @@ public class DriveHoldPosition extends CommandGroup {
 		return speeds;
     }
     
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return super.isFinished();
     }
     
     protected void end() {

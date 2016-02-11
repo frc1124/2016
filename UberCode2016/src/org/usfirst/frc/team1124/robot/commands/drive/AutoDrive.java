@@ -54,6 +54,8 @@ public class AutoDrive extends CommandGroup {
     }
     
     protected boolean isFinished(){
+    	super.isFinished();
+    	
     	return left.isFinished() && right.isFinished();
     }
     
