@@ -49,12 +49,30 @@ public class ShooterPID extends PIDSubsystem implements Safe {
     }
     
     public void initDefaultCommand() {}
-    
+
+    /**
+     * Stops the PID control and sets output to 0.
+     */
     public void stop(){
     	disable();
     	setSetpoint(0);
     	
     	shooter.set(0);
+    }
+    
+    /**
+     * Resumes the PID control.
+     */
+    public void resume(){
+    	enable();
+    }
+    
+    /**
+     * Run the stop() method before running this. Run resume() when done.
+     * @param speed the speed between -1.0 and 1.0
+     */
+    public void manual(double speed){
+    	shooter.set(speed);
     }
     
     /* Encoder Functions */

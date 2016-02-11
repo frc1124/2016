@@ -27,7 +27,6 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	private Timer timer;
 	private double lastVoltage;
 	private double lastTime;
-	private double rate;
 	
 	private CANTalon actuator;
 	private AnalogPotentiometer potentiometer;
