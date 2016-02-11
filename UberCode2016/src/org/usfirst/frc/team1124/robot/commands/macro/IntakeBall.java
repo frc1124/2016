@@ -1,16 +1,17 @@
-package org.usfirst.frc.team1124.robot.commands.belts;
+package org.usfirst.frc.team1124.robot.commands.macro;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
                                                                                                 
 /**
- *	Ball intake. Belts will run at intake speed set in IntakeBelts subsystem, then stop when light sensor detects ball.
+ *	Ball intake. Belts/wheels will run at intake speed, then stop when light sensor detects ball.
  */
 public class IntakeBall extends Command {
 
     public IntakeBall() {
-        requires(Robot.intake);
+        requires(Robot.arm_intake_wheels);
+        requires(Robot.ramp_belts);
         
         setInterruptible(true);
     }
@@ -18,15 +19,17 @@ public class IntakeBall extends Command {
     protected void initialize() {}
 
     protected void execute() {
-    	Robot.intake.intake();
+    	Robot.arm_intake_wheels.intake();
+    	Robot.ramp_belts.intake();
     }
 
     protected boolean isFinished() {
-        return Robot.intake.getBallDetected();
+        return Robot.ramp_belts.getBallDetected();
     }
 
-    protected void end(){
-    	Robot.intake.stop();
+    protected void end() {
+    	Robot.arm_intake_wheels.stop();
+    	Robot.ramp_belts.stop();
     }
 
     protected void interrupted() {

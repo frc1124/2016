@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1124.robot.commands.belts;
+package org.usfirst.frc.team1124.robot.commands.intake;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LowGoal extends Command {
 
     public LowGoal(){
-    	requires(Robot.intake);
+    	requires(Robot.arm_intake_wheels);
     	
     	setInterruptible(true);
     	
@@ -21,7 +21,7 @@ public class LowGoal extends Command {
     protected void initialize() {}
 
     protected void execute() {
-    	Robot.intake.spit();
+    	Robot.arm_intake_wheels.spit();
     }
 
     protected boolean isFinished() {
@@ -29,7 +29,7 @@ public class LowGoal extends Command {
     }
 
     protected void end(){
-    	Robot.intake.stop();
+    	Robot.arm_intake_wheels.stop();
     }
 
     protected void interrupted() {
