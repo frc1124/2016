@@ -106,7 +106,7 @@ public class ConfigIO {
 	}
 
 	/** Writes keys and values to config map. If the key already exists it overrides the existing value. */
-	public void changeKeyVal(String key, String value){
+	public void writeKeyValue(String key, String value){
 		reloadConfig();
 		config.put(key, value);
 

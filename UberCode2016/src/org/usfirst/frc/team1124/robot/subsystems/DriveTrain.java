@@ -3,6 +3,7 @@ package org.usfirst.frc.team1124.robot.subsystems;
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
@@ -10,6 +11,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /**
  * The Drive Train subsystem. Contains both the left and right gearboxes. </br>
@@ -29,6 +31,8 @@ public class DriveTrain extends Subsystem {
 	
 	private Encoder left;
 	private Encoder right;
+	
+	private AnalogGyro gyro;
 	
 	public DriveTrain(){
 		super("DriveTrain");
@@ -56,10 +60,25 @@ public class DriveTrain extends Subsystem {
 		
 		left.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
 		right.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
+		
+		gyro = new AnalogGyro(Robot.configIO.getIntVal("gyro"));
+		gyro.initGyro();
+		
+		Robot.configIO.writeKeyValue("gyro_offset_calculated", "" + gyro.getOffset());
 	}
 	
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ArcadeDriveJoystick());
+	}
+	
+	// gyro methods
+	
+	public double getAngle(){
+		return gyro.getAngle();
+	}
+	
+	public double getRate(){
+		return gyro.getRate();
 	}
 	
 	// encoder methods

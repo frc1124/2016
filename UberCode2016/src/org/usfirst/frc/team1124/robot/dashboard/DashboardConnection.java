@@ -286,7 +286,7 @@ public class DashboardConnection {
 					
 					String[] items = newData.split(" ");
 					
-					Robot.configIO.changeKeyVal(items[0], items[1]);
+					Robot.configIO.writeKeyValue(items[0], items[1]);
 				}
 				
 				SmartDashboard.putBoolean("update_config", false);
