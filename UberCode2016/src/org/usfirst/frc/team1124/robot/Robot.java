@@ -11,6 +11,7 @@ import org.usfirst.frc.team1124.robot.subsystems.RampBelts;
 import org.usfirst.frc.team1124.robot.subsystems.ShooterPID;
 import org.usfirst.frc.team1124.robot.subsystems.ArmActuatorPID;
 import org.usfirst.frc.team1124.robot.subsystems.ArmPistons;
+import org.usfirst.frc.team1124.robot.subsystems.Camera;
 
 // cameras
 import edu.wpi.first.wpilibj.vision.AxisCamera;
@@ -21,7 +22,6 @@ import org.usfirst.frc.team1124.robot.tools.ConfigIO;
 
 // dashboard
 import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
-import org.usfirst.frc.team1124.robot.dashboard.CameraSystem;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
 import org.usfirst.frc.team1124.robot.enums.CameraSelect;
 
@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
 	
 	// dashboard and camera
 	public static DashboardConnection db_connection = new DashboardConnection();
-	public static CameraSystem camera_system = new CameraSystem();
+	public static Camera camera = new Camera();
 	
 	// autonomous
     Command autonomousCommand;
@@ -92,10 +92,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		// set up cameras
-		camera_system.initShooterCamera();
-		camera_system.initIntakeCamera();
-		
-		camera_system.selectCamera(CameraSelect.Shooter);
+		camera.selectCamera(CameraSelect.Shooter);
         
         // set up error logger
         SafetyErrorLogger.init();
@@ -125,7 +122,7 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
     	db_connection.updateDashboard();
     	
-    	camera_system.getImage();
+    	camera.getImage();
     	
         Scheduler.getInstance().run();
     }
@@ -156,7 +153,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	db_connection.updateDashboard();
     	
-    	camera_system.getImage();
+    	camera.getImage();
     	
         Scheduler.getInstance().run();
     }

@@ -14,7 +14,8 @@ public class BringShooterToSpeed extends Command {
     public BringShooterToSpeed(){
     	requires(Robot.shooter_pid);
     	
-    	setpoint = Robot.camera_system.getRateForShooterToScore();
+    	// TODO set this!
+    	//setpoint = Robot.camera.getRateForShooterToScore();
     	
     	Robot.shooter_pid.setSetpoint(setpoint);
     	

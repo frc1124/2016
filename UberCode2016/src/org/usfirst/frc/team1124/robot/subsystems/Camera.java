@@ -1,12 +1,14 @@
-package org.usfirst.frc.team1124.robot.dashboard;
+package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.commands.camera.StreamShooterCamera;
 import org.usfirst.frc.team1124.robot.enums.CameraSelect;
 
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
 import edu.wpi.first.wpilibj.vision.AxisCamera.ExposureControl;
@@ -14,13 +16,30 @@ import edu.wpi.first.wpilibj.vision.AxisCamera.Resolution;
 import edu.wpi.first.wpilibj.vision.AxisCamera.WhiteBalance;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 
-public class CameraSystem {
+/**
+ * The subsystem that manages camera streams and data processing
+ */
+public class Camera extends Subsystem {
 	private Image intake_frame;
 	private Image shooter_frame;
 	
 	private CameraSelect current_camera;
 	
-	public void initShooterCamera(){
+	// if camera is being held by auto code
+	private boolean camera_held = false;
+
+	public Camera(){
+		super("camera");
+		
+		initShooterCamera();
+		initIntakeCamera();
+	}
+	
+	protected void initDefaultCommand() {
+		setDefaultCommand(new StreamShooterCamera());
+	}
+	
+	private void initShooterCamera(){
 		try{
 	        shooter_frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 	        Robot.shooter_camera = new AxisCamera("10.11.24.78");
@@ -38,7 +57,7 @@ public class CameraSystem {
 		}catch(Exception e) {}
 	}
 	
-	public void initIntakeCamera(){
+	private void initIntakeCamera(){
 		try{
 	        intake_frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 			
@@ -47,10 +66,25 @@ public class CameraSystem {
 		}catch(Exception e) {}
 	}
 	
+	/**
+	 * Select the camera to stream
+	 * @param selection the enum of the camera you want to stream
+	 */
 	public void selectCamera(CameraSelect selection){
 		current_camera = selection;
 	}
 	
+	public CameraSelect getActiveCamera(){
+		return current_camera;
+	}
+	
+	public void setHeld(){
+		camera_held = true;
+	}
+	
+	public boolean isHeld(){
+		return camera_held;
+	}
 	/** 
 	 * Only run this method while the robot is ENABLED! This method gets the image and sends it to the dashboard for display and processing. 
 	 */
@@ -67,15 +101,6 @@ public class CameraSystem {
         		break;
         	}
         }catch(Exception e){}
-	}
-	
-	/**
-	 * Calculates the speed needed to shoot a high goal using the current image data
-	 * TODO fill out this function with christian's code
-	 * @return the rate for the shooter motor
-	 */
-	public double getRateForShooterToScore(){
-		return 0.0;
 	}
 	
 	/** 

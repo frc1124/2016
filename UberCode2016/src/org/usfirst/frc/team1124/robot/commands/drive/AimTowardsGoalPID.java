@@ -24,7 +24,7 @@ public class AimTowardsGoalPID extends PIDCommand {
     }
     
 	protected double returnPIDInput() {
-		return Robot.camera_system.getTargetCenterOfMass()[0];
+		return Robot.camera.getTargetCenterOfMass()[0];
 	}
 	
 	protected void usePIDOutput(double output) {
@@ -32,7 +32,7 @@ public class AimTowardsGoalPID extends PIDCommand {
 	}
 	
 	protected void execute() {
-		double center = Robot.camera_system.getTargetCenterOfMass()[0];
+		double center = Robot.camera.getTargetCenterOfMass()[0];
 
 		/** TODO change this later? */
 		if(center == 0){

@@ -3,16 +3,25 @@ package org.usfirst.frc.team1124.robot.dashboard;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.commands.camera.SelectCamera;
+import org.usfirst.frc.team1124.robot.enums.CameraSelect;
 
 import edu.wpi.first.wpilibj.ControllerPower;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashboardConnection {
 	private static boolean firstCall = true;
 	
+	// use shooter since that is the default/first state
+	private CameraSelect prevCameraSelection = CameraSelect.Shooter;
+	
 	public void updateDashboard(){
 		// one-time operations
 		oneTimeOperations();
+		
+		// camera data
+		updateCameraInfo();
 		
 		// roboRIO
 		updateRoboRIO();
@@ -53,6 +62,29 @@ public class DashboardConnection {
 			
 			firstCall = false;
 		}
+	}
+	
+	private void updateCameraInfo(){
+		try{
+			boolean selection = SmartDashboard.getBoolean("camera_selector");
+			CameraSelect camera_selection = selection ? CameraSelect.Shooter : CameraSelect.Intake;
+			
+			if(prevCameraSelection != camera_selection){
+				SelectCamera command = new SelectCamera(camera_selection);
+				
+				Scheduler.getInstance().add(command);
+			}
+			
+			prevCameraSelection = camera_selection;
+		}catch(Exception e){}
+		
+		SmartDashboard.putBoolean("camera_override", Robot.camera.isHeld());
+		
+		CameraSelect select = Robot.camera.getActiveCamera();
+		
+		boolean result = (select == CameraSelect.Shooter);
+		
+		SmartDashboard.putBoolean("camera_enabled", result);
 	}
 	
 	private void updateEncoders(){
