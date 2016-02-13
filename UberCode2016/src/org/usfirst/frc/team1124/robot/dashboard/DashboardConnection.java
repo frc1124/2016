@@ -197,8 +197,8 @@ public class DashboardConnection {
 		SmartDashboard.putNumber("shooter_encoder_rate", Robot.shooter_pid.getRate());
 
 		// arm potentiometer
-		SmartDashboard.putNumber("arm_actuator_pot_dist", Robot.arm_actuator_pid.getDistance());
-		SmartDashboard.putNumber("arm_actuator_pot_rate", Robot.arm_actuator_pid.getRate());
+		SmartDashboard.putNumber("arm_actuator_encoder_dist", Robot.arm_actuator_pid.getDistance());
+		SmartDashboard.putNumber("arm_actuator_encoder_rate", Robot.arm_actuator_pid.getRate());
 		
 		// arm limit switches
 		boolean[] switches = Robot.arm_actuator_pid.getLimitSwitchStates();

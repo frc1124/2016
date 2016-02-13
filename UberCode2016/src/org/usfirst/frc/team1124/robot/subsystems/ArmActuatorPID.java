@@ -7,6 +7,7 @@ import org.usfirst.frc.team1124.robot.enums.SafetyError;
 import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;
@@ -24,12 +25,8 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	public final static double I = 0.0;
 	public final static double D = 0.0;
 	
-	private Timer timer;
-	private double lastVoltage;
-	private double lastTime;
-	
 	private CANTalon actuator;
-	private AnalogPotentiometer potentiometer;
+	private Encoder encoder;
 	
 	private Timer safetyTimer = new Timer();
 	private boolean timerFirstCall = true;
@@ -52,14 +49,12 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	public ArmActuatorPID() {
 		super("ArmActuators", P, I, D);
 		
-		timer = new Timer();
-		timer.start();
-		lastTime = timer.get();
-		
 		actuator = new CANTalon(Robot.configIO.getIntVal("arm_actuator"));
 		
-		potentiometer = new AnalogPotentiometer(Robot.configIO.getIntVal("arm_potentiometer"), 1000, 0); // 0-1 range, no offset
-		lastVoltage = potentiometer.get();
+		int a_channel = Robot.configIO.getIntVal("arm_encoder_a");
+		int b_channel = Robot.configIO.getIntVal("arm_encoder_b");
+		
+		encoder = new Encoder(a_channel, b_channel);
 		
 		limit_switch_back_left = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_b_l"));
 		limit_switch_back_right = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_b_r"));
@@ -96,13 +91,10 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
     /* PID Control */
     
 	protected double returnPIDInput() {
-		return potentiometer.get();
+		return encoder.getDistance();
 	}
 
 	protected void usePIDOutput(double output) {
-		lastVoltage = potentiometer.get();
-		lastTime = timer.get();
-		
 		if(isSafetyEnabled()){
 			actuator.set(safeOutput(output));
 		}else{
@@ -111,16 +103,12 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	}
 	
 	public double getDistance(){
-		return potentiometer.get();
+		return encoder.getDistance();
 	}
 	
 	//measures in changer per millisecond
 	public double getRate(){
-		//changer = change in voltage?
-		double voltChange = potentiometer.get() - lastVoltage;
-		double timeChange = timer.get() - lastTime;
-		
-		return voltChange / timeChange;
+		return encoder.getRate();
 	}
 	
 	/* Safety Code */
@@ -169,18 +157,18 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, SafetyError.LimitSwitchDirection);
 		}
 
-		if(potentiometer.get() >= MAX_UP && output > 0){	//Do we need a potentiometer threshold for max if we already have a limit switch?
+		if(getDistance() >= MAX_UP && output > 0){	//Do we need a potentiometer threshold for max if we already have a limit switch?
 			// trying to go to far up
 			safeOutput = 0;
 			
-			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, SafetyError.PotentiometerDirection);
-		}else if(potentiometer.get() <= MAX_DOWN && output < 0){	//If we have a limit switch for max, why not min? Mechanical decision?
+			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, SafetyError.EncoderDirection);
+		}else if(getDistance() <= MAX_DOWN && output < 0){	//If we have a limit switch for max, why not min? Mechanical decision?
 			// trying to go to far down
 			safeOutput = 0;
 			
-			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, SafetyError.PotentiometerDirection);
+			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, SafetyError.EncoderDirection);
 		}else{
-			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, SafetyError.PotentiometerDirection);
+			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, SafetyError.EncoderDirection);
 		}
 		
 		if(Math.abs(output) > getRateCutoffThreshold() && getRate() == 0 && safetyTimer.get() >= TIME_DELAY){
@@ -191,7 +179,6 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.log(SafetySubsystem.ArmActuator, SafetyError.NoRateDisconnection);
 		}else if(safetyTimer.get() >= TIME_DELAY){
 			safetyTimer.reset();
-			//See comment about time delay in ShooterPID.java
 		}else{
 			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, SafetyError.NoRateDisconnection);
 		}
