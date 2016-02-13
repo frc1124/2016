@@ -11,19 +11,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ArmPistons extends Subsystem {
 	
-	DoubleSolenoid left_piston;
-	DoubleSolenoid right_piston;
+	DoubleSolenoid piston;
 	
 	public ArmPistons(){
 		super("ArmPistons");
 		
-		int left_a = Robot.configIO.getIntVal("arm_piston_left_a");
-		int left_b = Robot.configIO.getIntVal("arm_piston_left_b");
-		int right_a = Robot.configIO.getIntVal("arm_piston_right_a");
-		int right_b = Robot.configIO.getIntVal("arm_piston_right_b");
+		int a = Robot.configIO.getIntVal("arm_piston_a");
+		int b = Robot.configIO.getIntVal("arm_piston_b");
 		
-		left_piston = new DoubleSolenoid(left_a, left_b);
-		right_piston = new DoubleSolenoid(right_a, right_b);
+		piston = new DoubleSolenoid(a, b);
 	}
 
     public void initDefaultCommand() {
@@ -32,14 +28,12 @@ public class ArmPistons extends Subsystem {
     
     /** Extend the arm pistons */
     public void extend(){
-    	left_piston.set(DoubleSolenoid.Value.kForward);
-    	right_piston.set(DoubleSolenoid.Value.kForward);
+    	piston.set(DoubleSolenoid.Value.kForward);
     }
     
     /** Retract the arm pistons */
     public void retract(){
-    	left_piston.set(DoubleSolenoid.Value.kReverse);
-    	right_piston.set(DoubleSolenoid.Value.kReverse);
+    	piston.set(DoubleSolenoid.Value.kReverse);
     }
 }
 

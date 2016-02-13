@@ -6,10 +6,8 @@ import org.usfirst.frc.team1124.robot.enums.SafetyError;
 import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
 import org.usfirst.frc.team1124.robot.tools.Safe;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
@@ -24,7 +22,6 @@ public class ShooterPID extends PIDSubsystem implements Safe {
 	public final double SETPOINT_TOLERANCE = 2.0;
 	
 	private CANTalon shooter;
-	private Encoder encoder;
 	
 	private Timer safetyTimer = new Timer();
 	private boolean timerFirstCall = true;
@@ -39,11 +36,6 @@ public class ShooterPID extends PIDSubsystem implements Safe {
     	super("ShooterPID", P, I, D);
     	
     	shooter = new CANTalon(Robot.configIO.getIntVal("shooter"));
-    	
-    	int port_a = Robot.configIO.getIntVal("shooter_enc_a");
-    	int port_b = Robot.configIO.getIntVal("shooter_enc_b");
-    	
-    	encoder = new Encoder(port_a, port_b, false, EncodingType.k4X);
     	
     	setSetpoint(0);
     }
@@ -78,13 +70,13 @@ public class ShooterPID extends PIDSubsystem implements Safe {
     /* Encoder Functions */
     
     public double getRate(){
-    	return encoder.getRate();
+    	return shooter.getEncVelocity();
     }
 
     /* PID Control */
     
     protected double returnPIDInput() {
-    	return encoder.getRate();
+    	return getRate();
     }
     
     protected void usePIDOutput(double output) {
@@ -131,7 +123,7 @@ public class ShooterPID extends PIDSubsystem implements Safe {
 		}
 		
 		// rate safeties
-		if(Math.abs(encoder.getRate()) > Double.MAX_VALUE / 4){
+		if(Math.abs(getRate()) > Double.MAX_VALUE / 4){
 			// encoder was disconnected and is reading something around infinity
 			safeOutput = 0;
 			safetyTripped = true;
@@ -141,7 +133,7 @@ public class ShooterPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.reportNoError(SafetySubsystem.Shooter, SafetyError.HighRateDisconnection);
 		}
 		
-		if(Math.abs(output) > getRateCutoffThreshold() && encoder.getRate() == 0 && safetyTimer.get() >= TIME_DELAY){
+		if(Math.abs(output) > getRateCutoffThreshold() && getRate() == 0 && safetyTimer.get() >= TIME_DELAY){
 			// we are moving it but the encoder isn't reading it, not good
 			safeOutput = 0;
 			safetyTripped = true;

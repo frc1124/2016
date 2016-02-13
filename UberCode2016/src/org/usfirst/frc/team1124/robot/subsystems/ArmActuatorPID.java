@@ -9,7 +9,6 @@ import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import org.usfirst.frc.team1124.robot.tools.Safe;
@@ -41,10 +40,8 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	private final double MAX_UP = 1;
 	private final double MAX_DOWN = 0;
 	
-	private DigitalInput limit_switch_back_left;
-	private DigitalInput limit_switch_back_right;
-	private DigitalInput limit_switch_forward_left;
-	private DigitalInput limit_switch_forward_right;
+	private DigitalInput limit_switch_back;
+	private DigitalInput limit_switch_forward;
 	
 	public ArmActuatorPID() {
 		super("ArmActuators", P, I, D);
@@ -56,10 +53,8 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		
 		encoder = new Encoder(a_channel, b_channel);
 		
-		limit_switch_back_left = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_b_l"));
-		limit_switch_back_right = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_b_r"));
-		limit_switch_forward_left = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_f_l"));
-		limit_switch_forward_right = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_f_r"));
+		limit_switch_back = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_back"));
+		limit_switch_forward = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_forward"));
 		
 		// will be the default position at start
 		setSetpoint(0);
@@ -79,10 +74,8 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
      */
     public boolean[] getLimitSwitchStates(){
     	boolean[] switches = {
-    			!limit_switch_back_left.get(),
-    			!limit_switch_back_right.get(),
-    			!limit_switch_forward_left.get(),
-    			!limit_switch_forward_right.get()
+    			!limit_switch_back.get(),
+    			!limit_switch_forward.get(),
     		};
     	
     	return switches;
@@ -148,7 +141,7 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		}
 		
 		// directional safety
-		if((!limit_switch_forward_left.get() || !limit_switch_forward_right.get()) && output > 0 || (!limit_switch_back_left.get() || !limit_switch_back_right.get()) && output < 0){
+		if(!limit_switch_forward.get() && output > 0 || !limit_switch_back.get() && output < 0){
 			// trying to go too far up, so only allow going down
 			safeOutput = 0;
 			
