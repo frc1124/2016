@@ -32,6 +32,19 @@ public class VisionTools {
 //    double goalRightRelativeX = goalLeftRelativeX + goalWidth;
 //    double goalRelativeY = dL * Math.sin(Math.acos((dR * dR - dL * dL - goalWidth * goalWidth) / 2 / dL / goalWidth));
     
+	
+	/**
+	 * Gives distances to the goal (left and right) from image data
+	 * @param TLX	x coordinate of the top left hand coordinate of the retroreflective tape around the goal
+	 * @param TLY	y coordinate of the top left hand coordinate of the retroreflective tape around the goal
+	 * @param TRX	x coordinate of the top right hand coordinate of the retroreflective tape around the goal
+	 * @param TRY	y coordinate of the top right hand coordinate of the retroreflective tape around the goal
+	 * @param BLX	x coordinate of the bottom left hand coordinate of the retroreflective tape around the goal
+	 * @param BLY	y coordinate of the bottom left hand coordinate of the retroreflective tape around the goal
+	 * @param BRX	x coordinate of the bottom right hand coordinate of the retroreflective tape around the goal
+	 * @param BRY	y coordinate of the bottom right hand coordinate of the retroreflective tape around the goal
+	 * @return	{ground distance to left hand side of goal, ground distance to right hand side of goal}
+	 */
     double[] goalDistances(double TLX, double TLY, double TRX, double TRY, double BLX, double BLY, double BRX, double BRY) {
     	return new double[] {
 			(dHBottom * (BLY - cameraHeight / 2 + focalLength * Math.sqrt(3.0))
