@@ -110,6 +110,10 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		}
 	}
 	
+	public double getDistance(){
+		return potentiometer.get();
+	}
+	
 	//measures in changer per millisecond
 	public double getRate(){
 		//changer = change in voltage?

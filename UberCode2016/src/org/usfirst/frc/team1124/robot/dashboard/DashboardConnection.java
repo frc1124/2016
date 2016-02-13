@@ -30,7 +30,7 @@ public class DashboardConnection {
 		updatePDP();
 		
 		// encoders
-		updateEncoders();
+		updateSensors();
 		
 		// config
 		sendConfigToDash();
@@ -87,8 +87,7 @@ public class DashboardConnection {
 		SmartDashboard.putBoolean("camera_enabled", result);
 	}
 	
-	private void updateEncoders(){
-    	/** TODO do this for all encoders */
+	private void updateSensors(){
 		// drive encoders
 		SmartDashboard.putNumber("left_drive_encoder_dist", Robot.drivetrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("left_drive_encoder_rate", Robot.drivetrain.getLeftEncoderRate());
@@ -96,6 +95,25 @@ public class DashboardConnection {
 		SmartDashboard.putNumber("right_drive_encoder_dist", Robot.drivetrain.getRightEncoderDistance());
 		SmartDashboard.putNumber("right_drive_encoder_rate", Robot.drivetrain.getRightEncoderRate());
 		
+		// shooter encoder
+		SmartDashboard.putNumber("shooter_encoder_rate", Robot.shooter_pid.getRate());
+
+		// arm potentiometer
+		SmartDashboard.putNumber("arm_actuator_pot_dist", Robot.arm_actuator_pid.getDistance());
+		SmartDashboard.putNumber("arm_actuator_pot_rate", Robot.arm_actuator_pid.getRate());
+		
+		// arm limit switches
+		boolean[] switches = Robot.arm_actuator_pid.getLimitSwitchStates();
+		
+		SmartDashboard.putBoolean("arm_actuator_back_left", switches[0]);
+		SmartDashboard.putBoolean("arm_actuator_back_right", switches[1]);
+		SmartDashboard.putBoolean("arm_actuator_forward_left", switches[2]);
+		SmartDashboard.putBoolean("arm_actuator_forward_right", switches[3]);
+		
+		// ball detection sensor
+		SmartDashboard.putBoolean("ramp_belts_sensor", Robot.ramp_belts.getBallDetected());
+		
+		// drive encoder resets
 		try {
 			boolean reset_right = SmartDashboard.getBoolean("right_encoder_reset");
 			boolean reset_left = SmartDashboard.getBoolean("left_encoder_reset");
