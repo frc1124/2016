@@ -3,6 +3,7 @@ package org.usfirst.frc.team1124.robot.subsystems;
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.camera.StreamShooterCamera;
 import org.usfirst.frc.team1124.robot.enums.CameraSelect;
+import org.usfirst.frc.team1124.robot.tools.VisionTools;
 
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
@@ -141,5 +142,54 @@ public class Camera extends Subsystem {
 		double data[] = {x, y};
 		
 		return data;
+	}
+	
+	/**
+	 * Get the average distance to the target.
+	 * @return The average distance (left edge distance and right edge distance averaged)
+	 */
+	public double getTargetAvgDistance(){
+		double result = -1.0;
+		
+		/*
+		 * What each point means on the image:
+		 * 
+		 *   XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+		 *   X point_1           point_2 X
+		 *   X                           X
+		 *   X                           X
+		 *   X                           X
+		 *   X                           X
+		 *   X                           X
+		 *   X                           X
+		 *   X                           X
+		 *   X point_4           point_3 X
+		 *   XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+		 */
+		
+		try{
+			double[] point_1 = {
+					SmartDashboard.getNumber("vision_target_p1_x"),
+					SmartDashboard.getNumber("vision_target_p1_y")
+				};
+			double[] point_2 = {
+					SmartDashboard.getNumber("vision_target_p2_x"),
+					SmartDashboard.getNumber("vision_target_p2_y")
+				};
+			double[] point_3 = {
+					SmartDashboard.getNumber("vision_target_p3_x"),
+					SmartDashboard.getNumber("vision_target_p3_y")
+				};
+			double[] point_4 = {
+					SmartDashboard.getNumber("vision_target_p4_x"),
+					SmartDashboard.getNumber("vision_target_p4_y")
+				};
+			
+			double[] distances = VisionTools.goalDistances(point_1[0], point_1[1], point_2[0], point_2[1], point_4[0], point_4[1], point_3[0], point_4[1]);
+			
+			result = (distances[0] + distances[1] ) / 2;
+		}catch(Exception e){}
+		
+		return result;
 	}
 }
