@@ -62,7 +62,7 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp;
 	
 	// dashboard and camera
-	public static DashboardConnection db_connection = new DashboardConnection();
+	public static DashboardConnection dashboard = new DashboardConnection();
 	public static Camera camera = new Camera();
 	
 	// autonomous
@@ -99,7 +99,7 @@ public class Robot extends IterativeRobot {
     }
 	
 	public void disabledPeriodic() {
-    	db_connection.updateDashboard();
+    	dashboard.updateDashboard();
     	
 		Scheduler.getInstance().run();
 	}
@@ -120,7 +120,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-    	db_connection.updateDashboard();
+    	dashboard.updateDashboard();
     	
     	camera.getImage();
     	
@@ -151,7 +151,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	db_connection.updateDashboard();
+    	dashboard.updateDashboard();
     	
     	camera.getImage();
     	

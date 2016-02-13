@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectCamera;
+import org.usfirst.frc.team1124.robot.enums.AutoDefensePosition;
+import org.usfirst.frc.team1124.robot.enums.AutoDefenseType;
+import org.usfirst.frc.team1124.robot.enums.AutoMode;
 import org.usfirst.frc.team1124.robot.enums.CameraSelect;
 
 import edu.wpi.first.wpilibj.ControllerPower;
@@ -15,6 +18,101 @@ public class DashboardConnection {
 	
 	// use shooter since that is the default/first state
 	private CameraSelect prevCameraSelection = CameraSelect.Shooter;
+	
+	/**
+	 * Get data for autonomous
+	 */
+	public static class Auto {
+		public static AutoMode getMode(){
+			AutoMode mode = AutoMode.Nothing;
+			
+			try{
+				int mode_id =  (int) SmartDashboard.getNumber("auto_mode");
+				
+				switch(mode_id){
+					case 0:
+						mode = AutoMode.Nothing;
+					break;
+					case 1:
+						mode = AutoMode.GetToDefense;
+					break;
+					case 2:
+						mode = AutoMode.CrossDefense;
+					break;
+					case 3:
+						mode = AutoMode.ScoreHighGoal;
+					break;
+					case 4:
+						mode = AutoMode.ScoreLowGoal;
+					break;
+				}
+			}catch(Exception e){}
+			
+			return mode;
+		}
+		
+		public static AutoDefenseType getDefenseType(){
+			AutoDefenseType type = AutoDefenseType.SomethingElse;
+			
+			try{
+				int type_id =  (int) SmartDashboard.getNumber("auto_defense_type");
+				
+				switch(type_id){
+					case 0:
+						type = AutoDefenseType.Moat;
+					break;
+					case 1:
+						type = AutoDefenseType.Ramparts;
+					break;
+					case 2:
+						type = AutoDefenseType.RockWall;
+					break;
+					case 3:
+						type = AutoDefenseType.RoughTerrain;
+					break;
+					case 4:
+						type = AutoDefenseType.SomethingElse;
+					break;
+				}
+			}catch(Exception e){}
+			
+			return type;
+		}
+		
+		public static AutoDefensePosition getDefensePosition(){
+			AutoDefensePosition position = AutoDefensePosition.SpyBox;
+			
+			try{
+				int position_id =  (int) SmartDashboard.getNumber("auto_defense_position");
+				
+				switch(position_id){
+					case 0:
+						position = AutoDefensePosition.Pos_1;
+					break;
+					case 1:
+						position = AutoDefensePosition.Pos_2;
+					break;
+					case 2:
+						position = AutoDefensePosition.Pos_3;
+					break;
+					case 3:
+						position = AutoDefensePosition.Pos_4;
+					break;
+					case 4:
+						position = AutoDefensePosition.Pos_5;
+					break;
+					case 5:
+						position = AutoDefensePosition.SpyBox;
+					break;
+				}
+			}catch(Exception e){}
+			
+			return position;
+		}
+		
+	}
+	
+	// dashboard data syncing
 	
 	public void updateDashboard(){
 		// one-time operations
