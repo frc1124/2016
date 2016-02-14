@@ -25,6 +25,7 @@ import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
 import org.usfirst.frc.team1124.robot.enums.CameraSelect;
 
+import edu.wpi.first.wpilibj.Compressor;
 // wpilib components
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -60,6 +61,7 @@ public class Robot extends IterativeRobot {
 	
 	// components
 	public static PowerDistributionPanel pdp;
+	public static Compressor compressor;
 	
 	// dashboard and camera
 	public static DashboardConnection dashboard = new DashboardConnection();
@@ -82,6 +84,7 @@ public class Robot extends IterativeRobot {
     	// instantiate subsystems
 		drivetrain = new DriveTrain();
 		pdp = new PowerDistributionPanel();
+		compressor = new Compressor();
 		//arm_pistons = new ArmPistons();
 		//arm_actuator_pid = new ArmActuatorPID();
 		//ramp_belts_pid = new RampBeltsPID();
@@ -96,6 +99,9 @@ public class Robot extends IterativeRobot {
         
         // set up error logger
         SafetyErrorLogger.init();
+        
+        // make sure compressor is not running
+        compressor.stop();
     }
 	
 	public void disabledPeriodic() {

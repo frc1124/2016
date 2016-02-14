@@ -19,6 +19,9 @@ public class DashboardConnection {
 	// use shooter since that is the default/first state
 	private CameraSelect prevCameraSelection = CameraSelect.Shooter;
 	
+	// previous compressor state
+	private boolean wasCompressorEnabled = false;
+	
 	/**
 	 * Get data for autonomous
 	 */
@@ -132,6 +135,9 @@ public class DashboardConnection {
 		
 		// config
 		sendConfigToDash();
+		
+		// control compressor
+		operateCompressor();
 	}
 	
 	private void oneTimeOperations(){
@@ -300,5 +306,21 @@ public class DashboardConnection {
 		for(int i = 0; i < list.size(); i++){
 			SmartDashboard.putString("config_" + i, list.get(i));
 		}
+	}
+	
+	private void operateCompressor(){
+		try{
+			boolean enableCompressor = SmartDashboard.getBoolean("compressor_enable");
+			
+			if(enableCompressor && !wasCompressorEnabled){
+				Robot.compressor.start();
+				
+				wasCompressorEnabled = true;
+			}else if(!enableCompressor && wasCompressorEnabled){
+				Robot.compressor.stop();
+				
+				wasCompressorEnabled = false;
+			}
+		}catch(Exception e){}
 	}
 }
