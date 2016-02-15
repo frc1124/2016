@@ -12,6 +12,6 @@ public class Shoot extends CommandGroup {
     
     public Shoot() {
         addParallel(new RampBeltsFeedToShooter());
-        addParallel(new BringShooterToSpeed());
+        addParallel(new BringShooterToSpeed(0)); //TODO change this
     }
 }

@@ -74,8 +74,8 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
      */
     public boolean[] getLimitSwitchStates(){
     	boolean[] switches = {
-    			!limit_switch_back.get(),
-    			!limit_switch_forward.get(),
+    			limit_switch_back.get(),
+    			limit_switch_forward.get(),
     		};
     	
     	return switches;

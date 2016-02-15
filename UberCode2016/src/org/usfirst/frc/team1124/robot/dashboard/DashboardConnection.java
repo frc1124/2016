@@ -3,21 +3,15 @@ package org.usfirst.frc.team1124.robot.dashboard;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.commands.camera.SelectCamera;
 import org.usfirst.frc.team1124.robot.enums.AutoDefensePosition;
 import org.usfirst.frc.team1124.robot.enums.AutoDefenseType;
 import org.usfirst.frc.team1124.robot.enums.AutoMode;
-import org.usfirst.frc.team1124.robot.enums.CameraSelect;
 
 import edu.wpi.first.wpilibj.ControllerPower;
-import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashboardConnection {
 	private static boolean firstCall = true;
-	
-	// use shooter since that is the default/first state
-	private CameraSelect prevCameraSelection = CameraSelect.Shooter;
 	
 	// previous compressor state
 	private boolean wasCompressorEnabled = false;
@@ -147,48 +141,29 @@ public class DashboardConnection {
 			
 			// PDP port "map"
 	    	/** TODO update these with final robot ports */
-			SmartDashboard.putString("pdp_can_key_port_0", "Right Drive [Rear] (CAN ID#6)");
-			SmartDashboard.putString("pdp_can_key_port_1", "Right Drive [Top] (CAN ID#5)");
-			SmartDashboard.putString("pdp_can_key_port_2", "null");
-			SmartDashboard.putString("pdp_can_key_port_3", "null");
-			SmartDashboard.putString("pdp_can_key_port_4", "null");
-			SmartDashboard.putString("pdp_can_key_port_5", "null");
+			SmartDashboard.putString("pdp_can_key_port_0", "Arm Actuator (CAN ID#5)");
+			SmartDashboard.putString("pdp_can_key_port_1", "Left Drive [front] (CAN ID#6)");
+			SmartDashboard.putString("pdp_can_key_port_2", "Left Drive [back] (CAN ID#7)");
+			SmartDashboard.putString("pdp_can_key_port_3", "Left Drive [top] (CAN ID#8)");
+			SmartDashboard.putString("pdp_can_key_port_4", "Arm Intake (CAN ID#9)");
+			SmartDashboard.putString("pdp_can_key_port_5", "Ramp Belts (CAN ID#10)");
 			SmartDashboard.putString("pdp_can_key_port_6", "null");
 			SmartDashboard.putString("pdp_can_key_port_7", "null");
 			SmartDashboard.putString("pdp_can_key_port_8", "null");
 			SmartDashboard.putString("pdp_can_key_port_9", "null");
 			SmartDashboard.putString("pdp_can_key_port_10", "null");
-			SmartDashboard.putString("pdp_can_key_port_11", "null");
-			SmartDashboard.putString("pdp_can_key_port_12", "Right Drive [Front] (CAN ID#4)");
-			SmartDashboard.putString("pdp_can_key_port_13", "Left Drive [Top] (CAN ID#2)");
-			SmartDashboard.putString("pdp_can_key_port_14", "Left Drive [Front] (CAN ID#1)");
-			SmartDashboard.putString("pdp_can_key_port_15", "Left Drive [Rear] (CAN ID#3)");
+			SmartDashboard.putString("pdp_can_key_port_11", "Light Sensor");
+			SmartDashboard.putString("pdp_can_key_port_12", "Shooter (CAN ID#1)");
+			SmartDashboard.putString("pdp_can_key_port_13", "Right Drive [top] (CAN ID#2)");
+			SmartDashboard.putString("pdp_can_key_port_14", "Right Drive [front] (CAN ID#3)");
+			SmartDashboard.putString("pdp_can_key_port_15", "Right Drive [back] (CAN ID#4)");
 			
 			firstCall = false;
 		}
 	}
 	
 	private void updateCameraInfo(){
-		try{
-			boolean selection = SmartDashboard.getBoolean("camera_selector");
-			CameraSelect camera_selection = selection ? CameraSelect.Shooter : CameraSelect.Intake;
-			
-			if(prevCameraSelection != camera_selection){
-				SelectCamera command = new SelectCamera(camera_selection);
-				
-				Scheduler.getInstance().add(command);
-			}
-			
-			prevCameraSelection = camera_selection;
-		}catch(Exception e){}
-		
 		SmartDashboard.putBoolean("camera_override", Robot.camera.isHeld());
-		
-		CameraSelect select = Robot.camera.getActiveCamera();
-		
-		boolean result = (select == CameraSelect.Shooter);
-		
-		SmartDashboard.putBoolean("camera_enabled", result);
 	}
 	
 	private void updateSensors(){
@@ -209,10 +184,8 @@ public class DashboardConnection {
 		// arm limit switches
 		boolean[] switches = Robot.arm_actuator_pid.getLimitSwitchStates();
 		
-		SmartDashboard.putBoolean("arm_actuator_back_left", switches[0]);
-		SmartDashboard.putBoolean("arm_actuator_back_right", switches[1]);
-		SmartDashboard.putBoolean("arm_actuator_forward_left", switches[2]);
-		SmartDashboard.putBoolean("arm_actuator_forward_right", switches[3]);
+		SmartDashboard.putBoolean("arm_actuator_back", switches[0]);
+		SmartDashboard.putBoolean("arm_actuator_forward", switches[1]);
 		
 		// ball detection sensor
 		SmartDashboard.putBoolean("ramp_belts_sensor", Robot.ramp_belts.getBallDetected());

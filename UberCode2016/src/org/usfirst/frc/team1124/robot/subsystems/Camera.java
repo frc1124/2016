@@ -1,8 +1,6 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.commands.camera.StreamShooterCamera;
-import org.usfirst.frc.team1124.robot.enums.CameraSelect;
 import org.usfirst.frc.team1124.robot.tools.VisionTools;
 
 import com.ni.vision.NIVision;
@@ -21,10 +19,7 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
  * The subsystem that manages camera streams and data processing
  */
 public class Camera extends Subsystem {
-	private Image intake_frame;
 	private Image shooter_frame;
-	
-	private CameraSelect current_camera;
 	
 	// if camera is being held by auto code
 	private boolean camera_held = false;
@@ -36,14 +31,12 @@ public class Camera extends Subsystem {
 		initIntakeCamera();
 	}
 	
-	protected void initDefaultCommand() {
-		setDefaultCommand(new StreamShooterCamera());
-	}
+	protected void initDefaultCommand() {}
 	
 	private void initShooterCamera(){
 		try{
 	        shooter_frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-	        Robot.shooter_camera = new AxisCamera("10.11.24.78");
+	        Robot.shooter_camera = new AxisCamera("10.11.24.81");
 	        
 	        Robot.shooter_camera.writeColorLevel(50);
 	        Robot.shooter_camera.writeBrightness(50);
@@ -60,47 +53,30 @@ public class Camera extends Subsystem {
 	
 	private void initIntakeCamera(){
 		try{
-	        intake_frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-			
-			Robot.intake_camera = new USBCamera("cam0");
+			Robot.intake_camera = new USBCamera("cam1");
 			Robot.intake_camera.openCamera();
+			
+			Robot.intake_camera.setFPS(20);
+			
+			CameraServer.getInstance().startAutomaticCapture(Robot.intake_camera);
 		}catch(Exception e) {}
 	}
 	
-	/**
-	 * Select the camera to stream
-	 * @param selection the enum of the camera you want to stream
-	 */
-	public void selectCamera(CameraSelect selection){
-		current_camera = selection;
-	}
-	
-	public CameraSelect getActiveCamera(){
-		return current_camera;
-	}
-	
-	public void setHeld(){
-		camera_held = true;
+	public void setHeld(boolean x){
+		camera_held = x;
 	}
 	
 	public boolean isHeld(){
 		return camera_held;
 	}
+	
 	/** 
 	 * Only run this method while the robot is ENABLED! This method gets the image and sends it to the dashboard for display and processing. 
 	 */
 	public void getImage(){
         try{
-        	switch(current_camera){
-        		case Intake:
-                	Robot.intake_camera.getImage(intake_frame);
-        			CameraServer.getInstance().setImage(intake_frame);
-        		break;
-        		case Shooter:
-                	Robot.shooter_camera.getImage(shooter_frame);
-                    CameraServer.getInstance().setImage(shooter_frame);
-        		break;
-        	}
+        	Robot.shooter_camera.getImage(shooter_frame);
+            CameraServer.getInstance().setImage(shooter_frame);
         }catch(Exception e){}
 	}
 	

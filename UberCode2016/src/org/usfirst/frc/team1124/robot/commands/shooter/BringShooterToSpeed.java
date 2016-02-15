@@ -9,9 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class BringShooterToSpeed extends Command {
 	
-	private double setpoint = 0;
-	
-    public BringShooterToSpeed(){
+    public BringShooterToSpeed(double setpoint){
     	requires(Robot.shooter_pid);
     	
     	// TODO set this!
@@ -29,7 +27,7 @@ public class BringShooterToSpeed extends Command {
     protected void execute() {}
 
     protected boolean isFinished(){
-    	return Math.abs(Robot.shooter_pid.getRate() - setpoint) >= Robot.shooter_pid.SETPOINT_TOLERANCE;
+    	return Math.abs(Robot.shooter_pid.getRate() - Robot.shooter_pid.getSetpoint()) >= Robot.shooter_pid.SETPOINT_TOLERANCE;
     }
 
     protected void end(){

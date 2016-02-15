@@ -21,7 +21,11 @@ public class ShooterManual extends Command {
     protected void execute() {
     	double speed = Robot.oi.getJS2().getY();
     	
-    	Robot.shooter_pid.manual(speed);
+    	speed = -speed;
+    	
+    	if(speed >= 0){
+    		Robot.shooter_pid.manual(speed);
+    	}
     }
 
     protected boolean isFinished() {

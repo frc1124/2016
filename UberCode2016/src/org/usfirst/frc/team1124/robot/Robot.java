@@ -3,6 +3,7 @@ package org.usfirst.frc.team1124.robot;
 // commands
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.macro.Autonomous;
+import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
 
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
@@ -12,6 +13,7 @@ import org.usfirst.frc.team1124.robot.subsystems.ShooterPID;
 import org.usfirst.frc.team1124.robot.subsystems.ArmActuatorPID;
 import org.usfirst.frc.team1124.robot.subsystems.ArmPistons;
 import org.usfirst.frc.team1124.robot.subsystems.Camera;
+import edu.wpi.first.wpilibj.Compressor;
 
 // cameras
 import edu.wpi.first.wpilibj.vision.AxisCamera;
@@ -23,9 +25,7 @@ import org.usfirst.frc.team1124.robot.tools.ConfigIO;
 // dashboard
 import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
-import org.usfirst.frc.team1124.robot.enums.CameraSelect;
 
-import edu.wpi.first.wpilibj.Compressor;
 // wpilib components
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot {
 	
 	// dashboard and camera
 	public static DashboardConnection dashboard = new DashboardConnection();
-	public static Camera camera = new Camera();
+	public static Camera camera;
 	
 	// autonomous
     Command autonomousCommand;
@@ -85,17 +85,15 @@ public class Robot extends IterativeRobot {
 		drivetrain = new DriveTrain();
 		pdp = new PowerDistributionPanel();
 		compressor = new Compressor();
-		//arm_pistons = new ArmPistons();
-		//arm_actuator_pid = new ArmActuatorPID();
-		//ramp_belts_pid = new RampBeltsPID();
-		//intake_belts = new IntakeBelts();
-		//shooter_pid = new ShooterPID();
+		arm_pistons = new ArmPistons();
+		arm_actuator_pid = new ArmActuatorPID();
+		ramp_belts = new RampBelts();
+		arm_intake_wheels = new ArmIntakeWheels();
+		shooter_pid = new ShooterPID();
+		camera = new Camera();
 		
 		// instantiate operator interface
 		oi = new OI();
-
-		// set up cameras
-		camera.selectCamera(CameraSelect.Shooter);
         
         // set up error logger
         SafetyErrorLogger.init();
@@ -115,7 +113,7 @@ public class Robot extends IterativeRobot {
     	drivetrain.setBrake();
 
         // instantiate the command used for the autonomous period
-        autonomousCommand = new Autonomous();
+        autonomousCommand = new BringShooterToSpeed(3000);
     	
         if(autonomousCommand != null){
         	autonomousCommand.start();

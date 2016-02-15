@@ -15,9 +15,9 @@ public class RampBelts extends Subsystem {
 	private DigitalInput light_sensor;
 
 	/** TODO tune these */
-	private final double FEED_TO_INTAKE = -1.0;
-	private final double INTAKE_SPEED = 1.0;
-	private final double FEED_TO_SHOOTER = 1.0;
+	private final double FEED_TO_INTAKE = -1;
+	private final double INTAKE_SPEED = 0.8;
+	private final double FEED_TO_SHOOTER = 1;
 
     public RampBelts() {
     	super("RampBelts");
@@ -27,13 +27,11 @@ public class RampBelts extends Subsystem {
 		light_sensor = new DigitalInput(Robot.configIO.getIntVal("intake_belts_light_sensor"));
     }
     
-    public void initDefaultCommand() {
-        //setDefaultCommand(new RampHoldPosition());
-    }
+    public void initDefaultCommand() {}
     
-    /** Note: Already inverted, since roboRIO uses pull-up resistors on its DIO ports */
+    /** True is detected */
     public boolean getBallDetected(){
-    	return !light_sensor.get();
+    	return light_sensor.get();
     }
     
     /** Intake a ball */

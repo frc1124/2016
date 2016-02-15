@@ -19,10 +19,9 @@ public class IntakeManual extends Command {
     protected void initialize() {}
 
     protected void execute() {
-    	// TODO determine if this needs to be inverted
     	double speed = Robot.oi.getJS2().getY();
     	
-    	Robot.arm_intake_wheels.manual(speed);
+    	Robot.arm_intake_wheels.manual(-speed);
     }
 
     protected boolean isFinished() {

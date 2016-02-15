@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsRetract;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,9 +21,7 @@ public class ArmPistons extends Subsystem {
 		piston = new DoubleSolenoid(a, b);
 	}
 
-    public void initDefaultCommand() {
-        setDefaultCommand(new ArmPistonsRetract());
-    }
+    public void initDefaultCommand() {}
     
     /** Extend the arm pistons */
     public void extend(){

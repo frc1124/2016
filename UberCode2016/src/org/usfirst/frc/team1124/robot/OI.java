@@ -1,15 +1,20 @@
 package org.usfirst.frc.team1124.robot;
 
+import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsExtend;
+import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsRetract;
 import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoalPID;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.drive.DriveHoldPosition;
+import org.usfirst.frc.team1124.robot.commands.intake.IntakeManual;
+import org.usfirst.frc.team1124.robot.commands.interrupt.IntakeInterrupt;
+import org.usfirst.frc.team1124.robot.commands.interrupt.RampBeltsInterrupt;
+import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
 import org.usfirst.frc.team1124.robot.commands.macro.IntakeBall;
 import org.usfirst.frc.team1124.robot.commands.macro.RampAndIntakeInterrupt;
 import org.usfirst.frc.team1124.robot.commands.macro.ScoreHighGoal;
 import org.usfirst.frc.team1124.robot.commands.macro.ScoreLowGoal;
-import org.usfirst.frc.team1124.robot.commands.oi.JS2ManualToggle;
-import org.usfirst.frc.team1124.robot.commands.oi.JS3ManualToggle;
-import org.usfirst.frc.team1124.robot.enums.JoystickManualState;
+import org.usfirst.frc.team1124.robot.commands.ramp.RampBeltsManual;
+import org.usfirst.frc.team1124.robot.commands.shooter.ShooterManual;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -88,9 +93,6 @@ public class OI {
 			new JoystickButton(js3, 12),
 	   };
 	
-	private JoystickManualState js2_manual = JoystickManualState.None;
-	private JoystickManualState js3_manual = JoystickManualState.None;
-	
 	public OI(){
 		// Driver 1, Joystick 1
 		
@@ -107,18 +109,21 @@ public class OI {
 		
 		js2_buttons[10].whenPressed(new ScoreLowGoal());
 		js2_buttons[12].whenPressed(new RampAndIntakeInterrupt());
-
-		js2_buttons[3].whenPressed(new JS2ManualToggle(3));
-		js2_buttons[4].whenPressed(new JS2ManualToggle(4));
 		
-		js2_buttons[5].whenPressed(new JS2ManualToggle(5));
-		js2_buttons[6].whenPressed(new JS2ManualToggle(6));
+		js2_buttons[5].whenPressed(new IntakeManual());
+		js2_buttons[3].whenPressed(new IntakeInterrupt());
+
+		js2_buttons[6].whenPressed(new ShooterManual());
+		js2_buttons[4].whenPressed(new ShooterInterrupt());
 		
 		// Driver 2, Joystick 3
+
+		js3_buttons[5].whenPressed(new RampBeltsManual());
+		js3_buttons[3].whenPressed(new RampBeltsInterrupt());
 		
-		js3_buttons[3].whenPressed(new JS3ManualToggle(3));
 		
-		js3_buttons[5].whenPressed(new JS3ManualToggle(5));
+		js3_buttons[9].whenPressed(new ArmPistonsExtend());
+		js3_buttons[11].whenPressed(new ArmPistonsRetract());
 	}
 	
 	// Joystick gets (used for getting axes)
@@ -134,23 +139,4 @@ public class OI {
 	public Joystick getJS3(){
 		return js3;
 	}
-	
-	// Manual control toggles
-	
-	public JoystickManualState getJS2ManState(){
-		return js2_manual;
-	}
-	
-	public JoystickManualState getJS3ManState(){
-		return js3_manual;
-	}
-	
-	public void setJS2ManState(JoystickManualState state){
-		js2_manual = state;
-	}
-	
-	public void setJS3ManState(JoystickManualState state){
-		js3_manual = state;
-	}
 }
-

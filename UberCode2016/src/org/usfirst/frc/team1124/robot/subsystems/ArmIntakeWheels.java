@@ -12,8 +12,8 @@ public class ArmIntakeWheels extends Subsystem {
 	private CANTalon arm_wheels_motor;
 	
 	/** TODO tune these */
-	private final double INTAKE_SPEED = 1;
-	private final double LOW_GOAL_SPEED = -1;
+	private final double INTAKE_SPEED = -1;
+	private final double LOW_GOAL_SPEED = 1;
 	
 	public ArmIntakeWheels(){
 		super("ArmIntakeWheels");
@@ -33,7 +33,7 @@ public class ArmIntakeWheels extends Subsystem {
     	arm_wheels_motor.set(LOW_GOAL_SPEED);
     }
     
-    /** Manual control of the wheels 
+    /** Manual control of the wheels
      *  @param speed The speed to run the wheels (-1.0 to 1.0) 
      */
     public void manual(double speed){

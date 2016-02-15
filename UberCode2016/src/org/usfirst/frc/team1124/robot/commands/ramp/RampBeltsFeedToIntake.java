@@ -23,7 +23,7 @@ public class RampBeltsFeedToIntake extends Command {
     protected void initialize() {}
 
     protected void execute() {
-    	Robot.ramp_belts.feedToShooter();
+    	Robot.ramp_belts.spit();
     }
 
     protected boolean isFinished() {

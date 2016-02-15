@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1124.robot.commands.camera;
 
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.enums.CameraSelect;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -20,7 +19,7 @@ public class StreamShooterCamera extends Command {
     protected void initialize() {}
 
     protected void execute() {
-    	Robot.camera.selectCamera(CameraSelect.Shooter);
+    	Robot.camera.setHeld(true);
     }
 
     // ended by owning command group
@@ -28,7 +27,9 @@ public class StreamShooterCamera extends Command {
         return false;
     }
 
-    protected void end() {}
+    protected void end() {
+    	Robot.camera.setHeld(false);
+    }
 
     protected void interrupted() {}
 }

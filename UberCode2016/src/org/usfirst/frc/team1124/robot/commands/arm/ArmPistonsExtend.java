@@ -15,11 +15,11 @@ public class ArmPistonsExtend extends Command {
     	setInterruptible(false);
     }
 
-    protected void initialize() {
+    protected void initialize() {}
+
+    protected void execute() {
     	Robot.arm_pistons.extend();
     }
-
-    protected void execute() {}
 
     protected boolean isFinished() {
         return true;

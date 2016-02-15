@@ -15,11 +15,13 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  */
 public class ShooterPID extends PIDSubsystem implements Safe {
 	/** TODO tune these */
-	private final static double P = 0.00001;
+	private final static double P = 0.01;
 	private final static double I = 0.0;
 	private final static double D = 0.0;
 	
 	public final double SETPOINT_TOLERANCE = 2.0;
+	
+	private final double UNITS_PER_TICK = 10.0 * 60.0 / 4096.0;
 	
 	private CANTalon shooter;
 	
@@ -38,6 +40,8 @@ public class ShooterPID extends PIDSubsystem implements Safe {
     	shooter = new CANTalon(Robot.configIO.getIntVal("shooter"));
     	
     	setSetpoint(0);
+    	
+    	enable();
     }
     
     public void initDefaultCommand() {}
@@ -64,13 +68,13 @@ public class ShooterPID extends PIDSubsystem implements Safe {
      * @param speed the speed between -1.0 and 1.0
      */
     public void manual(double speed){
-    	shooter.set(speed);
+    	shooter.set(Math.abs(speed));
     }
     
     /* Encoder Functions */
     
     public double getRate(){
-    	return shooter.getEncVelocity();
+    	return shooter.getEncVelocity() * UNITS_PER_TICK;
     }
 
     /* PID Control */
