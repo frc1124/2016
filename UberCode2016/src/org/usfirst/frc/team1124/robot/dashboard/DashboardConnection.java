@@ -190,6 +190,10 @@ public class DashboardConnection {
 		// ball detection sensor
 		SmartDashboard.putBoolean("ramp_belts_sensor", Robot.ramp_belts.getBallDetected());
 		
+		// gyro
+		SmartDashboard.putNumber("gyro_full_angle", Robot.drivetrain.getFullAngle());
+		SmartDashboard.putNumber("gyro_angular_rate", Robot.drivetrain.getAngularRate());
+		
 		// drive encoder resets
 		try {
 			boolean reset_right = SmartDashboard.getBoolean("right_encoder_reset");

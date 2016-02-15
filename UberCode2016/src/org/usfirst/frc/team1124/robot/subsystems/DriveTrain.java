@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /**
  * The Drive Train subsystem. Contains both the left and right gearboxes. </br>
@@ -73,11 +72,22 @@ public class DriveTrain extends Subsystem {
 	
 	// gyro methods
 	
-	public double getAngle(){
+	/**
+	 * Goes beyond 360 degrees
+	 * @return absolute full angle that is beyond 360 degrees after 1 rotation
+	 */
+	public double getFullAngle(){
 		return gyro.getAngle();
 	}
 	
-	public double getRate(){
+	/**
+	 * Gets an angle between 0 and 360
+	 */
+	public double getAngle(){
+		return gyro.getAngle() / 360.0;
+	}
+	
+	public double getAngularRate(){
 		return gyro.getRate();
 	}
 	
