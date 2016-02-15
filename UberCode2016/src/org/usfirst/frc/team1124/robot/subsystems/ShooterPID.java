@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  */
 public class ShooterPID extends PIDSubsystem implements Safe {
 	/** TODO tune these */
-	private final static double P = 0.01;
+	private final static double P = 0.1;
 	private final static double I = 0.0;
 	private final static double D = 0.0;
 	
@@ -51,6 +51,7 @@ public class ShooterPID extends PIDSubsystem implements Safe {
      */
     public void stop(){
     	disable();
+    	getPIDController().reset();
     	setSetpoint(0);
     	
     	shooter.set(0);

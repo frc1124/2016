@@ -27,12 +27,10 @@ public class BringShooterToSpeed extends Command {
     protected void execute() {}
 
     protected boolean isFinished(){
-    	return Math.abs(Robot.shooter_pid.getRate() - Robot.shooter_pid.getSetpoint()) >= Robot.shooter_pid.SETPOINT_TOLERANCE;
+    	return false;//Math.abs(Robot.shooter_pid.getRate() - Robot.shooter_pid.getSetpoint()) >= Robot.shooter_pid.SETPOINT_TOLERANCE;
     }
 
-    protected void end(){
-    	Robot.shooter_pid.stop();
-    }
+    protected void end() {}
 
     protected void interrupted(){
     	end();
