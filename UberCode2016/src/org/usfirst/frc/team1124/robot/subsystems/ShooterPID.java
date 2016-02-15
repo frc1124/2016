@@ -14,9 +14,13 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  * The shooter subsystem; extends PIDSubsystem. This PID controls rate, not distance.
  */
 public class ShooterPID extends PIDSubsystem implements Safe {
-	/** TODO tune these */
-	private final static double P = 0.1;
-	private final static double I = 0.0;
+	/**
+	 * Note:
+	 * Rate PIDs are different than Distance PIDs
+	 * You must treat I as thought it is P when tuning, then tune P as though it is D
+	 */
+	private final static double P = 0.0012;
+	private final static double I = 0.0002;
 	private final static double D = 0.0;
 	
 	public final double SETPOINT_TOLERANCE = 2.0;

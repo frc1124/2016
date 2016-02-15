@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1124.robot;
 
+import org.usfirst.frc.team1124.robot.commands.TestDriveEncoders;
 // commands
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.macro.Autonomous;
@@ -113,7 +114,8 @@ public class Robot extends IterativeRobot {
     	drivetrain.setBrake();
 
         // instantiate the command used for the autonomous period
-        autonomousCommand = new BringShooterToSpeed(3000);
+        //autonomousCommand = new BringShooterToSpeed(3000);
+    	autonomousCommand = new TestDriveEncoders();
     	
         if(autonomousCommand != null){
         	autonomousCommand.start();
