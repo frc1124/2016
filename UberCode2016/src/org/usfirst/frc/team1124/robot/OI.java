@@ -3,7 +3,6 @@ package org.usfirst.frc.team1124.robot;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsExtend;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsRetract;
 import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoalPID;
-import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.drive.DriveHoldPosition;
 import org.usfirst.frc.team1124.robot.commands.intake.IntakeManual;
 import org.usfirst.frc.team1124.robot.commands.interrupt.IntakeInterrupt;
@@ -127,8 +126,8 @@ public class OI {
 		js3_buttons[6].whenPressed(new ArmPistonsExtend());
 		js3_buttons[4].whenPressed(new ArmPistonsRetract());
 		
-		js3_buttons[7].whenPressed(new ExtendToClimb());
-		js3_buttons[9].whenPressed(new Climb());
+		js3_buttons[9].whenPressed(new ExtendToClimb());
+		js3_buttons[11].whenPressed(new Climb());
 	}
 	
 	// Joystick gets (used for getting axes)
