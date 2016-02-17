@@ -9,6 +9,8 @@ import org.usfirst.frc.team1124.robot.commands.intake.IntakeManual;
 import org.usfirst.frc.team1124.robot.commands.interrupt.IntakeInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.RampBeltsInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
+import org.usfirst.frc.team1124.robot.commands.macro.Climb;
+import org.usfirst.frc.team1124.robot.commands.macro.ExtendToClimb;
 import org.usfirst.frc.team1124.robot.commands.macro.IntakeBall;
 import org.usfirst.frc.team1124.robot.commands.macro.RampAndIntakeInterrupt;
 import org.usfirst.frc.team1124.robot.commands.macro.ScoreHighGoal;
@@ -97,8 +99,8 @@ public class OI {
 		// Driver 1, Joystick 1
 
 		// by default drivetrain runs arcade, so don't need this
-		//js1_buttons[7].whenPressed(new ArcadeDriveJoystick());
-		js1_buttons[8].whenPressed(new DriveHoldPosition(true));
+		//js1_buttons[].whenPressed(new ArcadeDriveJoystick());
+		js1_buttons[7].whenPressed(new DriveHoldPosition(true));
 
 		js1_buttons[1].whenPressed(new ScoreHighGoal());
 		js1_buttons[3].whenPressed(new AimTowardsGoalPID()); // this is a manual fallback control
@@ -122,9 +124,11 @@ public class OI {
 		js3_buttons[5].whenPressed(new RampBeltsManual());
 		js3_buttons[3].whenPressed(new RampBeltsInterrupt());
 		
+		js3_buttons[6].whenPressed(new ArmPistonsExtend());
+		js3_buttons[4].whenPressed(new ArmPistonsRetract());
 		
-		js3_buttons[9].whenPressed(new ArmPistonsExtend());
-		js3_buttons[11].whenPressed(new ArmPistonsRetract());
+		js3_buttons[7].whenPressed(new ExtendToClimb());
+		js3_buttons[9].whenPressed(new Climb());
 	}
 	
 	// Joystick gets (used for getting axes)

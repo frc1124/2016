@@ -28,7 +28,7 @@ public class Autonomous extends CommandGroup {
     	}else{
     		// do something!
     		switch(mode){
-    			
+    			default:
     		}
     	}
     }

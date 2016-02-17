@@ -1,8 +1,8 @@
 package org.usfirst.frc.team1124.robot;
 
 import org.usfirst.frc.team1124.robot.commands.TestDriveEncoders;
+
 // commands
-import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.macro.Autonomous;
 import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
 
