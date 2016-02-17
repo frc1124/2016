@@ -95,8 +95,9 @@ public class OI {
 	
 	public OI(){
 		// Driver 1, Joystick 1
-		
-		js1_buttons[7].whenPressed(new ArcadeDriveJoystick());
+
+		// by default drivetrain runs arcade, so don't need this
+		//js1_buttons[7].whenPressed(new ArcadeDriveJoystick());
 		js1_buttons[8].whenPressed(new DriveHoldPosition(true));
 
 		js1_buttons[1].whenPressed(new ScoreHighGoal());
