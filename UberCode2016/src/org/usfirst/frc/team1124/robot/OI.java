@@ -99,7 +99,7 @@ public class OI {
 
 		// by default drivetrain runs arcade, so don't need this
 		//js1_buttons[].whenPressed(new ArcadeDriveJoystick());
-		js1_buttons[7].whenPressed(new DriveHoldPosition(true));
+		js1_buttons[7].toggleWhenPressed(new DriveHoldPosition(true));
 
 		js1_buttons[1].whenPressed(new ScoreHighGoal());
 		js1_buttons[3].whenPressed(new AimTowardsGoalPID()); // this is a manual fallback control

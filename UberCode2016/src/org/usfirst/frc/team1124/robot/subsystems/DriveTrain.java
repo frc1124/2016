@@ -24,7 +24,7 @@ public class DriveTrain extends Subsystem {
 	
 	private final double ENCODER_DIST_PER_PULSE = Math.PI / 120;
 	
-	private RobotDrive firstpair;	//why are these organized in pairs if there are 3 left motors & 3 right?
+	private RobotDrive firstpair;
 	private RobotDrive secondpair;
 	private RobotDrive thirdpair;
 	
