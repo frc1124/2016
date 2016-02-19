@@ -9,18 +9,22 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class BringShooterToSpeed extends Command {
 	
+	private double setpoint;
+	
     public BringShooterToSpeed(double setpoint){
     	requires(Robot.shooter_pid);
     	
     	// TODO set this!
     	//setpoint = Robot.camera.getRateForShooterToScore();
     	
-    	Robot.shooter_pid.setSetpoint(setpoint);
+    	this.setpoint = setpoint;
     	
     	setInterruptible(true);
     }
 
     protected void initialize(){
+    	Robot.shooter_pid.setSetpoint(setpoint);
+    	
     	Robot.shooter_pid.enable();
     }
 
