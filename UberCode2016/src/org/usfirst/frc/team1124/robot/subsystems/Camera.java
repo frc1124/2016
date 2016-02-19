@@ -36,7 +36,7 @@ public class Camera extends Subsystem {
 	private void initShooterCamera(){
 		try{
 	        shooter_frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-	        Robot.shooter_camera = new AxisCamera("10.11.24.81");
+	        Robot.shooter_camera = new AxisCamera("10.11.24.11");
 	        
 	        Robot.shooter_camera.writeColorLevel(50);
 	        Robot.shooter_camera.writeBrightness(50);
@@ -56,7 +56,9 @@ public class Camera extends Subsystem {
 			Robot.intake_camera = new USBCamera("cam1");
 			Robot.intake_camera.openCamera();
 			
-			Robot.intake_camera.setFPS(20);
+			Robot.intake_camera.setSize(160, 120);
+			
+			Robot.intake_camera.setFPS(15);
 			
 			CameraServer.getInstance().startAutomaticCapture(Robot.intake_camera);
 		}catch(Exception e) {}
