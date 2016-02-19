@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1124.robot.commands.drive;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.tools.WakeMeUp;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
@@ -21,6 +22,8 @@ public class AimTowardsGoalPID extends PIDCommand {
     	
     	requires(Robot.drivetrain);
     	setInterruptible(true);
+    	WakeMeUp wake = new WakeMeUp();
+    	wake.wakeUp();
     }
     
 	protected double returnPIDInput() {
