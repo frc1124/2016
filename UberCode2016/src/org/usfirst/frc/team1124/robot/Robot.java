@@ -100,7 +100,7 @@ public class Robot extends IterativeRobot {
         SafetyErrorLogger.init();
 
         // instantiate the command used for the autonomous period
-        autonomousCommand = new AimTowardsGoalPID(); //new BringShooterToSpeed(3000);
+        autonomousCommand = /*new AimTowardsGoalPID();*/ new BringShooterToSpeed(3000);
     	//autonomousCommand = new TestDriveEncoders();
         
         // make sure compressor is not running
