@@ -2,6 +2,7 @@ package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmHoldPosition;
+import org.usfirst.frc.team1124.robot.commands.arm.ArmManual;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
 import org.usfirst.frc.team1124.robot.enums.SafetyError;
 import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
@@ -63,7 +64,15 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	}
 	
     public void initDefaultCommand() {
-        setDefaultCommand(new ArmHoldPosition());
+        setDefaultCommand(new ArmManual());
+    }
+    
+    public void manual(double outputValue){
+		if(isSafetyEnabled()){
+			actuator.set(safeOutput(-outputValue));
+		}else{
+			actuator.set(0);
+		}
     }
     
     /* Limit Switches */
@@ -141,7 +150,7 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		}
 		
 		// directional safety
-		if(!limit_switch_forward.get() && output > 0 || !limit_switch_back.get() && output < 0){
+		if(limit_switch_forward.get() && output > 0 || limit_switch_back.get() && output < 0){
 			// trying to go too far up, so only allow going down
 			safeOutput = 0;
 			
@@ -149,7 +158,8 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		}else{
 			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, SafetyError.LimitSwitchDirection);
 		}
-
+		
+		/*
 		if(getDistance() >= MAX_UP && output > 0){	//Do we need a potentiometer threshold for max if we already have a limit switch?
 			// trying to go to far up
 			safeOutput = 0;
@@ -163,7 +173,7 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		}else{
 			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, SafetyError.EncoderDirection);
 		}
-		
+		*/
 		if(Math.abs(output) > getRateCutoffThreshold() && getRate() == 0 && safetyTimer.get() >= TIME_DELAY){
 			// we are moving it but the encoder isn't reading it, not good
 			safeOutput = 0;
