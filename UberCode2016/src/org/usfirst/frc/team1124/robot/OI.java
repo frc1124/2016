@@ -1,10 +1,12 @@
 package org.usfirst.frc.team1124.robot;
 
+import org.usfirst.frc.team1124.robot.commands.arm.ArmManual;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsExtend;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsRetract;
 import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoalPID;
 import org.usfirst.frc.team1124.robot.commands.drive.DriveHoldPosition;
 import org.usfirst.frc.team1124.robot.commands.intake.IntakeManual;
+import org.usfirst.frc.team1124.robot.commands.interrupt.ArmInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.IntakeInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.RampBeltsInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
@@ -122,9 +124,12 @@ public class OI {
 
 		js3_buttons[5].whenPressed(new RampBeltsManual());
 		js3_buttons[3].whenPressed(new RampBeltsInterrupt());
+
+		js2_buttons[6].whenPressed(new ArmManual());
+		js2_buttons[4].whenPressed(new ArmInterrupt());
 		
-		js3_buttons[6].whenPressed(new ArmPistonsExtend());
-		js3_buttons[4].whenPressed(new ArmPistonsRetract());
+		js3_buttons[10].whenPressed(new ArmPistonsExtend());
+		js3_buttons[12].whenPressed(new ArmPistonsRetract());
 		
 		js3_buttons[9].whenPressed(new ExtendToClimb());
 		js3_buttons[11].whenPressed(new Climb());
