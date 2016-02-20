@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class BringShooterToApproxSpeed extends Command {
 	
 	private double voltage = 0.00;
-	private final double MAX_RPM = 3000.0;
+	private final double MAX_RPM = 3680.0;
 
     public BringShooterToApproxSpeed() {
     	/**
