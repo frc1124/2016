@@ -34,7 +34,9 @@ public class BringShooterToSpeed extends Command {
     	return false;//Math.abs(Robot.shooter_pid.getRate() - Robot.shooter_pid.getSetpoint()) >= Robot.shooter_pid.SETPOINT_TOLERANCE;
     }
 
-    protected void end() {}
+    protected void end() {
+    	Robot.shooter_pid.setSetpoint(0);
+    }
 
     protected void interrupted(){
     	end();
