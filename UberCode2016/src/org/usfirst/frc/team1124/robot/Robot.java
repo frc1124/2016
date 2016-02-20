@@ -1,10 +1,11 @@
 package org.usfirst.frc.team1124.robot;
 
+// test commands
 import org.usfirst.frc.team1124.robot.commands.TestDriveEncoders;
 import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoalPID;
+
 // commands
 import org.usfirst.frc.team1124.robot.commands.macro.Autonomous;
-import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
 
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
@@ -91,7 +92,7 @@ public class Robot extends IterativeRobot {
 		ramp_belts = new RampBelts();
 		arm_intake_wheels = new ArmIntakeWheels();
 		shooter_pid = new ShooterPID();
-		camera = new Camera(); // TODO set camera static IP!!!!!!
+		camera = new Camera();
 		
 		// instantiate operator interface
 		oi = new OI();
@@ -100,8 +101,7 @@ public class Robot extends IterativeRobot {
         SafetyErrorLogger.init();
 
         // instantiate the command used for the autonomous period
-        autonomousCommand = /*new AimTowardsGoalPID();*/ new BringShooterToSpeed(3000);
-    	//autonomousCommand = new TestDriveEncoders();
+        autonomousCommand = new Autonomous();
         
         // make sure compressor is not running
         compressor.stop();

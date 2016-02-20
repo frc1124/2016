@@ -15,9 +15,8 @@ public class RampBeltsFeedToIntake extends Command {
     	
     	setInterruptible(true);
     	
-    	// it should take about 1 second
-    	/** TODO tune this */
-    	setTimeout(1);
+    	// it should take about 1.5 seconds
+    	setTimeout(1.5);
     }
     
     protected void initialize() {}

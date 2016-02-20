@@ -45,6 +45,8 @@ public class ShooterPID extends PIDSubsystem implements Safe {
     	
     	setSetpoint(0);
     	
+    	getPIDController().setToleranceBuffer(5);
+    	
     	enable();
     }
     

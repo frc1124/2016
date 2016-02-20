@@ -14,20 +14,18 @@ public class RampBeltsFeedToShooter extends Command {
     	requires(Robot.ramp_belts);
     	
     	setInterruptible(true);
-    	
-    	// it should take about 1 second
-    	/** TODO tune this */
-    	setTimeout(1);
     }
 
     protected void initialize() {}
 
     protected void execute() {
-    	Robot.ramp_belts.feedToShooter();
+    	if(Robot.shooter_pid.getPIDController().getAvgError() <= 2.0){
+    		Robot.ramp_belts.feedToShooter();
+    	}
     }
 
     protected boolean isFinished() {
-        return isTimedOut();
+        return !Robot.ramp_belts.getBallDetected();
     }
 
     protected void end() {

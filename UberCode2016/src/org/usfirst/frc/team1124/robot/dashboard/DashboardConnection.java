@@ -140,7 +140,6 @@ public class DashboardConnection {
 			SmartDashboard.putString("code_revision", Robot.codeRevision);
 			
 			// PDP port "map"
-	    	/** TODO update these with final robot ports */
 			SmartDashboard.putString("pdp_can_key_port_0", "Arm Actuator (CAN ID#5)");
 			SmartDashboard.putString("pdp_can_key_port_1", "Left Drive [front] (CAN ID#6)");
 			SmartDashboard.putString("pdp_can_key_port_2", "Left Drive [back] (CAN ID#7)");

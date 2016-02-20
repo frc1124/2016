@@ -11,15 +11,18 @@ public class BringShooterToSpeed extends Command {
 	
 	private double setpoint;
 	
-    public BringShooterToSpeed(double setpoint){
+	private boolean safetyTrippedFirstCall = true;
+	
+	private Command fallback_command;
+	
+    public BringShooterToSpeed(){
     	requires(Robot.shooter_pid);
     	
-    	// TODO set this!
-    	//setpoint = Robot.camera.getRateForShooterToScore();
-    	
-    	this.setpoint = setpoint;
+    	this.setpoint = Robot.camera.getCalculatedShooterRPM();
     	
     	setInterruptible(true);
+    	
+    	fallback_command = new BringShooterToApproxSpeed();
     }
 
     protected void initialize(){
@@ -28,14 +31,33 @@ public class BringShooterToSpeed extends Command {
     	Robot.shooter_pid.enable();
     }
 
-    protected void execute() {}
+    protected void execute() {
+    	if(Robot.shooter_pid.isSafetyTripped() && safetyTrippedFirstCall){
+    		Robot.shooter_pid.disable();
+    		
+    		fallback_command.start();
+    		
+    		safetyTrippedFirstCall = false;
+    	}
+    }
+    
+    public boolean atSetpoint(){
+    	return Robot.shooter_pid.getPIDController().getAvgError() <= 2.0;
+    }
 
     protected boolean isFinished(){
-    	return false;//Math.abs(Robot.shooter_pid.getRate() - Robot.shooter_pid.getSetpoint()) >= Robot.shooter_pid.SETPOINT_TOLERANCE;
+    	if(Robot.shooter_pid.isSafetyTripped()){
+    		return fallback_command.isRunning();
+    	}else{
+    		return false;
+    	}
     }
 
     protected void end() {
+    	fallback_command.cancel();
+    	
     	Robot.shooter_pid.setSetpoint(0);
+    	Robot.shooter_pid.manual(0);
     }
 
     protected void interrupted(){

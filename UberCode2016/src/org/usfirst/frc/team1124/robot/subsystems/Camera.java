@@ -170,4 +170,8 @@ public class Camera extends Subsystem {
 		
 		return result;
 	}
+	
+	public double getCalculatedShooterRPM(){
+		return 0.0; // TODO code this
+	}
 }

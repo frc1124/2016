@@ -18,7 +18,7 @@ public class ScoreHighGoal extends CommandGroup {
     	
     	addSequential(new AimTowardsGoalPID());
     	
-    	addSequential(new Shoot());
+        addSequential(new Shoot());
     }
     
     protected void end(){

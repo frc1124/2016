@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1124.robot.commands.macro;
 
+import org.usfirst.frc.team1124.robot.commands.CommandDelay;
+import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
 import org.usfirst.frc.team1124.robot.commands.ramp.RampBeltsFeedToShooter;
 import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
 
@@ -11,7 +13,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Shoot extends CommandGroup {
     
     public Shoot() {
-        addParallel(new RampBeltsFeedToShooter());
-        addParallel(new BringShooterToSpeed(0)); //TODO change this
+        addParallel(new BringShooterToSpeed());
+        
+        addSequential(new RampBeltsFeedToShooter());
+        
+        // wait to be sure it fired and is done
+        addSequential(new CommandDelay(1));
+        addSequential(new ShooterInterrupt());
     }
 }
