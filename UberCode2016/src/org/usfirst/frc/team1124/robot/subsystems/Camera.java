@@ -199,18 +199,22 @@ public class Camera extends Subsystem {
 			
 			double height = SmartDashboard.getNumber("vision_target_height");
 			
+			
+			
 			double TLY = SmartDashboard.getNumber("vision_target_p1_y");
 			double BLY = 0;//SmartDashboard.getNumber("vision_target_p4_y");
 			double TRY = 0;//SmartDashboard.getNumber("vision_target_p2_y");
 			double BRY = 0;//SmartDashboard.getNumber("vision_target_p3_y");
+			//tl tr bl br
+			double[] ys = getTargetCornerCoordinates(SmartDashboard.getNumber("vision_target_theta"));
 			
-//			double[] distances = {0,0,0,0};
-//			VisionTools.goalDistances(TLY, BLY, TRY, BRY, distances);
+			double[] distances = {0,0,0,0};
+			VisionTools.goalDistances(ys[0], ys[3], ys[1], ys[3], distances);
 			
 //			result = (distances[0] + distances[1] + distances[2] + distances[3]) / 4;
 			
-			double[] distances = {-1,-1};
-			VisionTools.goalDistances(top_left, bottom_right, TLY, height, distances);
+//			double[] distances = {-1,-1};
+//			VisionTools.goalDistances(top_left, bottom_right, TLY, height, distances);
 			
 			result = (distances[0] + distances[1]) / 2;
 		}catch(Exception e){}
@@ -220,10 +224,15 @@ public class Camera extends Subsystem {
 	
 	private static final double shooterAngle = 40 * Math.PI / 180;
 	private static final double coefDrag = .054;
+	private static final double yOffset = 1.594;
+	private static final double airDensity = 1.225;
+	private static final double gravity = -9.8;
+	private static final double ballRadius = .127;
+	private static final double ballMass = 0.3;
 	public double getCalculatedShooterRPM(){
 		double distanceToGoalMeters = getTargetAvgDistance() * 3.2808;
-		return -9.8 * distanceToGoalMeters * distanceToGoalMeters /
-				(2 * 1.594 * Math.cos(shooterAngle) - 2 * distanceToGoalMeters * Math.sin(shooterAngle) +
-				distanceToGoalMeters * distanceToGoalMeters * coefDrag * 1.225 * Math.tan(shooterAngle) / 2 / Math.PI / .127 / .3);
+		return gravity * distanceToGoalMeters * distanceToGoalMeters /
+				(2 * yOffset * Math.cos(shooterAngle) - 2 * distanceToGoalMeters * Math.sin(shooterAngle) +
+				distanceToGoalMeters * distanceToGoalMeters * coefDrag * airDensity * Math.tan(shooterAngle) / 2 / Math.PI / ballRadius / ballMass);
 	}
 }
