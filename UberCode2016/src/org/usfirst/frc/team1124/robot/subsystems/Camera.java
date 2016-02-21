@@ -127,7 +127,7 @@ public class Camera extends Subsystem {
 	 * @return The average distance (left edge distance and right edge distance averaged)
 	 */
 	
-	public double getTargetBottomCoordinate(double theta)
+/*	public double getTargetBottomCoordinate(double theta)
 	{
 		// gives the intermediate bottom y-coordinate for true target
 		double result = 0.0;
@@ -145,24 +145,34 @@ public class Camera extends Subsystem {
 		return result;
 		// IF THETA WAS LESS THAN 90, THIS COORDINATE IS THE BOTTOM RIGHT CORNER OF TARGET
 		// IF THETA WAS GREATER THAN 90, THIS COORDINATE IS THE BOTTOM LEFT CORNER OF TARGET
-	}
+	} */
 	
-	public double getTargetTopCoordinate(double theta)
+	public double[] getTargetCornerCoordinates(double theta)
 	{
-		// gives the intermediate top y-coordinate for true target
-		double result = 0.0;
+		// returns the y-coordinates of all corners
 		if (theta > 90.0)
 			theta -= 90.0;
-		double bottomCoord = getTargetBottomCoordinate(theta);
+		double height = SmartDashboard.getNumber("vision_target_height");
+		double top_y = SmartDashboard.getNumber("vision_top_left");
 		double width = SmartDashboard.getNumber("vision_target_width");
 		double trueTheta = Math.tan(11.0/20.0);
 		
-		result = bottomCoord - (width*Math.tan(trueTheta));
+		double bottomLength = (width/(Math.cos(trueTheta-theta)))*Math.cos(trueTheta);
+		double bottomCoord = (top_y + height) - (bottomLength*Math.sin(theta));
+		double topCoord = bottomCoord - (width*Math.tan(trueTheta));
 		
-		return result;
+		if (theta <= 90.0)
+		{
+			double[] result = {topCoord, top_y, (top_y+height), bottomCoord};
+			return result;
+		}
+		else
+		{
+			double[] result = {top_y, topCoord, bottomCoord, (top_y+height)};
+			return result;
+		}
 		
-		// IF THETA WAS LESS THAN 90, THIS COORDINATE IS THE TOP LEFT CORNER OF TARGET
-		// IF THETA WAS GREATER THAN 90, THIS COORDINATE IS THE TOP RIGHT CORNER OF TARGET
+		// RETURNS IN THE ORDER: TOP LEFT, TOP RIGHT, BOTTOM LEFT, BOTTOM RIGHT
 	}
 	public double getTargetAvgDistance(){
 		double result = -1.0;
