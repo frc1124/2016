@@ -3,13 +3,13 @@ package org.usfirst.frc.team1124.robot.tools;
 public class VisionTools {
 	private static final double cameraWidth = 320;
 	private static final double cameraHeight = 240;
-	private static final double tanCameraMountAngle = Math.tan(Math.PI / 6);
+	private static final double tanCameraMountAngle = 27 * Math.PI / 180;
 	private static final double viewAngleHoriz = 47 * Math.PI / 180;
 	private static final double focalLength = cameraWidth / 2 / Math.tan(viewAngleHoriz / 2);
 	private static final double goalWidth = 20;   //actual--I've just forgotten the number
 	private static final double goalBottomHeight = 83;
 	private static final double goalTopHeight = 97;
-	private static final double cameraMountHeight = 41.523;
+	private static final double cameraMountHeight = 42; //41.523;
 	private static final double dHBottom = goalBottomHeight - cameraMountHeight;
 	private static final double dHTop = goalTopHeight - cameraMountHeight;
 	
