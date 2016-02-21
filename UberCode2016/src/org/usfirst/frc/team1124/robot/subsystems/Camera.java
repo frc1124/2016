@@ -156,10 +156,15 @@ public class Camera extends Subsystem {
 			double TRY = 0;//SmartDashboard.getNumber("vision_target_p2_y");
 			double BRY = 0;//SmartDashboard.getNumber("vision_target_p3_y");
 			
-			double[] distances = {0,0,0,0};
-			VisionTools.goalDistances(TLY, BLY, TRY, BRY, distances);
+//			double[] distances = {0,0,0,0};
+//			VisionTools.goalDistances(TLY, BLY, TRY, BRY, distances);
 			
-			result = (distances[0] + distances[1] + distances[2] + distances[3]) / 4;
+//			result = (distances[0] + distances[1] + distances[2] + distances[3]) / 4;
+			
+			double[] distances = {-1,-1};
+			VisionTools.goalDistances(top_left, bottom_right, TLY, height, distances);
+			
+			result = (distances[0] + distances[1]) / 2;
 		}catch(Exception e){}
 		
 		return result;

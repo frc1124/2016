@@ -61,4 +61,21 @@ public class VisionTools {
     	ret[2] = (focalLength * tanCameraMountAngle - TRY + cameraHeight / 2) / ((TRY - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
     	ret[3] = (focalLength * tanCameraMountAngle - BRY + cameraHeight / 2) / ((BRY - cameraHeight / 2) * tanCameraMountAngle + dHBottom * focalLength);
     }
+    
+    
+    public static void goalDistances(boolean tl, boolean br, double boundBoxTopY, double boundBoxHeight, double[] ret) {
+    	//ret[0] = ground distance to left side of goal
+    	//ret[1] = ground distance to right side of goal
+    	if(tl || br) {
+    		ret[0] = (focalLength * tanCameraMountAngle - boundBoxTopY + cameraHeight / 2) / 
+    				((boundBoxTopY - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
+    		ret[1] = (focalLength * tanCameraMountAngle - boundBoxTopY - boundBoxHeight + cameraHeight / 2) /
+    				((boundBoxTopY + cameraHeight - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
+    	} else {
+    		ret[0] = (focalLength * tanCameraMountAngle - boundBoxTopY - boundBoxHeight + cameraHeight / 2) /
+    				((boundBoxTopY + cameraHeight - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
+    		ret[1] = (focalLength * tanCameraMountAngle - boundBoxTopY + cameraHeight / 2) / 
+    				((boundBoxTopY - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
+    	}
+    }
 }
