@@ -211,12 +211,12 @@ public class Camera extends Subsystem {
 			double[] distances = {0,0,0,0};
 			VisionTools.goalDistances(ys[0], ys[3], ys[1], ys[3], distances);
 			
-//			result = (distances[0] + distances[1] + distances[2] + distances[3]) / 4;
+			result = (distances[0] + distances[1] + distances[2] + distances[3]) / 4;
 			
 //			double[] distances = {-1,-1};
 //			VisionTools.goalDistances(top_left, bottom_right, TLY, height, distances);
 			
-			result = (distances[0] + distances[1]) / 2;
+//			result = (distances[0] + distances[1]) / 2;
 		}catch(Exception e){}
 		
 		return result;
