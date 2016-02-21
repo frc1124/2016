@@ -172,13 +172,10 @@ public class Camera extends Subsystem {
 	
 	private static final double shooterAngle = 40 * Math.PI / 180;
 	private static final double coefDrag = .054;
-	public double getCalculatedShooterRPM(double distanceToGoalFeet){
-		double distanceToGoalMeters = distanceToGoalFeet * 3.2808;
+	public double getCalculatedShooterRPM(){
+		double distanceToGoalMeters = getTargetAvgDistance() * 3.2808;
 		return -9.8 * distanceToGoalMeters * distanceToGoalMeters /
 				(2 * 1.594 * Math.cos(shooterAngle) - 2 * distanceToGoalMeters * Math.sin(shooterAngle) +
-				distanceToGoalMeters * distanceToGoalMeters * .054 * 1.225 * Math.tan(shooterAngle) / 2 / Math.PI / .127 / .3);
-		
-		
-		return 0.0; // TODO code this
+				distanceToGoalMeters * distanceToGoalMeters * coefDrag * 1.225 * Math.tan(shooterAngle) / 2 / Math.PI / .127 / .3);
 	}
 }
