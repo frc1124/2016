@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class BringShooterToSpeed extends Command {
 	
 	private double setpoint;
+	private double MAGIC_SPEED_THAT_ALWAYS_WORKS = 3800.0;
 	
 	private boolean safetyTrippedFirstCall = true;
 	
@@ -18,7 +19,7 @@ public class BringShooterToSpeed extends Command {
     public BringShooterToSpeed(){
     	requires(Robot.shooter_pid);
     	
-    	this.setpoint = Robot.camera.getCalculatedShooterRPM();
+    	this.setpoint = MAGIC_SPEED_THAT_ALWAYS_WORKS;
     	
     	setInterruptible(true);
     	

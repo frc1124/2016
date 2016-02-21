@@ -3,6 +3,7 @@ package org.usfirst.frc.team1124.robot;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmManual;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsExtend;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsRetract;
+import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoalPID;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.drive.DriveHoldPosition;
@@ -18,6 +19,7 @@ import org.usfirst.frc.team1124.robot.commands.macro.RampAndIntakeInterrupt;
 import org.usfirst.frc.team1124.robot.commands.macro.ScoreHighGoal;
 import org.usfirst.frc.team1124.robot.commands.macro.ScoreLowGoal;
 import org.usfirst.frc.team1124.robot.commands.ramp.RampBeltsManual;
+import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
 import org.usfirst.frc.team1124.robot.commands.shooter.ShooterManual;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -105,9 +107,13 @@ public class OI {
 		js1_buttons[7].toggleWhenPressed(new DriveHoldPosition(true));
 
 		js1_buttons[1].whenPressed(new ScoreHighGoal());
+		js1_buttons[2].whenPressed(new BringShooterToSpeed());
 		js1_buttons[3].whenPressed(new AimTowardsGoalPID()); // this is a manual fallback control
 		
-		js1_buttons[8].toggleWhenPressed(new ArcadeDriveJoystick());
+		js1_buttons[8].whenPressed(new ArcadeDriveJoystick());
+
+		js1_buttons[11].whenPressed(new SelectTarget(true));
+		js1_buttons[12].whenPressed(new SelectTarget(false));
 		
 		// Driver 2, Joystick 2
 		

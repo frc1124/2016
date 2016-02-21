@@ -8,19 +8,23 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
  * Use PID and pixel data to turn towards the target
  */
 public class AimTowardsGoalPID extends PIDCommand {
-	/** TODO finish tuning these */
-	private static final double P = 0.0023666;
-	private static final double I = 0.00021213;
-	private static final double D = 0.002804366760;
+	private static final double P = 0.00495;
+	private static final double I = 0;
+	private static final double D = 0.008;
+	
+//	private static final double P = 0.00495;
+//	private static final double I = 0;
+//	private static final double D = 0.008;
 	
 	private static final int image_width = 320;
-	private static boolean is_done = false;
 	
     public AimTowardsGoalPID() {
     	super("AimTowardsGoalPID", P, I, D);
     	
     	requires(Robot.drivetrain);
     	setInterruptible(true);
+    	
+    	getPIDController().setToleranceBuffer(5);
     }
     
 	protected double returnPIDInput() {
@@ -33,8 +37,7 @@ public class AimTowardsGoalPID extends PIDCommand {
 	
 	protected void execute() {
 		double center = Robot.camera.getTargetCenterOfMass()[0];
-
-		/** TODO change this later? */
+		
 		if(center == 0){
 			getPIDController().disable();
 			getPIDController().reset();
@@ -48,10 +51,15 @@ public class AimTowardsGoalPID extends PIDCommand {
 	}
 
 	protected boolean isFinished() {
-		return is_done;
+		return getPIDController().getAvgError() <= 2.0;
 	}
 	
-	protected void end() {}
+	protected void end() {
+		getPIDController().disable();
+		getPIDController().reset();
+	}
 
-	protected void interrupted() {}
+	protected void interrupted() {
+		end();
+	}
 }
