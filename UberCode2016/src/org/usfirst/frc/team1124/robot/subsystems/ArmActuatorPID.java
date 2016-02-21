@@ -2,7 +2,6 @@ package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmHoldPosition;
-import org.usfirst.frc.team1124.robot.commands.arm.ArmManual;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
 import org.usfirst.frc.team1124.robot.enums.SafetyError;
 import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
@@ -64,7 +63,8 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	}
 	
     public void initDefaultCommand() {
-        setDefaultCommand(new ArmManual());
+        // TODO un-comment this later?
+    	//setDefaultCommand(new ArmHoldPosition());
     }
     
     public void manual(double outputValue){
