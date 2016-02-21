@@ -7,6 +7,7 @@ import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
@@ -155,7 +156,7 @@ public class Camera extends Subsystem {
 		double height = SmartDashboard.getNumber("vision_target_height");
 		double top_y = SmartDashboard.getNumber("vision_top_left");
 		double width = SmartDashboard.getNumber("vision_target_width");
-		double trueTheta = Math.tan(11.0/20.0);
+		double trueTheta = Math.atan(11.0/20.0);
 		
 		double bottomLength = (width/(Math.cos(trueTheta-theta)))*Math.cos(trueTheta);
 		double bottomCoord = (top_y + height) - (bottomLength*Math.sin(theta));
@@ -213,10 +214,14 @@ public class Camera extends Subsystem {
 			
 			result = (distances[0] + distances[1] + distances[2] + distances[3]) / 4;
 			
-//			double[] distances = {-1,-1};
-//			VisionTools.goalDistances(top_left, bottom_right, TLY, height, distances);
+			double[] distancesChristian = {-1,-1};
+			VisionTools.goalDistances(top_left, bottom_right, TLY, height, distances);
 			
-//			result = (distances[0] + distances[1]) / 2;
+			double resultChristian = (distances[0] + distances[1]) / 2;
+			
+			SmartDashboard.putNumber("Luke's distance", result);
+			SmartDashboard.putNumber("Christan's distance", resultChristian);
+			
 		}catch(Exception e){}
 		
 		return result;
