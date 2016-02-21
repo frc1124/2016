@@ -126,6 +126,44 @@ public class Camera extends Subsystem {
 	 * Get the average distance to the target.
 	 * @return The average distance (left edge distance and right edge distance averaged)
 	 */
+	
+	public double getTargetBottomCoordinate(double theta)
+	{
+		// gives the intermediate bottom y-coordinate for true target
+		double result = 0.0;
+		if (theta > 90.0)
+			theta -= 90.0;
+		double trueTheta = Math.tan(11.0/20.0);
+		
+		double height = SmartDashboard.getNumber("vision_target_height");
+		double top_y = SmartDashboard.getNumber("vision_top_left");
+		double width = SmartDashboard.getNumber("vision_target_width");
+		
+		double bottomLength = (width/(Math.cos(trueTheta-theta)))*Math.cos(trueTheta);
+		result = (top_y + height) - (bottomLength*Math.sin(theta));
+		
+		return result;
+		// IF THETA WAS LESS THAN 90, THIS COORDINATE IS THE BOTTOM RIGHT CORNER OF TARGET
+		// IF THETA WAS GREATER THAN 90, THIS COORDINATE IS THE BOTTOM LEFT CORNER OF TARGET
+	}
+	
+	public double getTargetTopCoordinate(double theta)
+	{
+		// gives the intermediate top y-coordinate for true target
+		double result = 0.0;
+		if (theta > 90.0)
+			theta -= 90.0;
+		double bottomCoord = getTargetBottomCoordinate(theta);
+		double width = SmartDashboard.getNumber("vision_target_width");
+		double trueTheta = Math.tan(11.0/20.0);
+		
+		result = bottomCoord - (width*Math.tan(trueTheta));
+		
+		return result;
+		
+		// IF THETA WAS LESS THAN 90, THIS COORDINATE IS THE TOP LEFT CORNER OF TARGET
+		// IF THETA WAS GREATER THAN 90, THIS COORDINATE IS THE TOP RIGHT CORNER OF TARGET
+	}
 	public double getTargetAvgDistance(){
 		double result = -1.0;
 		
