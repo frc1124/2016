@@ -146,26 +146,32 @@ public class Camera extends Subsystem {
 		 */
 		
 		try{
-			double[] point_1 = {
-					SmartDashboard.getNumber("vision_target_p1_x"),
-					SmartDashboard.getNumber("vision_target_p1_y")
-				};
-			double[] point_2 = {
-					SmartDashboard.getNumber("vision_target_p2_x"),
-					SmartDashboard.getNumber("vision_target_p2_y")
-				};
-			double[] point_3 = {
-					SmartDashboard.getNumber("vision_target_p3_x"),
-					SmartDashboard.getNumber("vision_target_p3_y")
-				};
-			double[] point_4 = {
-					SmartDashboard.getNumber("vision_target_p4_x"),
-					SmartDashboard.getNumber("vision_target_p4_y")
-				};
+//			double[] point_1 = {
+//					SmartDashboard.getNumber("vision_target_p1_x"),
+//					SmartDashboard.getNumber("vision_target_p1_y")
+//				};
+//			double[] point_2 = {
+//					SmartDashboard.getNumber("vision_target_p2_x"),
+//					SmartDashboard.getNumber("vision_target_p2_y")
+//				};
+//			double[] point_3 = {
+//					SmartDashboard.getNumber("vision_target_p3_x"),
+//					SmartDashboard.getNumber("vision_target_p3_y")
+//				};
+//			double[] point_4 = {
+//					SmartDashboard.getNumber("vision_target_p4_x"),
+//					SmartDashboard.getNumber("vision_target_p4_y")
+//				};
+			double TLY = SmartDashboard.getNumber("vision_target_p1_y");
+			double BLY = SmartDashboard.getNumber("vision_target_p4_y");
+			double TRY = SmartDashboard.getNumber("vision_target_p2_y");
+			double BRY = SmartDashboard.getNumber("vision_target_p3_y");
 			
-			double[] distances = VisionTools.goalDistances(point_1[0], point_1[1], point_2[0], point_2[1], point_4[0], point_4[1], point_3[0], point_4[1]);
+//			double[] distances = VisionTools.goalDistances(point_1[0], point_1[1], point_2[0], point_2[1], point_4[0], point_4[1], point_3[0], point_4[1]);
+			double[] distances = {0,0,0,0};
+			VisionTools.goalDistances(TLY, BLY, TRY, BRY, distances);
 			
-			result = (distances[0] + distances[1] ) / 2;
+			result = (distances[0] + distances[1] + distances[2] + distances[3]) / 4;
 		}catch(Exception e){}
 		
 		return result;

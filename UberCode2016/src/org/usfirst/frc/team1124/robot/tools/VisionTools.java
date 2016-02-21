@@ -3,6 +3,7 @@ package org.usfirst.frc.team1124.robot.tools;
 public class VisionTools {
 	private static final double cameraWidth = 320;
 	private static final double cameraHeight = 240;
+	private static final double tanCameraMountAngle = Math.tan(Math.PI / 6);
 	private static final double viewAngleHoriz = 47 * Math.PI / 180;
 	private static final double focalLength = cameraWidth / 2 / Math.tan(viewAngleHoriz / 2);
 	private static final double goalWidth = 20;   //actual--I've just forgotten the number
@@ -33,28 +34,31 @@ public class VisionTools {
 //  double goalRightRelativeX = goalLeftRelativeX + goalWidth;
 //  double goalRelativeY = dL * Math.sin(Math.acos((dR * dR - dL * dL - goalWidth * goalWidth) / 2 / dL / goalWidth));
 	
+	
+//    public static double[] goalDistances(double TLX, double TLY, double TRX, double TRY, double BLX, double BLY, double BRX, double BRY) {
+//    	return new double[] {
+//			(dHBottom * (BLY - cameraHeight / 2 + focalLength * Math.sqrt(3.0))
+//			/ (focalLength - Math.sqrt(3.0)*(BLY - cameraHeight / 2))
+//			+ dHTop * (TLY - cameraHeight / 2 + focalLength * Math.sqrt(3.0))
+//			/ (focalLength - Math.sqrt(3.0)*(TLY - cameraHeight / 2)))/2,
+//    		(dHBottom * (BRY - cameraHeight / 2 + focalLength * Math.sqrt(3.0))
+//    		/ (focalLength - Math.sqrt(3.0)*(BRY - cameraHeight / 2))
+//    		+ dHTop * (TRY - cameraHeight / 2 + focalLength * Math.sqrt(3.0))
+//    		/ (focalLength - Math.sqrt(3.0)*(TRY - cameraHeight / 2)))/2
+//    	};
+//	}
 	/**
-	 * Gives distances to the goal (left and right) from image data
-	 * @param TLX	x coordinate of the top left hand coordinate of the retroreflective tape around the goal
+	 * Gives ground-distances to the goal (top left, bottom left, top right, bottom right) from image data
 	 * @param TLY	y coordinate of the top left hand coordinate of the retroreflective tape around the goal
-	 * @param TRX	x coordinate of the top right hand coordinate of the retroreflective tape around the goal
 	 * @param TRY	y coordinate of the top right hand coordinate of the retroreflective tape around the goal
-	 * @param BLX	x coordinate of the bottom left hand coordinate of the retroreflective tape around the goal
 	 * @param BLY	y coordinate of the bottom left hand coordinate of the retroreflective tape around the goal
-	 * @param BRX	x coordinate of the bottom right hand coordinate of the retroreflective tape around the goal
 	 * @param BRY	y coordinate of the bottom right hand coordinate of the retroreflective tape around the goal
-	 * @return	{ground distance to left hand side of goal, ground distance to right hand side of goal}
+	 * @param ret	array in which distances are returned: {top left, bottom left, top right, bottom right}
 	 */
-    public static double[] goalDistances(double TLX, double TLY, double TRX, double TRY, double BLX, double BLY, double BRX, double BRY) {
-    	return new double[] {
-			(dHBottom * (BLY - cameraHeight / 2 + focalLength * Math.sqrt(3.0))
-			/ (focalLength - Math.sqrt(3.0)*(BLY - cameraHeight / 2))
-			+ dHTop * (TLY - cameraHeight / 2 + focalLength * Math.sqrt(3.0))
-			/ (focalLength - Math.sqrt(3.0)*(TLY - cameraHeight / 2)))/2,
-    		(dHBottom * (BRY - cameraHeight / 2 + focalLength * Math.sqrt(3.0))
-    		/ (focalLength - Math.sqrt(3.0)*(BRY - cameraHeight / 2))
-    		+ dHTop * (TRY - cameraHeight / 2 + focalLength * Math.sqrt(3.0))
-    		/ (focalLength - Math.sqrt(3.0)*(TRY - cameraHeight / 2)))/2
-    	};
+    public static void goalDistances(double TLY, double BLY, double TRY, double BRY, double[] ret) {
+    	ret[0] = (focalLength * tanCameraMountAngle - TLY + cameraHeight / 2) / ((TLY - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
+    	ret[1] = (focalLength * tanCameraMountAngle - BLY + cameraHeight / 2) / ((BLY - cameraHeight / 2) * tanCameraMountAngle + dHBottom * focalLength);
+    	ret[2] = (focalLength * tanCameraMountAngle - TRY + cameraHeight / 2) / ((TRY - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
+    	ret[3] = (focalLength * tanCameraMountAngle - BRY + cameraHeight / 2) / ((BRY - cameraHeight / 2) * tanCameraMountAngle + dHBottom * focalLength);
     }
 }
