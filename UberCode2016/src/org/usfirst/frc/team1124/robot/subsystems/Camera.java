@@ -217,7 +217,7 @@ public class Camera extends Subsystem {
 			double[] distancesChristian = {-1,-1};
 			VisionTools.goalDistances(top_left, bottom_right, TLY, height, distances);
 			
-			double resultChristian = (distances[0] + distances[1]) / 2;
+			double resultChristian = (distancesChristian[0] + distancesChristian[1]) / 2;
 			
 			SmartDashboard.putNumber("Luke's distance", result);
 			SmartDashboard.putNumber("Christan's distance", resultChristian);
