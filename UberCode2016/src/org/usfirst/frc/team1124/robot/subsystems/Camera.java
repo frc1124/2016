@@ -146,28 +146,16 @@ public class Camera extends Subsystem {
 		 */
 		
 		try{
-//			double[] point_1 = {
-//					SmartDashboard.getNumber("vision_target_p1_x"),
-//					SmartDashboard.getNumber("vision_target_p1_y")
-//				};
-//			double[] point_2 = {
-//					SmartDashboard.getNumber("vision_target_p2_x"),
-//					SmartDashboard.getNumber("vision_target_p2_y")
-//				};
-//			double[] point_3 = {
-//					SmartDashboard.getNumber("vision_target_p3_x"),
-//					SmartDashboard.getNumber("vision_target_p3_y")
-//				};
-//			double[] point_4 = {
-//					SmartDashboard.getNumber("vision_target_p4_x"),
-//					SmartDashboard.getNumber("vision_target_p4_y")
-//				};
-			double TLY = SmartDashboard.getNumber("vision_target_p1_y");
-			double BLY = SmartDashboard.getNumber("vision_target_p4_y");
-			double TRY = SmartDashboard.getNumber("vision_target_p2_y");
-			double BRY = SmartDashboard.getNumber("vision_target_p3_y");
+			boolean top_left = SmartDashboard.getBoolean("vision_top_left");
+			boolean bottom_right = SmartDashboard.getBoolean("vision_bottom_right");
 			
-//			double[] distances = VisionTools.goalDistances(point_1[0], point_1[1], point_2[0], point_2[1], point_4[0], point_4[1], point_3[0], point_4[1]);
+			double height = SmartDashboard.getNumber("vision_target_height");
+			
+			double TLY = SmartDashboard.getNumber("vision_target_p1_y");
+			double BLY = 0;//SmartDashboard.getNumber("vision_target_p4_y");
+			double TRY = 0;//SmartDashboard.getNumber("vision_target_p2_y");
+			double BRY = 0;//SmartDashboard.getNumber("vision_target_p3_y");
+			
 			double[] distances = {0,0,0,0};
 			VisionTools.goalDistances(TLY, BLY, TRY, BRY, distances);
 			
