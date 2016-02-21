@@ -234,10 +234,20 @@ public class Camera extends Subsystem {
 	private static final double gravity = -9.8;
 	private static final double ballRadius = .127;
 	private static final double ballMass = 0.3;
-	public double getCalculatedShooterRPM(){
-		double distanceToGoalMeters = getTargetAvgDistance() * 3.2808;
-		return gravity * distanceToGoalMeters * distanceToGoalMeters /
-				(2 * yOffset * Math.cos(shooterAngle) - 2 * distanceToGoalMeters * Math.sin(shooterAngle) +
-				distanceToGoalMeters * distanceToGoalMeters * coefDrag * airDensity * Math.tan(shooterAngle) / 2 / Math.PI / ballRadius / ballMass);
+	private static final double wheelRadius = .0762;
+	private static final double rpmPerRadPS = 30 / Math.PI;
+//	public double getCalculatedShooterRPM(){
+//		double distanceToGoalMeters = getTargetAvgDistance() * 3.2808;
+//		return gravity * distanceToGoalMeters * distanceToGoalMeters /
+//				(2 * yOffset * Math.cos(shooterAngle) - 2 * distanceToGoalMeters * Math.sin(shooterAngle) +
+//				distanceToGoalMeters * distanceToGoalMeters * coefDrag * airDensity * Math.tan(shooterAngle) / 2 / Math.PI / ballRadius / ballMass);
+//	}
+	public double getCalculatedShooterRPM() {
+		double distToGoalMeters = getTargetAvgDistance() * 12 / 3.2808;
+		return rpmPerRadPS * 2 * Math.PI * gravity * ballMass * ballRadius * distToGoalMeters * distToGoalMeters
+				/ (coefDrag * airDensity * distToGoalMeters * distToGoalMeters * Math.sin(shooterAngle)
+				+ 4 * Math.PI * ballMass * ballRadius * distToGoalMeters * Math.sin(shooterAngle) * Math.cos(shooterAngle)
+				- 4 * Math.PI * ballMass * ballRadius * yOffset * Math.cos(shooterAngle) * Math.cos(shooterAngle)
+				/ wheelRadius);
 	}
 }
