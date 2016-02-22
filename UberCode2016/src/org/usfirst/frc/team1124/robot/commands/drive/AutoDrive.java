@@ -38,19 +38,6 @@ public class AutoDrive extends CommandGroup {
     		//left.stop();
     		//right.stop();
     	}
-
-    	/** TODO remove this when done tuning */
-    	if(left.isFinished()){
-    		SmartDashboard.putString("LEFT_STATE", "FINISHED");
-    	}else{
-    		SmartDashboard.putString("LEFT_STATE", "RUNNING");
-    	}
-    	
-    	if(right.isFinished()){
-    		SmartDashboard.putString("RIGHT_STATE", "FINISHED");
-    	}else{
-    		SmartDashboard.putString("RIGHT_STATE", "RUNNING");
-    	}
     }
     
     protected boolean isFinished(){
@@ -60,9 +47,6 @@ public class AutoDrive extends CommandGroup {
     }
     
     protected void end(){
-    	/** TODO remove dashboard stuff when done tuning */
-    	SmartDashboard.putString("auto-state", "done");
-    	
     	Robot.drivetrain.stop();
     }
     
