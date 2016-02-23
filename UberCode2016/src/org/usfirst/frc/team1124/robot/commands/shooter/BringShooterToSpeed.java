@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class BringShooterToSpeed extends Command {
 	
 	private double setpoint;
-	private double MAGIC_SPEED_THAT_ALWAYS_WORKS = 3800.0;
+	private double MAGIC_SPEED_THAT_ALWAYS_WORKS = 3600.0;
 	
 	private boolean safetyTrippedFirstCall = true;
 	

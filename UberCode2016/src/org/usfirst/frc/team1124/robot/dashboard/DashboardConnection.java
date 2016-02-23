@@ -232,11 +232,13 @@ public class DashboardConnection {
 	}
 	
 	private void updatePDP(){
-		SmartDashboard.putNumber("pdp_voltage", Robot.pdp.getVoltage());
-		SmartDashboard.putNumber("pdp_temp", (Robot.pdp.getTemperature() * (9.00/5.00)) + 32.00);
-		SmartDashboard.putNumber("pdp_total_current", Robot.pdp.getTotalCurrent());
-		SmartDashboard.putNumber("pdp_total_power", Robot.pdp.getTotalPower());
-		SmartDashboard.putNumber("pdp_total_energy", Robot.pdp.getTotalEnergy());
+		try{
+			SmartDashboard.putNumber("pdp_voltage", Robot.pdp.getVoltage());
+			SmartDashboard.putNumber("pdp_temp", (Robot.pdp.getTemperature() * (9.00/5.00)) + 32.00);
+			SmartDashboard.putNumber("pdp_total_current", Robot.pdp.getTotalCurrent());
+			SmartDashboard.putNumber("pdp_total_power", Robot.pdp.getTotalPower());
+			SmartDashboard.putNumber("pdp_total_energy", Robot.pdp.getTotalEnergy());
+		}catch(Exception anish){}
 		
 		for(int i = 0; i < 16; i++){
 			SmartDashboard.putNumber("pdp_port_" + i + "_current", Robot.pdp.getCurrent(i));
