@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  * Starts a hold position loop that also incorporates feed-forward control from the driver
- * TODO test this code
  */
 public class DriveHoldPosition extends CommandGroup {
 	private LeftDrivePID left_drive;
@@ -84,8 +83,9 @@ public class DriveHoldPosition extends CommandGroup {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double y = Robot.oi.getJS1().getY() * -1;
-    	double x = Robot.oi.getJS1().getX() * -1;
+    	// we are not going to have control while in this mode, just hold still
+    	double y = 0; //Robot.oi.getJS1().getY() * -1;
+    	double x = 0; //Robot.oi.getJS1().getX() * -1;
     	
     	if(Math.abs(y) > threshold || Math.abs(x) > threshold){
     		if(!wasActive){
@@ -182,8 +182,6 @@ public class DriveHoldPosition extends CommandGroup {
     
     protected void end() {
     	Robot.drivetrain.stop();
-    	
-    	System.out.println("command ended");
     }
 
     protected void interrupted() {
