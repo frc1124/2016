@@ -174,6 +174,7 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 			SafetyErrorLogger.reportNoError(SafetySubsystem.ArmActuator, SafetyError.EncoderDirection);
 		}
 		*/
+		
 		if(Math.abs(output) > getRateCutoffThreshold() && getRate() == 0 && safetyTimer.get() >= TIME_DELAY){
 			// we are moving it but the encoder isn't reading it, not good
 			safeOutput = 0;

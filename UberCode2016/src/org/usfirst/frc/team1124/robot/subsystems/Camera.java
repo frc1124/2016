@@ -7,7 +7,6 @@ import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
 
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
@@ -148,8 +147,7 @@ public class Camera extends Subsystem {
 		// IF THETA WAS GREATER THAN 90, THIS COORDINATE IS THE BOTTOM LEFT CORNER OF TARGET
 	} */
 	
-	public double[] getTargetCornerCoordinates(double theta)
-	{
+	public double[] getTargetCornerCoordinates(double theta){
 		// returns the y-coordinates of all corners
 		if (theta > 90.0)
 			theta -= 90.0;
@@ -175,6 +173,7 @@ public class Camera extends Subsystem {
 		
 		// RETURNS IN THE ORDER: TOP LEFT, TOP RIGHT, BOTTOM LEFT, BOTTOM RIGHT
 	}
+	
 	public double getTargetAvgDistance(){
 		double result = -1.0;
 		
@@ -203,10 +202,7 @@ public class Camera extends Subsystem {
 			
 			
 			double TLY = SmartDashboard.getNumber("vision_target_p1_y");
-			double BLY = 0;//SmartDashboard.getNumber("vision_target_p4_y");
-			double TRY = 0;//SmartDashboard.getNumber("vision_target_p2_y");
-			double BRY = 0;//SmartDashboard.getNumber("vision_target_p3_y");
-			//tl tr bl br
+			
 			double[] ys = getTargetCornerCoordinates(SmartDashboard.getNumber("vision_target_theta"));
 			
 			double[] distances = {0,0,0,0};
@@ -221,7 +217,6 @@ public class Camera extends Subsystem {
 			
 			SmartDashboard.putNumber("Luke's distance", result);
 			SmartDashboard.putNumber("Christan's distance", resultChristian);
-			
 		}catch(Exception e){}
 		
 		return result;
@@ -236,12 +231,14 @@ public class Camera extends Subsystem {
 	private static final double ballMass = 0.3;
 	private static final double wheelRadius = .0762;
 	private static final double rpmPerRadPS = 30 / Math.PI;
+	
 //	public double getCalculatedShooterRPM(){
 //		double distanceToGoalMeters = getTargetAvgDistance() * 3.2808;
 //		return gravity * distanceToGoalMeters * distanceToGoalMeters /
 //				(2 * yOffset * Math.cos(shooterAngle) - 2 * distanceToGoalMeters * Math.sin(shooterAngle) +
 //				distanceToGoalMeters * distanceToGoalMeters * coefDrag * airDensity * Math.tan(shooterAngle) / 2 / Math.PI / ballRadius / ballMass);
 //	}
+	
 	public double getCalculatedShooterRPM() {
 		double distToGoalMeters = getTargetAvgDistance() * 12 / 3.2808;
 		return rpmPerRadPS * 2 * Math.PI * gravity * ballMass * ballRadius * distToGoalMeters * distToGoalMeters
