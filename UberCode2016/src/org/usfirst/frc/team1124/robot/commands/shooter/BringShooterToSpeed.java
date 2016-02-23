@@ -2,19 +2,23 @@ package org.usfirst.frc.team1124.robot.commands.shooter;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Shoots a ball at a specific rate (using PID)
  */
 public class BringShooterToSpeed extends Command {
-	
 	private double setpoint;
-	private double MAGIC_SPEED_THAT_ALWAYS_WORKS = 3600.0;
+	private double voltage;
+	
+	public static final double MAGIC_SPEED_THAT_ALWAYS_WORKS = 3600.0;
+	public static final double MAX_RPM = 3680.0;
+	private final double APPROX_TIME_TO_SPEED_UP = 3.0;
+	
+	private Timer manualTimer = new Timer();
 	
 	private boolean safetyTrippedFirstCall = true;
-	
-	private Command fallback_command;
 	
     public BringShooterToSpeed(){
     	requires(Robot.shooter_pid);
@@ -22,8 +26,8 @@ public class BringShooterToSpeed extends Command {
     	this.setpoint = MAGIC_SPEED_THAT_ALWAYS_WORKS;
     	
     	setInterruptible(true);
-    	
-    	fallback_command = new BringShooterToApproxSpeed();
+
+    	voltage = MAGIC_SPEED_THAT_ALWAYS_WORKS / MAX_RPM;
     }
 
     protected void initialize(){
@@ -36,32 +40,34 @@ public class BringShooterToSpeed extends Command {
     	if(Robot.shooter_pid.isSafetyTripped() && safetyTrippedFirstCall){
     		Robot.shooter_pid.disable();
     		
-    		fallback_command.start();
-    		
+    		manualTimer.start();
     		safetyTrippedFirstCall = false;
+    	}
+    	
+    	if(Robot.shooter_pid.isSafetyTripped()){
+        	Robot.shooter_pid.manual(voltage);
     	}
     }
     
-    public boolean atSetpoint(){
+    private boolean atSetpoint(){
     	return Robot.shooter_pid.getPIDController().getAvgError() <= 2.0;
     }
 
     protected boolean isFinished(){
     	if(Robot.shooter_pid.isSafetyTripped()){
-    		return fallback_command.isRunning();
+    		return manualTimer.get() >= APPROX_TIME_TO_SPEED_UP;
     	}else{
-    		return false;
+    		return atSetpoint();
     	}
     }
 
     protected void end() {
-    	fallback_command.cancel();
+    	HoldShooterSpeed hold = new HoldShooterSpeed();
     	
-    	Robot.shooter_pid.setSetpoint(0);
-    	Robot.shooter_pid.manual(0);
+    	hold.start();
     }
 
     protected void interrupted(){
-    	end();
+    	Robot.shooter_pid.stop();
     }
 }
