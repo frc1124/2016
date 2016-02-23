@@ -7,7 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
  * Use this in a command group using addSequential() so the next command has to wait.
  */
 public class CommandDelay extends Command {
-
+	/**
+	 * Delay the next sequential command in a command group.
+	 * @param time The time to wait in seconds.
+	 */
     public CommandDelay(double time) {
         setTimeout(time);
     }
