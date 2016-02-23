@@ -1,9 +1,5 @@
 package org.usfirst.frc.team1124.robot;
 
-// test commands
-import org.usfirst.frc.team1124.robot.commands.TestDriveEncoders;
-import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoalPID;
-
 // commands
 import org.usfirst.frc.team1124.robot.commands.macro.Autonomous;
 

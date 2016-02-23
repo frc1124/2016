@@ -3,7 +3,7 @@ package org.usfirst.frc.team1124.robot.commands.drive;
 import org.usfirst.frc.team1124.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Use PID and pixel data to turn towards the target
@@ -18,7 +18,7 @@ public class AimTowardsGoalPID extends PIDCommand {
 	// d = 0.000018031
 	
 	private static final int image_width = 320;	
-	private static final int setpoint = 160;
+	private static final int setpoint = image_width / 2;
 	
     public AimTowardsGoalPID() {
     	super("AimTowardsGoalPID", P, I, D);
@@ -36,7 +36,7 @@ public class AimTowardsGoalPID extends PIDCommand {
 	}
 	
 	protected void usePIDOutput(double output) {
-		System.out.println(output + " setpoint: " + getSetpoint() + " process var: " + returnPIDInput());
+		// System.out.println(output + " setpoint: " + getSetpoint() + " process var: " + returnPIDInput());
 		Robot.drivetrain.drive_tank_auto((-1) * output, output);
 	}
 	
@@ -50,6 +50,7 @@ public class AimTowardsGoalPID extends PIDCommand {
 			getPIDController().enable();
 		}
 		
+		/*
 		try{
 			double p = SmartDashboard.getNumber("P");
 			double i = SmartDashboard.getNumber("I");
@@ -59,6 +60,7 @@ public class AimTowardsGoalPID extends PIDCommand {
 				getPIDController().setPID(p, i, d);
 			}
 		}catch(Exception e){}
+		*/
 	}
 	
 	protected void initialize() {
@@ -66,7 +68,7 @@ public class AimTowardsGoalPID extends PIDCommand {
 	}
 
 	protected boolean isFinished() {
-		return false;//getPIDController().getAvgError() <= 2.0;
+		return false; //getPIDController().getAvgError() <= 2.0;
 	}
 	
 	protected void end() {

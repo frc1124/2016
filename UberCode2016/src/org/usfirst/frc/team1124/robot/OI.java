@@ -5,7 +5,6 @@ import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsExtend;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsRetract;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoal;
-import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoalPID;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.drive.AutoDrive;
 import org.usfirst.frc.team1124.robot.commands.drive.DriveHoldPosition;
