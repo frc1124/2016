@@ -17,19 +17,61 @@ public class Autonomous extends CommandGroup {
 	private AutoDefensePosition defense_position;
 	
     public  Autonomous() {
-    	addSequential(new AutoDrive(60, 60));
-    	
     	mode = DashboardConnection.Auto.getMode();
     	defense_type = DashboardConnection.Auto.getDefenseType();
     	defense_position = DashboardConnection.Auto.getDefensePosition();
     	
-    	if(mode == AutoMode.Nothing || defense_type == AutoDefenseType.SomethingElse || defense_position == AutoDefensePosition.SpyBox){
+    	if(mode == AutoMode.Nothing || defense_position == AutoDefensePosition.SpyBox){
     		// do nothing
     	}else{
     		// do something!
     		switch(mode){
-    			default:
+				case Nothing:
+				break;
+    			case GetToDefense:
+    		    	getToDefense();
+    			break;
+    			case CrossDefense:
+    				getToDefense();
+    				crossDefense();
+    			break;
+				case ScoreHighGoal:
+					getToDefense();
+					crossDefense();
+					turnTowardsApproxGoal();
+					scoreHighGoal();
+				break;
+				case ScoreLowGoal:
+				break;
     		}
     	}
+    }
+    
+    private void getToDefense(){
+    	addSequential(new AutoDrive(60, 60));
+    }
+    
+    private void crossDefense(){
+		switch(defense_type){
+			case Moat:
+			break;
+			case Ramparts:
+			break;
+			case RockWall:
+			break;
+			case RoughTerrain:
+			break;
+			case SomethingElse:
+			break;
+		}
+    }
+    
+    /** turn towards the goal depending on where we started so we can target it */
+    private void turnTowardsApproxGoal(){
+    	
+    }
+    
+    private void scoreHighGoal(){
+    	addSequential(new ScoreHighGoal());
     }
 }
