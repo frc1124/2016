@@ -12,8 +12,8 @@ public class BringShooterToSpeed extends Command {
 	private double setpoint;
 	private double voltage;
 	
-	public static final double MAGIC_SPEED_THAT_ALWAYS_WORKS = 3600.0;
-	public static final double MAX_RPM = 3680.0;
+	public static final double SPEED = 3600.0;
+	public static final double MAX_RPM = 3600.0;
 	private final double APPROX_TIME_TO_SPEED_UP = 3.0;
 	
 	private Timer manualTimer = new Timer();
@@ -23,11 +23,11 @@ public class BringShooterToSpeed extends Command {
     public BringShooterToSpeed(){
     	requires(Robot.shooter_pid);
     	
-    	this.setpoint = MAGIC_SPEED_THAT_ALWAYS_WORKS;
+    	this.setpoint = SPEED;
     	
     	setInterruptible(true);
 
-    	voltage = MAGIC_SPEED_THAT_ALWAYS_WORKS / MAX_RPM;
+    	voltage = SPEED / MAX_RPM;
     }
 
     protected void initialize(){
@@ -44,28 +44,21 @@ public class BringShooterToSpeed extends Command {
     		safetyTrippedFirstCall = false;
     	}
     	
+    	
     	if(Robot.shooter_pid.isSafetyTripped()){
         	Robot.shooter_pid.manual(voltage);
     	}
-    }
-    
-    private boolean atSetpoint(){
-    	return Robot.shooter_pid.getPIDController().getAvgError() <= 2.0;
     }
 
     protected boolean isFinished(){
     	if(Robot.shooter_pid.isSafetyTripped()){
     		return manualTimer.get() >= APPROX_TIME_TO_SPEED_UP;
     	}else{
-    		return atSetpoint();
+    		return Math.abs(Robot.shooter_pid.getRate() - SPEED) < 50;
     	}
     }
 
-    protected void end() {
-    	HoldShooterSpeed hold = new HoldShooterSpeed();
-    	
-    	hold.start();
-    }
+    protected void end() {}
 
     protected void interrupted(){
     	Robot.shooter_pid.stop();

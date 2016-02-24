@@ -5,8 +5,7 @@ import org.usfirst.frc.team1124.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Run the ramp belts to feed the ball to the shooter to score a high goal. </br>
- * Runs for 1 second.
+ * Run the ramp belts to feed the ball to the shooter to score a high goal.
  */
 public class RampBeltsFeedToShooter extends Command {
 
@@ -19,9 +18,7 @@ public class RampBeltsFeedToShooter extends Command {
     protected void initialize() {}
 
     protected void execute() {
-    	if(Robot.shooter_pid.getPIDController().getAvgError() <= 2.0){
-    		Robot.ramp_belts.feedToShooter();
-    	}
+    	Robot.ramp_belts.feedToShooter();
     }
 
     protected boolean isFinished() {

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1124.robot;
 
+import org.usfirst.frc.team1124.robot.commands.drive.AutoDrive;
 // commands
 import org.usfirst.frc.team1124.robot.commands.macro.Autonomous;
 
@@ -69,7 +70,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     
     // this revision of code (displayed on dashboard)
-    public static String codeRevision = "[v2.0.0]:build-season";
+    public static String codeRevision = "[v2.0.1]:build-season";
 
     /**
      * This function is run when the robot is first started up and should be
@@ -97,7 +98,7 @@ public class Robot extends IterativeRobot {
         SafetyErrorLogger.init();
 
         // instantiate the command used for the autonomous period
-        autonomousCommand = new Autonomous();
+        autonomousCommand = new AutoDrive(2, -2);//Autonomous();
         
         // make sure compressor is not running
         compressor.stop();

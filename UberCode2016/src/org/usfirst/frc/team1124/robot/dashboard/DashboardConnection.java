@@ -238,11 +238,11 @@ public class DashboardConnection {
 			SmartDashboard.putNumber("pdp_total_current", Robot.pdp.getTotalCurrent());
 			SmartDashboard.putNumber("pdp_total_power", Robot.pdp.getTotalPower());
 			SmartDashboard.putNumber("pdp_total_energy", Robot.pdp.getTotalEnergy());
+			
+			for(int i = 0; i < 16; i++){
+				SmartDashboard.putNumber("pdp_port_" + i + "_current", Robot.pdp.getCurrent(i));
+			}
 		}catch(Exception anish){}
-		
-		for(int i = 0; i < 16; i++){
-			SmartDashboard.putNumber("pdp_port_" + i + "_current", Robot.pdp.getCurrent(i));
-		}
 		
 		try{
 			boolean resetTotalEnergy = SmartDashboard.getBoolean("reset_pdp_total_energy");

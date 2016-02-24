@@ -6,6 +6,7 @@ import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoal;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
 import org.usfirst.frc.team1124.robot.commands.ramp.RampBeltsFeedToShooter;
 import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
+import org.usfirst.frc.team1124.robot.commands.shooter.HoldShooterSpeed;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -18,15 +19,17 @@ public class ScoreHighGoal extends CommandGroup {
     public ScoreHighGoal() {
     	camera_command = new StreamShooterCamera();
     	
-    	addParallel(camera_command);
+    	camera_command.start();
     	
     	addSequential(new AimTowardsGoal());
         
         addSequential(new BringShooterToSpeed());
+        addParallel(new HoldShooterSpeed());
+        
         addSequential(new RampBeltsFeedToShooter());
         
         // wait to be sure it fired and is done
-        addSequential(new CommandDelay(1.5));
+        addSequential(new CommandDelay(1));
         addSequential(new ShooterInterrupt());
     }
     

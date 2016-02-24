@@ -26,9 +26,9 @@ public class RightDrivePID extends PIDCommand implements Safe {
 	private double rate_threshold = 0.112;
 
 	/** TODO tune these */
-	private static final double P = 0.25;
-	private static final double I = 0.0;
-	private static final double D = 0.0025;
+	private static final double P = 0.025;
+	private static final double I = 0.0000776;
+	private static final double D = 0.0;
 	
     public RightDrivePID(double setpoint) {
 		super("RightDrivePID", P, I, D);

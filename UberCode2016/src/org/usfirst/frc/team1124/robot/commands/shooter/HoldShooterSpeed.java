@@ -20,7 +20,7 @@ public class HoldShooterSpeed extends Command {
     	
     	setInterruptible(true);
 
-    	voltage = BringShooterToSpeed.MAGIC_SPEED_THAT_ALWAYS_WORKS / BringShooterToSpeed.MAX_RPM;
+    	voltage = BringShooterToSpeed.SPEED / BringShooterToSpeed.MAX_RPM;
     }
 
     protected void initialize() {}
