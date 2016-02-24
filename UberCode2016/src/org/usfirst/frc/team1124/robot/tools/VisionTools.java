@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1124.robot.tools;
 
+import com.ni.vision.NIVision;
+
 public class VisionTools {
 	private static final double cameraWidth = 320;
 	private static final double cameraHeight = 240;
@@ -77,5 +79,10 @@ public class VisionTools {
     		ret[1] = (focalLength * tanCameraMountAngle - boundBoxTopY + cameraHeight / 2) / 
     				((boundBoxTopY - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
     	}
+    }
+
+    public static double getAngle(double centerX, double viewAngle, int imageWidth) {
+		double degreesPerPixel = viewAngle / imageWidth;
+		return ((imageWidth / 2) - centerX) * degreesPerPixel;
     }
 }
