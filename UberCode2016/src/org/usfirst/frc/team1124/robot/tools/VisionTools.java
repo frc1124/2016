@@ -50,12 +50,12 @@ public class VisionTools {
 //    	};
 //	}
 	/**
-	 * Gives ground-distances to the goal (top left, bottom left, top right, bottom right) from image data
-	 * @param TLY	y coordinate of the top left hand coordinate of the retroreflective tape around the goal
-	 * @param TRY	y coordinate of the top right hand coordinate of the retroreflective tape around the goal
-	 * @param BLY	y coordinate of the bottom left hand coordinate of the retroreflective tape around the goal
-	 * @param BRY	y coordinate of the bottom right hand coordinate of the retroreflective tape around the goal
-	 * @param ret	array in which distances are returned: {top left, bottom left, top right, bottom right}
+	 * Gives ground distances (in inches) to the goal (top left, bottom left, top right, bottom right) from image data (in pixels)
+	 * @param TLY	y coordinate (in pixels) of the top left hand coordinate of the retroreflective tape around the goal
+	 * @param TRY	y coordinate (in pixels) of the top right hand coordinate of the retroreflective tape around the goal
+	 * @param BLY	y coordinate (in pixels) of the bottom left hand coordinate of the retroreflective tape around the goal
+	 * @param BRY	y coordinate (in pixels) of the bottom right hand coordinate of the retroreflective tape around the goal
+	 * @param ret	array in which distances (in inches) are returned: {top left, bottom left, top right, bottom right}
 	 */
     public static void goalDistances(double TLY, double BLY, double TRY, double BRY, double[] ret) {
     	ret[0] = (focalLength * tanCameraMountAngle - TLY + cameraHeight / 2) / ((TLY - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
@@ -64,7 +64,14 @@ public class VisionTools {
     	ret[3] = (focalLength * tanCameraMountAngle - BRY + cameraHeight / 2) / ((BRY - cameraHeight / 2) * tanCameraMountAngle + dHBottom * focalLength);
     }
     
-    
+    /**
+     * Gives ground distances (in inches) to the goal (left, right) from image data
+     * @param tl				is the top left pixel of the bounding box around the goal true?
+     * @param br				is the bottom right pixel of the bounding box around the goal true?
+     * @param boundBoxTopY		position (in pixels) of the top of the bounding box around the goal. This is smaller than boundBoxBottomY would be.
+     * @param boundBoxHeight	height (in pixels) of the bounding box
+     * @param ret				array in which distances (in inches) are returned: {left, right}
+     */
     public static void goalDistances(boolean tl, boolean br, double boundBoxTopY, double boundBoxHeight, double[] ret) {
     	//ret[0] = ground distance to left side of goal
     	//ret[1] = ground distance to right side of goal
@@ -81,8 +88,29 @@ public class VisionTools {
     	}
     }
 
-    public static double getAngle(double centerX, double viewAngle, int imageWidth) {
+    public static double getSkewAngle(double centerX, double viewAngle, int imageWidth) {
 		double degreesPerPixel = viewAngle / imageWidth;
 		return ((imageWidth / 2) - centerX) * degreesPerPixel;
+    }
+    
+    /**
+     * Gets the angle of the robot from the line parallel to the goal such that:
+     * <br>
+     * -When the robot is turned perpendicular to the goal, with the goal at its left, the return angle is 0 radians
+     * <br>
+     * -When the robot is turned perpendicular to the goal, with the goal at its right, the return angle is pi radians
+     * <br>
+     * -When the robot is pointed directly at the goal, the return angle is pi/2 radians
+     * <br>
+     * Takes dLeft and dRight as arguments rather than getting them from goalDistances, because they may already be calculated.
+     * @param dLeft				ground distance (in inches) to the left hand side of the goal
+     * @param dRight			ground distance (in inches) to the right hand side of the goal
+     * @param xRHS_BoundingBox	position (in pixels) of the right hand side of the bounding box around the goal
+     * @return
+     */
+    public static double getAngleToGoal(double dLeft, double dRight, double xRHS_BoundingBox) {
+    	return Math.acos((goalWidth * goalWidth + dRight * dRight - dLeft * dLeft) / (2 * goalWidth * dRight))
+    			+ Math.acos((dLeft * dLeft + dRight * dRight - goalWidth * goalWidth) / (2 * dLeft * dRight))
+    			+ Math.atan((cameraWidth / 2 - xRHS_BoundingBox) / focalLength);
     }
 }
