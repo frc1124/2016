@@ -106,11 +106,12 @@ public class VisionTools {
      * @param dLeft				ground distance (in inches) to the left hand side of the goal
      * @param dRight			ground distance (in inches) to the right hand side of the goal
      * @param xRHS_BoundingBox	position (in pixels) of the right hand side of the bounding box around the goal
+     * @param degrees			if true, multiplies return by 180 / pi
      * @return
      */
-    public static double getAngleToGoal(double dLeft, double dRight, double xRHS_BoundingBox) {
-    	return Math.acos((goalWidth * goalWidth + dRight * dRight - dLeft * dLeft) / (2 * goalWidth * dRight))
+    public static double getAngleToGoal(double dLeft, double dRight, double xRHS_BoundingBox, boolean degrees) {
+    	return ((degrees) ? (180 / Math.PI) : (1)) * (Math.acos((goalWidth * goalWidth + dRight * dRight - dLeft * dLeft) / (2 * goalWidth * dRight))
     			+ Math.acos((dLeft * dLeft + dRight * dRight - goalWidth * goalWidth) / (2 * dLeft * dRight))
-    			+ Math.atan((cameraWidth / 2 - xRHS_BoundingBox) / focalLength);
+    			+ Math.atan((cameraWidth / 2 - xRHS_BoundingBox) / focalLength));
     }
 }

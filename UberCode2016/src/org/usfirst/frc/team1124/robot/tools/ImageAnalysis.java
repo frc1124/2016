@@ -174,7 +174,7 @@ public class ImageAnalysis {
 
 		// Find the angle to the center of the goal
 		int imageWidth = NIVision.imaqGetImageSize(this.image).width;
-		this.angle = VisionTools.getAngle(p.CenterOfMassX,(this.axisCamera != null) ? ImageAnalysis.AXIS_VIEW_ANGLE : ImageAnalysis.USB_VIEW_ANGLE, imageWidth);
+		this.angle = VisionTools.getSkewAngle(p.CenterOfMassX,(this.axisCamera != null) ? ImageAnalysis.AXIS_VIEW_ANGLE : ImageAnalysis.USB_VIEW_ANGLE, imageWidth);
 	}
 
 	/**
