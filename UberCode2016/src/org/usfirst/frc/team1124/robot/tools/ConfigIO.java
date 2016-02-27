@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.usfirst.frc.team1124.robot.CurrenException;
+//import org.usfirst.frc.team1124.robot.CurrenException;
 
 public class ConfigIO {
 	// saves and imports from and to "/home/lvuser/config/robot.cfg"
@@ -44,18 +44,19 @@ public class ConfigIO {
 	/** Get the string value from the config file.*/
 	public String getStringVal(String key){
 		String s = config.get(key);
-		if(s == null)
-			throw new CurrenException("There nothin' here captain!");
+		if(s == null);
+			//throw new CurrenException("There nothin' here captain!");
 		return s;
 	}
 
 	/** Get the integer value from the config file.*/
 	public int getIntVal(String key){
 		int i;
+		i = Integer.parseInt(config.get(key));
 		try {
 			i = Integer.parseInt(config.get(key));
 		} catch(NumberFormatException numFormat){
-			throw new CurrenException("There wasn't an int where I expected an int." ,numFormat);
+			//throw new CurrenException("There wasn't an int where I expected an int." ,numFormat);
 		}
 		return i;
 	}

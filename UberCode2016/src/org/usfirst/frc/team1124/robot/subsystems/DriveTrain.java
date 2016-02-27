@@ -68,6 +68,10 @@ public class DriveTrain extends Subsystem {
 	
 	// gyro methods
 	
+	public void resetGyro(){
+		gyro.reset();
+	}
+	
 	/**
 	 * Goes beyond 360 degrees
 	 * @return absolute full angle that is beyond 360 degrees after 1 rotation

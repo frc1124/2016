@@ -4,6 +4,7 @@ import org.usfirst.frc.team1124.robot.commands.arm.ArmManual;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsExtend;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsRetract;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
+import org.usfirst.frc.team1124.robot.commands.drive.AimAtAngle;
 import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoal;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.drive.DriveHoldPosition;
@@ -109,6 +110,8 @@ public class OI {
 		js1_buttons[1].toggleWhenPressed(new ScoreHighGoal());
 		js1_buttons[2].whenPressed(new BringShooterToSpeed());
 		js1_buttons[3].whenPressed(new AimTowardsGoal());
+		
+		js1_buttons[4].whenPressed(new AimAtAngle(40));
 		
 		js1_buttons[8].whenPressed(new ArcadeDriveJoystick());
 
