@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.usfirst.frc.team1124.robot.CurrenException;
+
 public class ConfigIO {
 	// saves and imports from and to "/home/lvuser/config/robot.cfg"
 	// i need to edit this file to make a new commit
@@ -41,12 +43,21 @@ public class ConfigIO {
 
 	/** Get the string value from the config file.*/
 	public String getStringVal(String key){
-		return config.get(key);
+		String s = config.get(key);
+		if(s == null)
+			throw new CurrenException("There nothin' here captain!");
+		return s;
 	}
 
 	/** Get the integer value from the config file.*/
 	public int getIntVal(String key){
-		return Integer.parseInt(config.get(key));
+		int i;
+		try {
+			i = Integer.parseInt(config.get(key));
+		} catch(NumberFormatException numFormat){
+			throw new CurrenException("There wasn't an int where I expected an int." ,numFormat);
+		}
+		return i;
 	}
 
 	private void reloadConfig(){
@@ -126,14 +137,14 @@ public class ConfigIO {
 			for(int i = 0; i <  config.size() && !foundKey; i++){
 				String tempKey = (String) config.keySet().toArray()[i];
 				String tempVal = config.get(tempKey);
-				
+
 				fCLine = fullConfig.get(c);
 				String fCKey = "";
 				for(int s = 0; s < fCLine.length() && fCLine.charAt(0) != '#' && fCLine.charAt(s) != ' '; s++){
 					if(fCLine.charAt(s) != ' ')
 						fCKey += fCLine.charAt(s);
 				}
-				
+
 				if(fCKey.equals(tempKey)){
 					wr0.println(tempKey + " " + tempVal);
 					foundKey = true;
