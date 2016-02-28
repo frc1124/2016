@@ -28,7 +28,10 @@ public class AimAtAnglePID extends PIDCommand {
     }
 
     protected void initialize() {
+    	double setpoint = 0;
+    	
     	try{
+    		/*
 	    	double top_left_y = SmartDashboard.getNumber("vision_target_p1_y");
 	    	double top_right_x = SmartDashboard.getNumber("vision_target_p2_x");
 	    	double height = SmartDashboard.getNumber("vision_target_height");
@@ -41,15 +44,23 @@ public class AimAtAnglePID extends PIDCommand {
 	    	VisionTools.goalDistances(top_left, bottom_right, top_left_y, height, goalDistances);
 	    	double angleToGoal = VisionTools.getAngleToGoal(goalDistances[0], goalDistances[1], top_right_x, true);
 	    	double setpoint = angleToGoal - VisionTools.angleToGoalSetpoint(goalDistances[0], goalDistances[1], true);
+	    	*/
+    		
+	    	double xlhsGoalBBox = SmartDashboard.getNumber("vision_target_p1_x");
+	    	double widthGoalBBox = SmartDashboard.getNumber("vision_target_width");
+	    	
+	    	System.out.println("Target Left X: " + xlhsGoalBBox + " Width: " + widthGoalBBox);
+	    	
+	    	setpoint = VisionTools.turnAngle(xlhsGoalBBox, widthGoalBBox, true);
+	    	
+	    	System.out.println("Setpoint: " + setpoint);
     	}catch(Exception oh_no){
     		System.out.println("Fatal Targeting Error: Dashboard data not found.");
     	}
     	
     	Robot.drivetrain.resetGyro();
         
-    	//angle = setpoint;
-    	
-        angle = SmartDashboard.getNumber("ANGLE");
+    	angle = setpoint;
         
         setSetpoint(angle);
         
