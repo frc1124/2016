@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Aim at an angle using the gyro.
  */
-public class AimAtAngle extends PIDCommand {
+public class AimAtAnglePID extends PIDCommand {
 	//w/o oscillation: 0.02464, w/ oscillation: 0.064, small angle: 0.111
 	private static final double P = 0.08464;
 	private static final double I = 0.00003;
@@ -20,7 +20,7 @@ public class AimAtAngle extends PIDCommand {
 	/**
 	 * @param angle angle in degrees
 	 */
-    public AimAtAngle() {
+    public AimAtAnglePID() {
     	super("AimAtAngle", P, I, D);
         requires(Robot.drivetrain);
         
@@ -74,18 +74,7 @@ public class AimAtAngle extends PIDCommand {
         }
     }
 
-    protected void execute() {
-		try{
-			double p = SmartDashboard.getNumber("P");
-			double i = SmartDashboard.getNumber("I");
-			double d = SmartDashboard.getNumber("D");
-			
-			if(SmartDashboard.getBoolean("SET_PID")){
-				getPIDController().setPID(p, i, d);
-				System.out.println(p + ", " + i + ", " + d);
-			}
-		}catch(Exception e){}
-    }
+    protected void execute() {}
 
 	protected double returnPIDInput() {
     	return Robot.drivetrain.getFullAngle();
