@@ -114,4 +114,10 @@ public class VisionTools {
     			+ Math.acos((dLeft * dLeft + dRight * dRight - goalWidth * goalWidth) / (2 * dLeft * dRight))
     			+ Math.atan((cameraWidth / 2 - xRHS_BoundingBox) / focalLength));
     }
+    public static double angleToGoalSetpoint(double dLeft, double dRight) {
+    	double temp = (goalWidth * goalWidth + dRight * dRight - dLeft * dLeft) / 2 * goalWidth * dRight;
+    	temp *= temp;
+    	temp = Math.sqrt(1-temp);
+    	return Math.atan((goalWidth - (dLeft * dLeft + goalWidth * goalWidth - dRight * dRight) / goalWidth) / dRight * temp);
+    }
 }
