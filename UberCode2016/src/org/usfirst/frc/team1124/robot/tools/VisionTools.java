@@ -114,10 +114,19 @@ public class VisionTools {
     			+ Math.acos((dLeft * dLeft + dRight * dRight - goalWidth * goalWidth) / (2 * dLeft * dRight))
     			+ Math.atan((cameraWidth / 2 - xRHS_BoundingBox) / focalLength));
     }
-    public static double angleToGoalSetpoint(double dLeft, double dRight) {
+    /**
+     * Returns the angle towards which the robot should turn in order to face the center of the goal.
+     * Usage: getAngleToGoal() is process variable in a PID, while this is the setpoint.
+     * 
+     * @param dLeft		ground distance to the left side of the goal
+     * @param dRight	ground distance to the right side of the goal
+     * @param degrees	if true, multiplies return by 180 / pi
+     * @return			angle towards which the robot should turn in order to face the center of the goal.
+     */
+    public static double angleToGoalSetpoint(double dLeft, double dRight, boolean degrees) {
     	double temp = (goalWidth * goalWidth + dRight * dRight - dLeft * dLeft) / 2 * goalWidth * dRight;
     	temp *= temp;
     	temp = Math.sqrt(1-temp);
-    	return Math.atan((goalWidth - (dLeft * dLeft + goalWidth * goalWidth - dRight * dRight) / goalWidth) / dRight * temp);
+    	return ((degrees) ? (180 / Math.PI) : (1)) * Math.atan((goalWidth - (dLeft * dLeft + goalWidth * goalWidth - dRight * dRight) / goalWidth) / dRight * temp);
     }
 }
