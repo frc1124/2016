@@ -60,6 +60,9 @@ public class VisionTools {
     	ret[1] = (focalLength * tanCameraMountAngle - BLY + cameraHeight / 2) / ((BLY - cameraHeight / 2) * tanCameraMountAngle + dHBottom * focalLength);
     	ret[2] = (focalLength * tanCameraMountAngle - TRY + cameraHeight / 2) / ((TRY - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
     	ret[3] = (focalLength * tanCameraMountAngle - BRY + cameraHeight / 2) / ((BRY - cameraHeight / 2) * tanCameraMountAngle + dHBottom * focalLength);
+    	System.out.println("goal distance information:");
+    	System.out.println("\tTLY, BLY, TRY, BRY: " + TLY + ", " + BLY + ", " + TRY + ", " + BRY);
+    	System.out.println("\tdLeft, dRight: " + ((ret[0] + ret[1]) / 2) + ", " + ((ret[2] + ret[3]) / 2));
     }
     
     /**
@@ -73,17 +76,21 @@ public class VisionTools {
     public static void goalDistances(boolean tl, boolean br, double boundBoxTopY, double boundBoxHeight, double[] ret) {
     	//ret[0] = ground distance to left side of goal
     	//ret[1] = ground distance to right side of goal
+    	System.out.println("goal distance information");
     	if(tl || br) {
     		ret[0] = (focalLength * tanCameraMountAngle - boundBoxTopY + cameraHeight / 2) / 
     				((boundBoxTopY - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
     		ret[1] = (focalLength * tanCameraMountAngle - boundBoxTopY - boundBoxHeight + cameraHeight / 2) /
     				((boundBoxTopY + cameraHeight - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
+    		System.out.println("\ttl/br");
     	} else {
     		ret[0] = (focalLength * tanCameraMountAngle - boundBoxTopY - boundBoxHeight + cameraHeight / 2) /
     				((boundBoxTopY + cameraHeight - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
     		ret[1] = (focalLength * tanCameraMountAngle - boundBoxTopY + cameraHeight / 2) / 
     				((boundBoxTopY - cameraHeight / 2) * tanCameraMountAngle + dHTop * focalLength);
+    		System.out.println("\ttr/bl");
     	}
+		System.out.println("\tdLeft, dRight: " + ret[0] + ", " + ret[1]);
     }
 
     public static double getSkewAngle(double centerX, double viewAngle, int imageWidth) {
@@ -108,9 +115,16 @@ public class VisionTools {
      * @return
      */
     public static double getAngleToGoal(double dLeft, double dRight, double xRHS_BoundingBox, boolean degrees) {
-    	return ((degrees) ? (180 / Math.PI) : (1)) * (Math.acos((goalWidth * goalWidth + dRight * dRight - dLeft * dLeft) / (2 * goalWidth * dRight))
+    	double ret = ((degrees) ? (180 / Math.PI) : (1)) * (Math.acos((goalWidth * goalWidth + dRight * dRight - dLeft * dLeft) / (2 * goalWidth * dRight))
     			+ Math.acos((dLeft * dLeft + dRight * dRight - goalWidth * goalWidth) / (2 * dLeft * dRight))
     			+ Math.atan((cameraWidth / 2 - xRHS_BoundingBox) / focalLength));
+    	System.out.println("angle to goal information");
+    	System.out.println("\txRHS_BoundingBox, degrees: " + xRHS_BoundingBox + ", " + degrees);
+    	System.out.println("\tangle: " + ret);
+//    	return ((degrees) ? (180 / Math.PI) : (1)) * (Math.acos((goalWidth * goalWidth + dRight * dRight - dLeft * dLeft) / (2 * goalWidth * dRight))
+//    			+ Math.acos((dLeft * dLeft + dRight * dRight - goalWidth * goalWidth) / (2 * dLeft * dRight))
+//    			+ Math.atan((cameraWidth / 2 - xRHS_BoundingBox) / focalLength));
+    	return ret;
     }
     /**
      * Returns the angle towards which the robot should turn in order to face the center of the goal.
@@ -125,6 +139,11 @@ public class VisionTools {
     	double temp = (goalWidth * goalWidth + dRight * dRight - dLeft * dLeft) / 2 * goalWidth * dRight;
     	temp *= temp;
     	temp = Math.sqrt(1-temp);
-    	return ((degrees) ? (180 / Math.PI) : (1)) * Math.atan((goalWidth - (dLeft * dLeft + goalWidth * goalWidth - dRight * dRight) / goalWidth) / dRight * temp);
+    	double ret = ((degrees) ? (180 / Math.PI) : (1)) * Math.atan((goalWidth - (dLeft * dLeft + goalWidth * goalWidth - dRight * dRight) / goalWidth) / dRight * temp);
+    	System.out.println("angle to goal setpoint information");
+    	System.out.println("\tdegrees: " + degrees);
+    	System.out.println("\tangle: " + ret);
+//    	return ((degrees) ? (180 / Math.PI) : (1)) * Math.atan((goalWidth - (dLeft * dLeft + goalWidth * goalWidth - dRight * dRight) / goalWidth) / dRight * temp);
+    	return ret;
     }
 }
