@@ -3,7 +3,7 @@ package org.usfirst.frc.team1124.robot.tools;
 public class VisionTools {
 	private static final double cameraWidth = 320;
 	private static final double cameraHeight = 240;
-	private static final double tanCameraMountAngle = 34.9 * Math.PI / 180;
+	private static final double tanCameraMountAngle = 28.0 * Math.PI / 180;
 	private static final double viewAngleHoriz = 47 * Math.PI / 180;
 	private static final double focalLength = cameraWidth / 2 / Math.tan(viewAngleHoriz / 2);
 	private static final double goalWidth = 20;   //actual--I've just forgotten the number
