@@ -111,7 +111,7 @@ public class OI {
 		js1_buttons[2].whenPressed(new BringShooterToSpeed());
 		js1_buttons[3].whenPressed(new AimTowardsGoal());
 		
-		js1_buttons[4].whenPressed(new AimAtAngle(40));
+		js1_buttons[4].whenPressed(new AimAtAngle());
 		
 		js1_buttons[8].whenPressed(new ArcadeDriveJoystick());
 
