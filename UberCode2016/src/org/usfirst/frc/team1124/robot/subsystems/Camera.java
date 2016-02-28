@@ -53,7 +53,7 @@ public class Camera extends Subsystem {
 	
 	private void initIntakeCamera(){
 		try{
-			Robot.intake_camera = new USBCamera("cam0");
+			Robot.intake_camera = new USBCamera("cam1");
 			Robot.intake_camera.openCamera();
 			
 			Robot.intake_camera.setSize(160, 120);

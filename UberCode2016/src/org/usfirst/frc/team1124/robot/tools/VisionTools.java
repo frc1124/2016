@@ -1,7 +1,5 @@
 package org.usfirst.frc.team1124.robot.tools;
 
-import com.ni.vision.NIVision;
-
 public class VisionTools {
 	private static final double cameraWidth = 320;
 	private static final double cameraHeight = 240;
