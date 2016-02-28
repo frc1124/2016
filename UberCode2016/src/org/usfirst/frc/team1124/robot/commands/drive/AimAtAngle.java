@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class AimAtAngle extends PIDCommand {
 	//w/o oscillation: 0.02464, w/ oscillation: 0.064, small angle: 0.111
-	private static final double P = 0.08422;
+	private static final double P = 0.08464;
 	private static final double I = 0.00003;
-	private static final double D = 0.058;
+	private static final double D = 0.057;
 	
 	private double angle = 0;
 	
@@ -59,13 +59,18 @@ public class AimAtAngle extends PIDCommand {
         	double d_override = 0.072;
         	
         	if(Math.signum(angle) < 0){
-        		// things are different if left :(
+        		// things are different if left
         		d_override = 0.062;
         	}
         	
         	getPIDController().setPID(p_override, i_override, d_override);
         }else if(Math.signum(angle) < 0){
-        	// TODO: overrides to code
+    		// things are different if left
+        	double p_override = 0.0826;
+        	double i_override = 0.00002;
+        	double d_override = 0.05;
+
+        	getPIDController().setPID(p_override, i_override, d_override);
         }
     }
 
