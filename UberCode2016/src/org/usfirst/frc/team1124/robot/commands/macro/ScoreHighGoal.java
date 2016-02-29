@@ -2,7 +2,7 @@ package org.usfirst.frc.team1124.robot.commands.macro;
 
 import org.usfirst.frc.team1124.robot.commands.CommandDelay;
 import org.usfirst.frc.team1124.robot.commands.camera.StreamShooterCamera;
-import org.usfirst.frc.team1124.robot.commands.drive.AimTowardsGoal;
+import org.usfirst.frc.team1124.robot.commands.drive.AimAtAnglePID;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
 import org.usfirst.frc.team1124.robot.commands.ramp.RampBeltsFeedToShooter;
 import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
@@ -21,7 +21,7 @@ public class ScoreHighGoal extends CommandGroup {
     	
     	camera_command.start();
     	
-    	addSequential(new AimTowardsGoal());
+    	addSequential(new AimAtAnglePID());
         
         addSequential(new BringShooterToSpeed());
         addParallel(new HoldShooterSpeed());

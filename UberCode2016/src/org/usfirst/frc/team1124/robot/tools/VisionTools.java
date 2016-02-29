@@ -157,6 +157,6 @@ public class VisionTools {
     public static double turnAngle(double xlhsGoalBBox, double widthGoalBBox, boolean degrees) {
 //    	return ((degrees) ? (180 / Math.PI) : (1)) * Math.atan((2 * xlhsGoalBBox + widthGoalBBox + 2 * cameraWidth)*Math.tan(viewAngleHoriz / 2) / cameraWidth);
     	double x = xlhsGoalBBox + widthGoalBBox / 2 - cameraWidth / 2;
-    	return -Math.atan(2 * x * Math.tan(viewAngleHoriz / 2) / cameraWidth);
+    	return ((degrees) ? (180 / Math.PI) : (1)) * Math.atan(2 * x * Math.tan(viewAngleHoriz / 2) / cameraWidth);
     }
 }

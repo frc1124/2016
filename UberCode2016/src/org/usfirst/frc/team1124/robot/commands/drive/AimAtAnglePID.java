@@ -46,7 +46,7 @@ public class AimAtAnglePID extends PIDCommand {
 	    	double setpoint = angleToGoal - VisionTools.angleToGoalSetpoint(goalDistances[0], goalDistances[1], true);
 	    	*/
     		
-	    	double xlhsGoalBBox = SmartDashboard.getNumber("vision_target_p1_x");
+	    	double xlhsGoalBBox = SmartDashboard.getNumber("vision_target_left");
 	    	double widthGoalBBox = SmartDashboard.getNumber("vision_target_width");
 	    	
 	    	System.out.println("Target Left X: " + xlhsGoalBBox + " Width: " + widthGoalBBox);
@@ -92,16 +92,21 @@ public class AimAtAnglePID extends PIDCommand {
 	}
 
 	protected void usePIDOutput(double output) {
-		SmartDashboard.putNumber("pid-output", output);
 		Robot.drivetrain.drive_tank_auto(output, -output);
 	}
 
     protected boolean isFinished() {
-        return false;
+    	if(Math.abs(getSetpoint()) < 8){
+    		return Math.abs(getPIDController().getError()) <= 2.0;
+    	}else{
+    		return Math.abs(getPIDController().getError()) <= 1.0;
+    	}
     }
 
     protected void end() {
     	Robot.drivetrain.stop();
+    	
+    	this.getPIDController().reset();
     }
 
     protected void interrupted() {
