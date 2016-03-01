@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1124.robot.commands.drive.targeting;
 
+import org.usfirst.frc.team1124.robot.commands.drive.LeftDrivePID;
+import org.usfirst.frc.team1124.robot.commands.drive.RightDrivePID;
 import org.usfirst.frc.team1124.robot.tools.VisionTools;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -13,11 +15,10 @@ public class AimUsingDriveEncoders extends CommandGroup {
 	
 	private double CONVERSION_FACTOR = 0;
 	
+	private LeftDrivePID left_drive;
+	private RightDrivePID right_drive;
+	
     public AimUsingDriveEncoders() {
-    	
-    }
-
-    protected void initialize() {
     	double setpoint = 0;
     	
     	try{
@@ -34,6 +35,15 @@ public class AimUsingDriveEncoders extends CommandGroup {
     	}
         
     	angle = setpoint * CONVERSION_FACTOR;
+    	
+    	left_drive = new LeftDrivePID(setpoint);
+    	right_drive = new RightDrivePID(-setpoint);
+    	
+    	left_drive.setToRotatePID();
+    	right_drive.setToRotatePID();
+    }
+
+    protected void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run

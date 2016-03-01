@@ -29,6 +29,11 @@ public class LeftDrivePID extends PIDCommand implements Safe {
 	private static final double P = 0.025;
 	private static final double I = 0.0000956;
 	private static final double D = 0.0;
+
+	/** TODO tune these */
+	private static final double P_rotate = 0;
+	private static final double I_rotate = 0;
+	private static final double D_rotate = 0;
 	
 	public LeftDrivePID(double setpoint) {
 		super("LeftDrivePID", P, I, D);
@@ -36,6 +41,7 @@ public class LeftDrivePID extends PIDCommand implements Safe {
         setInterruptible(true);
         
         getPIDController().setOutputRange(-0.75, 0.75);
+    	getPIDController().disable();
         
         this.setpoint = setpoint;
         
@@ -48,6 +54,7 @@ public class LeftDrivePID extends PIDCommand implements Safe {
         setInterruptible(true);
         
         getPIDController().setOutputRange(minOutput, maxOutput);
+    	getPIDController().disable();
         
         this.setpoint = setpoint;
         
@@ -64,6 +71,11 @@ public class LeftDrivePID extends PIDCommand implements Safe {
 
     protected boolean isSideFinished() {
         return Math.abs(Robot.drivetrain.getLeftEncoderDistance() - getSetpoint()) <= Robot.drivetrain.SETPOINT_TOLERANCE;
+    }
+    
+    public void setToRotatePID(){
+    	getPIDController().setPID(P_rotate, I_rotate, D_rotate);
+    	getPIDController().disable();
     }
     
     protected boolean isFinished() {
