@@ -134,11 +134,19 @@ public class AimAtAnglePID extends PIDCommand {
     	
     	double output = 0;
 		double center = Robot.camera.getTargetCenterOfMass()[0];
+		double acceleration;
+		
+    	try{
+    		acceleration = SmartDashboard.getNumber("error_acceleration");
+    	}catch(Exception anish){
+    	}finally{
+    		acceleration = 0.02;
+    	}
     	
 		if(center > 160){
-			output = 0.02 * t.get();
+			output = acceleration * t.get();
 		}else if(center < 160){
-			output = -0.02 * t.get();
+			output = -acceleration * t.get();
 		}
 		
 	    Robot.drivetrain.drive_tank_auto((-1) * output, output);
