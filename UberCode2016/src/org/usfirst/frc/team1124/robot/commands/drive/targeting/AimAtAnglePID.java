@@ -1,8 +1,9 @@
-package org.usfirst.frc.team1124.robot.commands.drive;
+package org.usfirst.frc.team1124.robot.commands.drive.targeting;
 
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.tools.VisionTools;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,10 +17,12 @@ public class AimAtAnglePID extends PIDCommand {
 	private static final double D = 0.057;
 	
 	private double angle = 0;
+	private double pixelRate = 0;
+	private double prevPixel = 0;
 	
-	/**
-	 * @param angle angle in degrees
-	 */
+	private Timer t = new Timer();
+	private boolean timerFirstCall = true;
+	
     public AimAtAnglePID() {
     	super("AimAtAngle", P, I, D);
         requires(Robot.drivetrain);
@@ -85,7 +88,9 @@ public class AimAtAnglePID extends PIDCommand {
         }
     }
 
-    protected void execute() {}
+    protected void execute() {
+    	//getToCloseTarget();
+    }
 
 	protected double returnPIDInput() {
     	return Robot.drivetrain.getFullAngle();
@@ -107,9 +112,35 @@ public class AimAtAnglePID extends PIDCommand {
     	Robot.drivetrain.stop();
     	
     	this.getPIDController().reset();
+    	
+    	timerFirstCall = true;
     }
 
     protected void interrupted() {
     	end();
+    }
+    
+    protected void getToCloseTarget(){
+    	if(timerFirstCall){
+	    	this.getPIDController().disable();
+	    	
+	    	t.start();
+	    	
+	    	timerFirstCall = false;
+
+	    	prevPixel = Robot.camera.getTargetCenterOfMass()[0];
+	    	pixelRate = 0;
+    	}
+    	
+    	double output = 0;
+		double center = Robot.camera.getTargetCenterOfMass()[0];
+    	
+		if(center > 160){
+			output = 0.02 * t.get();
+		}else if(center < 160){
+			output = -0.02 * t.get();
+		}
+		
+	    Robot.drivetrain.drive_tank_auto((-1) * output, output);
     }
 }

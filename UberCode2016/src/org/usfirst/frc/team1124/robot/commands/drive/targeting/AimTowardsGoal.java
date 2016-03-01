@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1124.robot.commands.drive;
+package org.usfirst.frc.team1124.robot.commands.drive.targeting;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Aim towards the goal using our own control system <u>instead</u> of a PID.
+ * @deprecated
  */
 public class AimTowardsGoal extends Command {
 	private static final double setpoint = 160;

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1124.robot.commands.drive;
+package org.usfirst.frc.team1124.robot.commands.drive.targeting;
 
 import org.usfirst.frc.team1124.robot.Robot;
 
@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 
 /**
  * Use PID and pixel data to turn towards the target
+ * @deprecated
  */
 public class AimTowardsGoalPID extends PIDCommand {
 	private static final double P = 0.0065;

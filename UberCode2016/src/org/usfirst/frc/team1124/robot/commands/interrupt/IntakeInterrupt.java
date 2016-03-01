@@ -23,7 +23,9 @@ public class IntakeInterrupt extends Command {
         return true;
     }
 
-    protected void end() {}
+    protected void end() {
+    	Robot.shooter_pid.stop();
+    }
 
     protected void interrupted() {}
 }
