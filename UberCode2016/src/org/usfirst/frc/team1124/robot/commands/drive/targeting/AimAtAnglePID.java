@@ -19,6 +19,9 @@ public class AimAtAnglePID extends PIDCommand {
 	private double angle = 0;
 	private double pixelRate = 0;
 	private double prevPixel = 0;
+	private double prevOutput = 0;
+	
+	private boolean gotToTarget = false;
 	
 	private Timer t = new Timer();
 	private boolean timerFirstCall = true;
@@ -89,7 +92,12 @@ public class AimAtAnglePID extends PIDCommand {
     }
 
     protected void execute() {
-    	//getToCloseTarget();
+    	if(Math.abs(Robot.camera.getTargetCenterOfMass()[0] - 160) < 15){
+    		getToCloseTarget();
+    	}else{
+    		timerFirstCall = true;
+	    	this.getPIDController().enable();
+    	}
     }
 
 	protected double returnPIDInput() {
@@ -101,11 +109,14 @@ public class AimAtAnglePID extends PIDCommand {
 	}
 
     protected boolean isFinished() {
+    	/*
     	if(Math.abs(getSetpoint()) < 8){
     		return Math.abs(getPIDController().getError()) <= 2.0;
     	}else{
     		return Math.abs(getPIDController().getError()) <= 1.0;
-    	}
+    	}*/
+    	
+    	return false;
     }
 
     protected void end() {
@@ -124,31 +135,50 @@ public class AimAtAnglePID extends PIDCommand {
     	if(timerFirstCall){
 	    	this.getPIDController().disable();
 	    	
+	    	t.reset();
 	    	t.start();
 	    	
 	    	timerFirstCall = false;
 
 	    	prevPixel = Robot.camera.getTargetCenterOfMass()[0];
 	    	pixelRate = 0;
+	    	
+	    	gotToTarget = false;
     	}
     	
     	double output = 0;
 		double center = Robot.camera.getTargetCenterOfMass()[0];
-		double acceleration;
+		double acceleration = 0.08;
+		double stop_voltage = 0.12;
 		
     	try{
     		acceleration = SmartDashboard.getNumber("error_acceleration");
-    	}catch(Exception anish){
-    	}finally{
-    		acceleration = 0.02;
-    	}
+    		stop_voltage = SmartDashboard.getNumber("stop_voltage");
+    	}catch(Exception anish){}
     	
-		if(center > 160){
-			output = acceleration * t.get();
-		}else if(center < 160){
-			output = -acceleration * t.get();
+    	pixelRate = Math.abs(prevPixel - center);
+    	
+    	if(center < 162.0 && center > 158.0){
+			output = Math.signum(prevOutput) * stop_voltage;
+			
+			gotToTarget = true;
+		}else if(center > 160.0){
+			output = -((acceleration * t.get()) + 0.1);
+		}else if(center < 160.0){
+			output = (acceleration * t.get()) + 0.1;
+		}
+		
+    	if(gotToTarget){
+    		output = Math.signum(prevOutput) * stop_voltage;
+    	}else if(Math.abs(output) > 0.25){
+			output = Math.signum(output) * 0.25;
 		}
 		
 	    Robot.drivetrain.drive_tank_auto((-1) * output, output);
+	    
+	    prevOutput = output;
+	    prevPixel = center;
+	    
+	    System.out.println("Center: " + center + " Output: " + output + " Pixel Rate: " + pixelRate);
     }
 }

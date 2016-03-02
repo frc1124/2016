@@ -115,7 +115,9 @@ public class Camera extends Subsystem {
 		try{
 			x = SmartDashboard.getNumber("vision_target_x_cm");
 			y = SmartDashboard.getNumber("vision_target_y_cm");
-		}catch(Exception e){}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		
 		double data[] = {x, y};
 		
