@@ -109,14 +109,7 @@ public class AimAtAnglePID extends PIDCommand {
 	}
 
     protected boolean isFinished() {
-    	/*
-    	if(Math.abs(getSetpoint()) < 8){
-    		return Math.abs(getPIDController().getError()) <= 2.0;
-    	}else{
-    		return Math.abs(getPIDController().getError()) <= 1.0;
-    	}*/
-    	
-    	return false;
+    	return gotToTarget;
     }
 
     protected void end() {
@@ -150,11 +143,12 @@ public class AimAtAnglePID extends PIDCommand {
 		double center = Robot.camera.getTargetCenterOfMass()[0];
 		double acceleration = 0.08;
 		double stop_voltage = 0.12;
-		
+		/*
     	try{
     		acceleration = SmartDashboard.getNumber("error_acceleration");
     		stop_voltage = SmartDashboard.getNumber("stop_voltage");
     	}catch(Exception anish){}
+    	*/
     	
     	pixelRate = Math.abs(prevPixel - center);
     	
