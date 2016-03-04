@@ -132,11 +132,6 @@ public class DashboardConnection {
 		
 		// control compressor
 		operateCompressor();
-		
-		double x = SmartDashboard.getNumber("vision_target_x_cm");
-		double y = SmartDashboard.getNumber("vision_target_y_cm");
-		
-		System.out.println("X CENTER OF MASS: " + x + " Y CENTER OF MASS: " + y);
 	}
 	
 	private void oneTimeOperations(){

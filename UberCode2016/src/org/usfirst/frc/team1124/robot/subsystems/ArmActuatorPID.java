@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.commands.arm.ArmHoldPosition;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
 import org.usfirst.frc.team1124.robot.enums.SafetyError;
 import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
@@ -37,8 +36,8 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	private double rate_threshold = 1.0;
 	
 	/** TODO tune these */
-	private final double MAX_UP = 1;
-	private final double MAX_DOWN = 0;
+	//private final double MAX_UP = 1;
+	//private final double MAX_DOWN = 0;
 	
 	private DigitalInput limit_switch_back;
 	private DigitalInput limit_switch_forward;

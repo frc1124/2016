@@ -16,6 +16,8 @@ public class AimAtAnglePID extends PIDCommand {
 	private static final double I = 0.00003;
 	private static final double D = 0.057;
 	
+	public double voltage = 0;
+	
 	private double angle = 0;
 	private double pixelRate = 0;
 	private double prevPixel = 0;
@@ -35,23 +37,9 @@ public class AimAtAnglePID extends PIDCommand {
 
     protected void initialize() {
     	double setpoint = 0;
+    	gotToTarget = false;
     	
     	try{
-    		/*
-	    	double top_left_y = SmartDashboard.getNumber("vision_target_p1_y");
-	    	double top_right_x = SmartDashboard.getNumber("vision_target_p2_x");
-	    	double height = SmartDashboard.getNumber("vision_target_height");
-	    	
-	    	boolean top_left = SmartDashboard.getBoolean("vision_top_left");
-	    	boolean bottom_right = SmartDashboard.getBoolean("vision_bottom_right");
-	    	
-	    	double[] goalDistances = new double[] {0,0};
-	    	
-	    	VisionTools.goalDistances(top_left, bottom_right, top_left_y, height, goalDistances);
-	    	double angleToGoal = VisionTools.getAngleToGoal(goalDistances[0], goalDistances[1], top_right_x, true);
-	    	double setpoint = angleToGoal - VisionTools.angleToGoalSetpoint(goalDistances[0], goalDistances[1], true);
-	    	*/
-    		
 	    	double xlhsGoalBBox = SmartDashboard.getNumber("vision_target_left");
 	    	double widthGoalBBox = SmartDashboard.getNumber("vision_target_width");
 	    	
@@ -107,7 +95,7 @@ public class AimAtAnglePID extends PIDCommand {
 	protected void usePIDOutput(double output) {
 		Robot.drivetrain.drive_tank_auto(output, -output);
 	}
-
+	
     protected boolean isFinished() {
     	return gotToTarget;
     }
@@ -142,7 +130,8 @@ public class AimAtAnglePID extends PIDCommand {
     	double output = 0;
 		double center = Robot.camera.getTargetCenterOfMass()[0];
 		double acceleration = 0.08;
-		double stop_voltage = 0.12;
+		double stop_voltage = 0.14;
+		
 		/*
     	try{
     		acceleration = SmartDashboard.getNumber("error_acceleration");
@@ -154,6 +143,7 @@ public class AimAtAnglePID extends PIDCommand {
     	
     	if(center < 162.0 && center > 158.0){
 			output = Math.signum(prevOutput) * stop_voltage;
+    		voltage = output;
 			
 			gotToTarget = true;
 		}else if(center > 160.0){
@@ -164,9 +154,12 @@ public class AimAtAnglePID extends PIDCommand {
 		
     	if(gotToTarget){
     		output = Math.signum(prevOutput) * stop_voltage;
+    		voltage = output;
     	}else if(Math.abs(output) > 0.25){
 			output = Math.signum(output) * 0.25;
 		}
+    	
+    	Robot.drive_voltage_for_targeting = voltage;
 		
 	    Robot.drivetrain.drive_tank_auto((-1) * output, output);
 	    

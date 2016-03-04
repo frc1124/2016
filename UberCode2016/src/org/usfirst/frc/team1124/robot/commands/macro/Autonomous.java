@@ -21,7 +21,7 @@ public class Autonomous extends CommandGroup {
     	defense_type = DashboardConnection.Auto.getDefenseType();
     	defense_position = DashboardConnection.Auto.getDefensePosition();
     	
-    	if(mode == AutoMode.Nothing || defense_position == AutoDefensePosition.SpyBox){
+    	if(mode == AutoMode.Nothing){
     		// do nothing
     	}else{
     		// do something!
@@ -36,9 +36,14 @@ public class Autonomous extends CommandGroup {
     				crossDefense();
     			break;
 				case ScoreHighGoal:
-					getToDefense();
-					crossDefense();
-					turnTowardsApproxGoal();
+					if(defense_position == AutoDefensePosition.SpyBox){
+						// just aim and stuff, no moving and stuff
+					}else{
+						getToDefense();
+						crossDefense();
+						turnTowardsApproxGoal();
+					}
+					
 					scoreHighGoal();
 				break;
 				case ScoreLowGoal:
@@ -66,9 +71,9 @@ public class Autonomous extends CommandGroup {
 		}
     }
     
-    /** turn towards the goal depending on where we started so we can target it */
+    /** TODO: turn towards the goal depending on where we started so we can target it */
     private void turnTowardsApproxGoal(){
-    	
+    	addSequential(new AutoDrive(0, 0));
     }
     
     private void scoreHighGoal(){

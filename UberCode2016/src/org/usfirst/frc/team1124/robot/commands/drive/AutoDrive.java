@@ -3,7 +3,6 @@ package org.usfirst.frc.team1124.robot.commands.drive;
 import org.usfirst.frc.team1124.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Use this to control autonomous driving, it manages both halves of the drive train.

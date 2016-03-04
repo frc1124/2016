@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Aim at an angle using a conversion of the angle to rotational inches
  */
 public class AimUsingDriveEncoders extends CommandGroup {	
+	@SuppressWarnings("unused")
 	private double angle = 0;
 	
 	private double CONVERSION_FACTOR = 0;
