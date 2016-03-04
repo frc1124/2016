@@ -7,14 +7,12 @@ import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.drive.DriveHoldPosition;
 import org.usfirst.frc.team1124.robot.commands.drive.targeting.AimAtAnglePID;
-import org.usfirst.frc.team1124.robot.commands.drive.targeting.AimTowardsGoal;
+//import org.usfirst.frc.team1124.robot.commands.drive.targeting.AimTowardsGoal;
 import org.usfirst.frc.team1124.robot.commands.intake.IntakeManual;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ArmInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.IntakeInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.RampBeltsInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
-import org.usfirst.frc.team1124.robot.commands.macro.Climb;
-import org.usfirst.frc.team1124.robot.commands.macro.ExtendToClimb;
 import org.usfirst.frc.team1124.robot.commands.macro.IntakeBall;
 import org.usfirst.frc.team1124.robot.commands.macro.RampAndIntakeInterrupt;
 import org.usfirst.frc.team1124.robot.commands.macro.ScoreHighGoal;
@@ -109,7 +107,7 @@ public class OI {
 
 		js1_buttons[1].toggleWhenPressed(new ScoreHighGoal());
 		js1_buttons[2].whenPressed(new BringShooterToSpeed());
-		js1_buttons[3].whenPressed(new AimTowardsGoal());
+		//js1_buttons[3].whenPressed(new AimTowardsGoal());
 		
 		js1_buttons[4].whenPressed(new AimAtAnglePID());
 		
@@ -143,8 +141,8 @@ public class OI {
 		js3_buttons[10].whenPressed(new ArmPistonsExtend());
 		js3_buttons[12].whenPressed(new ArmPistonsRetract());
 		
-		js3_buttons[9].whenPressed(new ExtendToClimb());
-		js3_buttons[11].whenPressed(new Climb());
+		//js3_buttons[9].whenPressed(new ExtendToClimb());
+		//js3_buttons[11].whenPressed(new Climb());
 	}
 	
 	// Joystick gets (used for getting axes)
