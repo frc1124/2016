@@ -169,8 +169,8 @@ public class ImageAnalysis {
 		ParticleReport p = particles.elementAt(0);
 		this.centerOfTarget = (int)(p.BoundingRectRight - p.BoundingRectLeft)/2;
 
-		// TODO: Find the corners of the goal or find if topLeft/bottomRight pixels are on or off
-		// TODO: use VisionTools.goalDistances to get distance
+		// TO DO: Find the corners of the goal or find if topLeft/bottomRight pixels are on or off
+		// TO DO: use VisionTools.goalDistances to get distance
 
 		// Find the angle to the center of the goal
 		int imageWidth = NIVision.imaqGetImageSize(this.image).width;

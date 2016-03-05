@@ -19,7 +19,6 @@ public class RampBeltsManual extends Command {
     protected void initialize() {}
 
     protected void execute() {
-    	// TODO see if needs inverting
     	double speed = Robot.oi.getJS3().getY();
     	
     	Robot.ramp_belts.manual(speed);

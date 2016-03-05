@@ -18,8 +18,7 @@ import org.usfirst.frc.team1124.robot.tools.Safe;
  */
 public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	
-	/** TODO tune these */
-	public final static double P = 0.00001;
+	public final static double P = 0.0;
 	public final static double I = 0.0;
 	public final static double D = 0.0;
 	
@@ -57,14 +56,12 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		
 		// will be the default position at start
 		setSetpoint(0);
+		disable();
 		
 		enableSafety();
 	}
 	
-    public void initDefaultCommand() {
-        // TODO un-comment this later?
-    	//setDefaultCommand(new ArmHoldPosition());
-    }
+    public void initDefaultCommand() {}
     
     public void manual(double outputValue){
 		if(isSafetyEnabled()){

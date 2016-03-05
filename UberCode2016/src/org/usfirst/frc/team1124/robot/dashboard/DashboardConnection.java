@@ -162,6 +162,7 @@ public class DashboardConnection {
 	}
 	
 	private void updateCameraInfo(){
+		// TODO: test this
 		SmartDashboard.putBoolean("camera_override", Robot.camera.isHeld());
 	}
 	

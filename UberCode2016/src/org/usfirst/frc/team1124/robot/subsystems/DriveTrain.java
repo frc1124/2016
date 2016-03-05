@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveTrain extends Subsystem {
 	public CANTalon left_1, left_2, right_1, right_2;
 	
-	/** TODO tune this */
 	public final double SETPOINT_TOLERANCE = Math.PI / 60;
 	
 	private final double ENCODER_DIST_PER_PULSE = Math.PI / 120;
