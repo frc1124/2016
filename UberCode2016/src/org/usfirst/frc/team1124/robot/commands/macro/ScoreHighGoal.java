@@ -12,7 +12,7 @@ import org.usfirst.frc.team1124.robot.commands.shooter.HoldShooterSpeed;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- * Aim and shoot the ball.
+ * Aim and shoot the ball :)
  */
 public class ScoreHighGoal extends CommandGroup {
 	private AimAtAnglePID aim_cmd;
@@ -41,8 +41,6 @@ public class ScoreHighGoal extends CommandGroup {
     	super.end();
     	
     	hold_cmd.cancel();
-    	//Command cmd = new ArcadeDriveJoystick();
-    	//cmd.start();
 
     	Robot.camera.setHeld(false);
     }

@@ -11,17 +11,15 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ArmManual extends Command {
 
     public ArmManual() {
-        requires(Robot.arm_actuator_pid);
+        requires(Robot.arm_actuator);
         
         setInterruptible(true);
     }
 
-    protected void initialize() {
-    	Robot.arm_actuator_pid.disable();
-    }
+    protected void initialize() {}
 
     protected void execute() {
-    	Robot.arm_actuator_pid.manual(Robot.oi.getJS3().getY());
+    	Robot.arm_actuator.manual(Robot.oi.getJS3().getY());
     }
 
     protected boolean isFinished() {
@@ -29,7 +27,7 @@ public class ArmManual extends Command {
     }
 
     protected void end() {
-    	Robot.arm_actuator_pid.enable();
+    	Robot.arm_actuator.stop();
     }
 
     protected void interrupted() {

@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ArmInterrupt extends Command {
 
     public ArmInterrupt() {
-        requires(Robot.arm_actuator_pid);
+        requires(Robot.arm_actuator);
         
         setInterruptible(false);
     }

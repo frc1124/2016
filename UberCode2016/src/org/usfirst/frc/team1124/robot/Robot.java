@@ -8,7 +8,7 @@ import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1124.robot.subsystems.ArmIntakeWheels;
 import org.usfirst.frc.team1124.robot.subsystems.RampBelts;
 import org.usfirst.frc.team1124.robot.subsystems.ShooterPID;
-import org.usfirst.frc.team1124.robot.subsystems.ArmActuatorPID;
+import org.usfirst.frc.team1124.robot.subsystems.ArmActuator;
 import org.usfirst.frc.team1124.robot.subsystems.ArmPistons;
 import org.usfirst.frc.team1124.robot.subsystems.Camera;
 import edu.wpi.first.wpilibj.Compressor;
@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
 	// subsystems
 	public static DriveTrain drivetrain;
 	public static ArmPistons arm_pistons;
-	public static ArmActuatorPID arm_actuator_pid;
+	public static ArmActuator arm_actuator;
 	public static RampBelts ramp_belts;
 	public static ArmIntakeWheels arm_intake_wheels;
 	public static ShooterPID shooter_pid;
@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     
     // this revision of code (displayed on dashboard)
-    public static String codeRevision = "[v2.0.1]:build-season";
+    public static String codeRevision = "[v3.0.1]:waterbury";
     
     // illigitimate global static variables
     public static double drive_voltage_for_targeting = 0;
@@ -87,7 +87,7 @@ public class Robot extends IterativeRobot {
 		pdp = new PowerDistributionPanel();
 		compressor = new Compressor();
 		arm_pistons = new ArmPistons();
-		arm_actuator_pid = new ArmActuatorPID();
+		arm_actuator = new ArmActuator();
 		ramp_belts = new RampBelts();
 		arm_intake_wheels = new ArmIntakeWheels();
 		shooter_pid = new ShooterPID();
@@ -133,10 +133,6 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
     	drivetrain.setCoast();
     	
         if(autonomousCommand != null){

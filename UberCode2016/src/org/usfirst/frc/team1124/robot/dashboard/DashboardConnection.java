@@ -162,7 +162,6 @@ public class DashboardConnection {
 	}
 	
 	private void updateCameraInfo(){
-		// TODO: test this
 		SmartDashboard.putBoolean("camera_override", Robot.camera.isHeld());
 	}
 	
@@ -178,11 +177,11 @@ public class DashboardConnection {
 		SmartDashboard.putNumber("shooter_encoder_rate", Robot.shooter_pid.getRate());
 
 		// arm potentiometer
-		SmartDashboard.putNumber("arm_actuator_encoder_dist", Robot.arm_actuator_pid.getDistance());
-		SmartDashboard.putNumber("arm_actuator_encoder_rate", Robot.arm_actuator_pid.getRate());
+		SmartDashboard.putNumber("arm_actuator_encoder_dist", Robot.arm_actuator.getDistance());
+		SmartDashboard.putNumber("arm_actuator_encoder_rate", Robot.arm_actuator.getRate());
 		
 		// arm limit switches
-		boolean[] switches = Robot.arm_actuator_pid.getLimitSwitchStates();
+		boolean[] switches = Robot.arm_actuator.getLimitSwitchStates();
 		
 		SmartDashboard.putBoolean("arm_actuator_back", switches[0]);
 		SmartDashboard.putBoolean("arm_actuator_forward", switches[1]);

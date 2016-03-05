@@ -9,19 +9,14 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.command.Subsystem;
+
 import org.usfirst.frc.team1124.robot.tools.Safe;
 
 /**
- * The linear actuator on the arm used to actuate the arm; implements PID subsystem. PID control for distance. </br>
- * Positive = Arm Up, Negative = Arm Down
+ * The linear actuator on the arm used to actuate the arm.
  */
-public class ArmActuatorPID extends PIDSubsystem implements Safe {
-	
-	public final static double P = 0.0;
-	public final static double I = 0.0;
-	public final static double D = 0.0;
-	
+public class ArmActuator extends Subsystem implements Safe {
 	private CANTalon actuator;
 	private Encoder encoder;
 	
@@ -41,8 +36,8 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 	private DigitalInput limit_switch_back;
 	private DigitalInput limit_switch_forward;
 	
-	public ArmActuatorPID() {
-		super("ArmActuators", P, I, D);
+	public ArmActuator() {
+		super("ArmActuators");
 		
 		actuator = new CANTalon(Robot.configIO.getIntVal("arm_actuator"));
 		
@@ -53,10 +48,6 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		
 		limit_switch_back = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_back"));
 		limit_switch_forward = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_forward"));
-		
-		// will be the default position at start
-		setSetpoint(0);
-		disable();
 		
 		enableSafety();
 	}
@@ -69,6 +60,10 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
 		}else{
 			actuator.set(0);
 		}
+    }
+    
+    public void stop(){
+    	actuator.set(0);
     }
     
     /* Limit Switches */
@@ -85,28 +80,16 @@ public class ArmActuatorPID extends PIDSubsystem implements Safe {
     	
     	return switches;
     }
-    
-    /* PID Control */
-    
-	protected double returnPIDInput() {
-		return encoder.getDistance();
-	}
-
-	protected void usePIDOutput(double output) {
-		if(isSafetyEnabled()){
-			actuator.set(safeOutput(output));
-		}else{
-			actuator.set(output);
-		}
-	}
-	
-	public double getDistance(){
-		return encoder.getDistance();
-	}
 	
 	//measures in changer per millisecond
 	public double getRate(){
 		return encoder.getRate();
+	}
+	
+	/* Encoders */
+	
+	public double getDistance(){
+		return encoder.getDistance();
 	}
 	
 	/* Safety Code */
