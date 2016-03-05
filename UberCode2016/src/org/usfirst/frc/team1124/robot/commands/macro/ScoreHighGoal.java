@@ -19,8 +19,6 @@ public class ScoreHighGoal extends CommandGroup {
 	private HoldAtVoltage hold_cmd;
 	
     public ScoreHighGoal() {
-    	Robot.camera.setHeld(true);
-    	
     	aim_cmd = new AimAtAnglePID();
     	hold_cmd = new HoldAtVoltage(aim_cmd);
     	
@@ -37,11 +35,15 @@ public class ScoreHighGoal extends CommandGroup {
         addSequential(new ShooterInterrupt());
     }
     
+    protected void initialize(){
+    	super.initialize();
+
+    	Robot.camera.setHeld(true);
+    }
+    
     protected void end(){
     	super.end();
     	
-    	hold_cmd.cancel();
-
     	Robot.camera.setHeld(false);
     }
     

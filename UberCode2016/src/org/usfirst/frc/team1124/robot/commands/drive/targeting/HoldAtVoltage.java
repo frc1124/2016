@@ -28,6 +28,7 @@ public class HoldAtVoltage extends Command {
 
     protected void execute() {
         //voltage = Robot.drive_voltage_for_targeting;
+    	System.out.println(voltage);
     	
     	Robot.drivetrain.drive_tank_auto((-1) * voltage, voltage);
     }

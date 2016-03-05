@@ -16,42 +16,43 @@ public class Autonomous extends CommandGroup {
 	private AutoDefenseType defense_type;
 	private AutoDefensePosition defense_position;
 	
-    public  Autonomous() {
+    public Autonomous() {
+    	// legit code is for noobs
+    }
+    
+    public void start(){
     	mode = DashboardConnection.Auto.getMode();
     	defense_type = DashboardConnection.Auto.getDefenseType();
     	defense_position = DashboardConnection.Auto.getDefensePosition();
     	
-    	if(mode == AutoMode.Nothing){
-    		// do nothing
-    	}else{
-    		// do something!
-    		switch(mode){
-				case Nothing:
-				break;
-    			case GetToDefense:
-    		    	getToDefense();
-    			break;
-    			case CrossDefense:
-    				getToDefense();
-    				crossDefense();
-    			break;
-				case ScoreHighGoal:
-					if(defense_position == AutoDefensePosition.SpyBox){
-						// just aim and stuff, no moving and stuff
-						shootHighGoal();
-					}else{
-						getToDefense();
-						crossDefense();
-						
-						turnTowardsApproxGoal();
-						scoreHighGoal();
-					}
-				break;
-				case ScoreLowGoal:
-					// y?
-				break;
-    		}
-    	}
+		switch(mode){
+			case Nothing:
+			break;
+			case GetToDefense:
+		    	getToDefense();
+			break;
+			case CrossDefense:
+				getToDefense();
+				crossDefense();
+			break;
+			case ScoreHighGoal:
+				if(defense_position == AutoDefensePosition.SpyBox){
+					// just aim and stuff, no moving and stuff
+					shootHighGoal();
+				}else{
+					getToDefense();
+					crossDefense();
+					
+					turnTowardsApproxGoal();
+					scoreHighGoal();
+				}
+			break;
+			case ScoreLowGoal:
+				// y?
+			break;
+		}
+    	
+    	super.start();
     }
     
     private void getToDefense(){

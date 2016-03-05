@@ -165,7 +165,7 @@ public class AimAtAnglePID extends PIDCommand {
 	    
 	    prevOutput = output;
 	    prevPixel = center;
-	    
+
 	    System.out.println("Center: " + center + " Output: " + output + " Pixel Rate: " + pixelRate);
     }
 }
