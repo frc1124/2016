@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     
     // this revision of code (displayed on dashboard)
-    public static String codeRevision = "[v3.0.3]:waterbury";
+    public static String codeRevision = "[v3.0.4]:waterbury-new_button";
     
     // illigitimate global static variables
     public static double drive_voltage_for_targeting = 0;

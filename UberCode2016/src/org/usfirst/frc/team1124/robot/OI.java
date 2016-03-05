@@ -15,6 +15,7 @@ import org.usfirst.frc.team1124.robot.commands.interrupt.RampBeltsInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
 import org.usfirst.frc.team1124.robot.commands.macro.IntakeBall;
 import org.usfirst.frc.team1124.robot.commands.macro.RampAndIntakeInterrupt;
+import org.usfirst.frc.team1124.robot.commands.macro.RecoverIntakedBall;
 import org.usfirst.frc.team1124.robot.commands.macro.ScoreHighGoal;
 import org.usfirst.frc.team1124.robot.commands.macro.ScoreLowGoal;
 import org.usfirst.frc.team1124.robot.commands.ramp.RampBeltsManual;
@@ -129,6 +130,8 @@ public class OI {
 
 		js2_buttons[6].whenPressed(new ShooterManual());
 		js2_buttons[4].whenPressed(new ShooterInterrupt());
+		
+		js2_buttons[7].toggleWhenPressed(new RecoverIntakedBall());
 		
 		// Driver 2, Joystick 3
 
