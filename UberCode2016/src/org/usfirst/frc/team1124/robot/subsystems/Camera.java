@@ -64,8 +64,8 @@ public class Camera extends Subsystem {
 		}catch(Exception e) {}
 	}
 	
-	public void setHeld(boolean x){
-		camera_held = x;
+	public void setHeld(boolean held){
+		camera_held = held;
 	}
 	
 	public boolean isHeld(){
