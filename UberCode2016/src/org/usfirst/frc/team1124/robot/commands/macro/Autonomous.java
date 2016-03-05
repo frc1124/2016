@@ -38,15 +38,17 @@ public class Autonomous extends CommandGroup {
 				case ScoreHighGoal:
 					if(defense_position == AutoDefensePosition.SpyBox){
 						// just aim and stuff, no moving and stuff
+						shootHighGoal();
 					}else{
 						getToDefense();
 						crossDefense();
+						
 						turnTowardsApproxGoal();
+						scoreHighGoal();
 					}
-					
-					scoreHighGoal();
 				break;
 				case ScoreLowGoal:
+					// y?
 				break;
     		}
     	}
@@ -78,5 +80,9 @@ public class Autonomous extends CommandGroup {
     
     private void scoreHighGoal(){
     	addSequential(new ScoreHighGoal());
+    }
+    
+    private void shootHighGoal(){
+    	addSequential(new SpyBoxHighGoal());
     }
 }
