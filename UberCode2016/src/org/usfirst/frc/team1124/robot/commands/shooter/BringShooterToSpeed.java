@@ -29,6 +29,16 @@ public class BringShooterToSpeed extends Command {
 
     	voltage = SPEED / MAX_RPM;
     }
+	
+    public BringShooterToSpeed(double speed){
+    	requires(Robot.shooter_pid);
+    	
+    	this.setpoint = speed;
+    	
+    	setInterruptible(false);
+
+    	voltage = speed / MAX_RPM;
+    }
 
     protected void initialize(){
     	Robot.shooter_pid.setSetpoint(setpoint);

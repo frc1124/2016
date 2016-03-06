@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class SpyBoxHighGoal extends CommandGroup {
     public SpyBoxHighGoal() {
+    	// slower speed for 
         addSequential(new BringShooterToSpeed());
         addParallel(new HoldShooterSpeed());
         

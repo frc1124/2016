@@ -19,8 +19,6 @@ public class AimAtAnglePID extends PIDCommand {
 	public double voltage = 0;
 	
 	private double angle = 0;
-	private double pixelRate = 0;
-	private double prevPixel = 0;
 	private double prevOutput = 0;
 	
 	private boolean gotToTarget = false;
@@ -120,9 +118,6 @@ public class AimAtAnglePID extends PIDCommand {
 	    	t.start();
 	    	
 	    	timerFirstCall = false;
-
-	    	prevPixel = Robot.camera.getTargetCenterOfMass()[0];
-	    	pixelRate = 0;
 	    	
 	    	gotToTarget = false;
     	}
@@ -131,20 +126,8 @@ public class AimAtAnglePID extends PIDCommand {
 		double center = Robot.camera.getTargetCenterOfMass()[0];
 		double acceleration = 0.08;
 		double stop_voltage = 0.14;
-		
-		/*
-    	try{
-    		acceleration = SmartDashboard.getNumber("error_acceleration");
-    		stop_voltage = SmartDashboard.getNumber("stop_voltage");
-    	}catch(Exception anish){}
-    	*/
-    	
-    	pixelRate = Math.abs(prevPixel - center);
     	
     	if(center < 162.0 && center > 158.0){
-			output = Math.signum(prevOutput) * stop_voltage;
-    		voltage = output;
-			
 			gotToTarget = true;
 		}else if(center > 160.0){
 			output = -((acceleration * t.get()) + 0.1);
@@ -164,8 +147,5 @@ public class AimAtAnglePID extends PIDCommand {
 	    Robot.drivetrain.drive_tank_auto((-1) * output, output);
 	    
 	    prevOutput = output;
-	    prevPixel = center;
-
-	    System.out.println("Center: " + center + " Output: " + output + " Pixel Rate: " + pixelRate);
     }
 }

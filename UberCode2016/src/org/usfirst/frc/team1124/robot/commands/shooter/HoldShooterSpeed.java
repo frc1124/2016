@@ -22,6 +22,14 @@ public class HoldShooterSpeed extends Command {
 
     	voltage = BringShooterToSpeed.SPEED / BringShooterToSpeed.MAX_RPM;
     }
+    
+    public HoldShooterSpeed(double speed) {
+    	requires(Robot.shooter_pid);
+    	
+    	setInterruptible(true);
+
+    	voltage = speed / BringShooterToSpeed.MAX_RPM;
+    }
 
     protected void initialize() {}
 
