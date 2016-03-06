@@ -3,6 +3,7 @@ package org.usfirst.frc.team1124.robot;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmManual;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsExtend;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsRetract;
+import org.usfirst.frc.team1124.robot.commands.camera.SelectCamera;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.drive.DriveHoldPosition;
@@ -143,6 +144,9 @@ public class OI {
 		
 		js3_buttons[10].whenPressed(new ArmPistonsExtend());
 		js3_buttons[12].whenPressed(new ArmPistonsRetract());
+		
+		js3_buttons[7].whenPressed(new SelectCamera(true));
+		js3_buttons[8].whenPressed(new SelectCamera(false));
 		
 		//js3_buttons[9].whenPressed(new ExtendToClimb());
 		//js3_buttons[11].whenPressed(new Climb());
