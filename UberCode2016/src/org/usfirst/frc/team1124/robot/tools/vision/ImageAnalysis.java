@@ -1,9 +1,10 @@
-package org.usfirst.frc.team1124.robot.tools;
+package org.usfirst.frc.team1124.robot.tools.vision;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
 import org.usfirst.frc.team1124.robot.Robot;
+
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
 import com.ni.vision.NIVision.ImageType;

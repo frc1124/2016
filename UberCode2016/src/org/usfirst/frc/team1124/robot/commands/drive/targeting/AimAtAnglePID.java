@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1124.robot.commands.drive.targeting;
 
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.tools.VisionTools;
+import org.usfirst.frc.team1124.robot.tools.vision.VisionTools;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDCommand;

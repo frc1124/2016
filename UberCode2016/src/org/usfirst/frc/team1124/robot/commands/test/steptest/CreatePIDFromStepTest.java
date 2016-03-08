@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1124.robot.commands.test.steptest;
 
-import org.usfirst.frc.team1124.robot.tools.StepTest;
+import org.usfirst.frc.team1124.robot.tools.test.StepTest;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
