@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ArmIntakeWheels extends Subsystem {
 	private CANTalon arm_wheels_motor;
 	
-	/** TODO tune these */
 	private final double INTAKE_SPEED = -0.70;
 	private final double LOW_GOAL_SPEED = 1.00;
 	

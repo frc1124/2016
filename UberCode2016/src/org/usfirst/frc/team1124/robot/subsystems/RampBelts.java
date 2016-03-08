@@ -14,7 +14,6 @@ public class RampBelts extends Subsystem {
 	
 	private DigitalInput light_sensor;
 
-	/** TODO tune these */
 	private final double FEED_TO_INTAKE = -1;
 	private final double INTAKE_SPEED = 0.8;
 	private final double FEED_TO_SHOOTER = 1;
