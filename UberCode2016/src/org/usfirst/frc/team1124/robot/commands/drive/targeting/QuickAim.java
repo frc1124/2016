@@ -17,11 +17,11 @@ public class QuickAim extends Command {
 	
     public QuickAim() {
         requires(Robot.drivetrain);
-        
-        x = Robot.camera.getTargetCenterOfMass()[0];
     }
 
     protected void initialize() {
+        x = Robot.camera.getTargetCenterOfMass()[0];
+        
     	aim = new Aim(x);
     }
 
