@@ -70,7 +70,7 @@ public class ArmActuator extends Subsystem implements Safe {
     
     /**
      * Get the arm's limit switches.
-     * @return a 1 dimensional boolean array of back left, back right, forward left, and forward right limit switches (in that order).
+     * @return a 1 dimensional boolean array of {back, forward} limit switches (in that order).
      */
     public boolean[] getLimitSwitchStates(){
     	boolean[] switches = {

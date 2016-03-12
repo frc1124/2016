@@ -1,6 +1,11 @@
 package org.usfirst.frc.team1124.robot.commands.macro;
 
+import org.usfirst.frc.team1124.robot.commands.CommandDelay;
+import org.usfirst.frc.team1124.robot.commands.arm.ArmDown;
+import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.AutoDrive;
+import org.usfirst.frc.team1124.robot.commands.drive.TimedAutoDrive;
+import org.usfirst.frc.team1124.robot.commands.drive.TurnTowardsAnglePID;
 import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
 import org.usfirst.frc.team1124.robot.enums.AutoDefensePosition;
 import org.usfirst.frc.team1124.robot.enums.AutoDefenseType;
@@ -17,7 +22,7 @@ public class Autonomous extends CommandGroup {
 	private AutoDefensePosition defense_position;
 	
     public Autonomous() {
-    	// legit code is for noobs
+    	// legit code is for n00bz
     }
     
     public void start(){
@@ -27,11 +32,17 @@ public class Autonomous extends CommandGroup {
     	
 		switch(mode){
 			case Nothing:
+				// do everything cause spite
+				// doEverything();
 			break;
 			case GetToDefense:
+				armDown();
+				
 		    	getToDefense();
 			break;
 			case CrossDefense:
+				armDown();
+				
 				getToDefense();
 				crossDefense();
 			break;
@@ -40,6 +51,8 @@ public class Autonomous extends CommandGroup {
 					// just aim and stuff, no moving and stuff
 					shootHighGoal();
 				}else{
+					armDown();
+					
 					getToDefense();
 					crossDefense();
 					
@@ -48,38 +61,79 @@ public class Autonomous extends CommandGroup {
 				}
 			break;
 			case ScoreLowGoal:
-				// y?
+				// y? y do u do dis?
 			break;
 		}
     	
     	super.start();
     }
     
+    private void armDown(){
+    	addParallel(new ArmDown());
+    }
+    
     private void getToDefense(){
-    	addSequential(new AutoDrive(60, 60));
+    	addSequential(new TimedAutoDrive(0.8, 0.8, 1.0));
     }
     
     private void crossDefense(){
 		switch(defense_type){
 			case Moat:
+				addSequential(new TimedAutoDrive(0.9, 0.9, 1.8));
+				addSequential(new CommandDelay(0.2));
 			break;
 			case Ramparts:
+				addSequential(new TimedAutoDrive(0.9, 0.9, 0.5));
+				addSequential(new TimedAutoDrive(0.55, 1.0, 0.55));
+				addSequential(new TimedAutoDrive(0.9, 0.9, 0.7));
+				addSequential(new CommandDelay(0.4));
 			break;
 			case RockWall:
 			break;
 			case RoughTerrain:
+				addSequential(new TimedAutoDrive(0.9, 0.9, 1.7));
+				addSequential(new CommandDelay(0.2));
 			break;
 			case SomethingElse:
+				// do nothing
 			break;
 		}
     }
     
-    /** TODO: turn towards the goal depending on where we started so we can target it */
     private void turnTowardsApproxGoal(){
-    	addSequential(new AutoDrive(0, 0));
+    	switch(defense_position){
+			case Pos_1:
+				// THROUGH THE LOW BAR!!! MUHAHAHHAHAHAHA
+				// destroyLowBar(DestroyType.violently);
+				break;
+			case Pos_2:
+				addParallel(new SelectTarget(false));
+		    	addSequential(new TurnTowardsAnglePID(24.0));
+				break;
+			case Pos_3:
+				addParallel(new SelectTarget(false));
+		    	addSequential(new TurnTowardsAnglePID(12.0));
+				break;
+			case Pos_4:
+				addParallel(new SelectTarget(true));
+				break;
+			case Pos_5:
+				addParallel(new SelectTarget(true));
+		    	addSequential(new TurnTowardsAnglePID(-18.0));
+				break;
+			case SpyBox:
+				break;
+		}
+    	
+    	// delay before targeting
+		addSequential(new CommandDelay(0.3));
     }
     
     private void scoreHighGoal(){
+    	// re-intake incase ball fell down a bit
+    	addSequential(new IntakeBall());
+    	
+    	// shoot
     	addSequential(new ScoreHighGoal());
     }
     
