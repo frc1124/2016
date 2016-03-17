@@ -141,8 +141,6 @@ public class AimAtAnglePID extends PIDCommand {
     	}else if(Math.abs(output) > 0.25){
 			output = Math.signum(output) * 0.25;
 		}
-    	
-    	Robot.drive_voltage_for_targeting = voltage;
 		
 	    Robot.drivetrain.drive_tank_auto((-1) * output, output);
 	    

@@ -5,18 +5,16 @@ import org.usfirst.frc.team1124.robot.Robot;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
 /**
- * Turn towards an angle after homing.
+ * Turn based off of CURRENT gyro angle; doesn't re-home it.
  */
-public class TurnTowardsAnglePID extends PIDCommand {
+public class TurnOffCurrentAnglePID extends PIDCommand {
     private static final double P = 0.08464;
 	private static final double I = 0.00003;
 	private static final double D = 0.057;
 	
-	public double voltage = 0;
-	
 	private double angle = 0;
 
-    public TurnTowardsAnglePID(double angle) {
+    public TurnOffCurrentAnglePID(double angle) {
     	super("AimAtAngle", P, I, D);
         requires(Robot.drivetrain);
         
@@ -26,11 +24,9 @@ public class TurnTowardsAnglePID extends PIDCommand {
         
         setInterruptible(false);
     }
-	
-    protected void initialize() {    	
-    	Robot.drivetrain.resetGyro();
-        
-        setSetpoint(angle);
+
+    protected void initialize() {
+    	setSetpoint(angle);
         
         if(Math.abs(angle) <= 5){
         	double p_override = 0.102;
@@ -52,12 +48,13 @@ public class TurnTowardsAnglePID extends PIDCommand {
         	getPIDController().setPID(p_override, i_override, d_override);
         }
     }
-
+    
     protected void execute() {
-
+    	
     }
 
 	protected double returnPIDInput() {
+		System.out.println(Robot.drivetrain.getFullAngle());
     	return Robot.drivetrain.getFullAngle();
 	}
 
@@ -66,16 +63,15 @@ public class TurnTowardsAnglePID extends PIDCommand {
 	}
 	
     protected boolean isFinished() {
-    	// This is really sketchy. Do not try this at home.
-    	return Math.abs(Robot.drivetrain.getFullAngle()) >= Math.abs(angle) - 2; //&& Math.abs(Robot.drivetrain.getFullAngle()) <= Math.abs(angle) + 2;
+    	return Math.abs(Robot.drivetrain.getFullAngle()) >= Math.abs(angle) - 2 && Math.abs(Robot.drivetrain.getFullAngle()) <= Math.abs(angle) + 2;
     }
-
+    
     protected void end() {
     	Robot.drivetrain.stop();
     	
     	this.getPIDController().reset();
     }
-
+    
     protected void interrupted() {
     	end();
     }

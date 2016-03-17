@@ -31,7 +31,6 @@ public class DriveTrain extends Subsystem {
 	private Encoder right;
 	
 	private AnalogGyro gyro;
-	private AnalogGyro vert_gyro;
 	private BuiltInAccelerometer accel;
 	
 	public DriveTrain(){
@@ -60,9 +59,6 @@ public class DriveTrain extends Subsystem {
 		
 		gyro = new AnalogGyro(Robot.configIO.getIntVal("gyro"));
 		gyro.initGyro();
-		
-		vert_gyro = new AnalogGyro(Robot.configIO.getIntVal("vert_gyro"));
-		vert_gyro.initGyro();
 		
 		Robot.configIO.writeKeyValue("gyro_offset_calculated", "" + gyro.getOffset());
 		
@@ -95,31 +91,6 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public double getAngularRate(){
-		return gyro.getRate();
-	}
-	
-	// vertical gyro
-	
-	public void resetVerticalGyro(){
-		vert_gyro.reset();
-	}
-	
-	/**
-	 * Goes beyond 360 degrees
-	 * @return absolute full angle that is beyond 360 degrees after 1 rotation
-	 */
-	public double getVerticalFullAngle(){
-		return gyro.getAngle();
-	}
-	
-	/**
-	 * Gets an angle between 0 and 360
-	 */
-	public double getVerticalAngle(){
-		return gyro.getAngle() / 360.0;
-	}
-	
-	public double getVerticalAngularRate(){
 		return gyro.getRate();
 	}
 	

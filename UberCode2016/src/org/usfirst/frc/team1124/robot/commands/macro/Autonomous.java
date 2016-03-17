@@ -1,11 +1,11 @@
 package org.usfirst.frc.team1124.robot.commands.macro;
 
+import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.CommandDelay;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmDown;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
-import org.usfirst.frc.team1124.robot.commands.drive.AutoDrive;
 import org.usfirst.frc.team1124.robot.commands.drive.TimedAutoDrive;
-import org.usfirst.frc.team1124.robot.commands.drive.TurnTowardsAnglePID;
+import org.usfirst.frc.team1124.robot.commands.drive.TurnOffCurrentAnglePID;
 import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
 import org.usfirst.frc.team1124.robot.enums.AutoDefensePosition;
 import org.usfirst.frc.team1124.robot.enums.AutoDefenseType;
@@ -26,6 +26,8 @@ public class Autonomous extends CommandGroup {
     }
     
     public void start(){
+    	Robot.drivetrain.resetGyro();
+    	
     	mode = DashboardConnection.Auto.getMode();
     	defense_type = DashboardConnection.Auto.getDefenseType();
     	defense_position = DashboardConnection.Auto.getDefensePosition();
@@ -89,6 +91,8 @@ public class Autonomous extends CommandGroup {
 				addSequential(new CommandDelay(0.4));
 			break;
 			case RockWall:
+				addSequential(new TimedAutoDrive(0.8, 0.8, 2.1));
+				addSequential(new CommandDelay(0.4));
 			break;
 			case RoughTerrain:
 				addSequential(new TimedAutoDrive(0.9, 0.9, 1.7));
@@ -108,18 +112,19 @@ public class Autonomous extends CommandGroup {
 				break;
 			case Pos_2:
 				addParallel(new SelectTarget(false));
-		    	addSequential(new TurnTowardsAnglePID(24.0));
+				addSequential(new TurnOffCurrentAnglePID(24.0));
 				break;
 			case Pos_3:
 				addParallel(new SelectTarget(false));
-		    	addSequential(new TurnTowardsAnglePID(12.0));
+				addSequential(new TurnOffCurrentAnglePID(14.0));
 				break;
 			case Pos_4:
 				addParallel(new SelectTarget(true));
+				addSequential(new TurnOffCurrentAnglePID(0.0));
 				break;
 			case Pos_5:
 				addParallel(new SelectTarget(true));
-		    	addSequential(new TurnTowardsAnglePID(-18.0));
+		    	addSequential(new TurnOffCurrentAnglePID(-18.0));
 				break;
 			case SpyBox:
 				break;

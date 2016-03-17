@@ -25,7 +25,7 @@ public class BringShooterToSpeed extends Command {
     	
     	this.setpoint = SPEED;
     	
-    	setInterruptible(false);
+    	setInterruptible(true);
 
     	voltage = SPEED / MAX_RPM;
     }
@@ -35,7 +35,7 @@ public class BringShooterToSpeed extends Command {
     	
     	this.setpoint = speed;
     	
-    	setInterruptible(false);
+    	setInterruptible(true);
 
     	voltage = speed / MAX_RPM;
     }
