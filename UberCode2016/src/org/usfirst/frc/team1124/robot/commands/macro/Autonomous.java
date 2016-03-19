@@ -35,6 +35,7 @@ public class Autonomous extends CommandGroup {
 		switch(mode){
 			case Nothing:
 				// do everything cause spite
+				// import org.curren.scrub.spite;
 				// doEverything();
 			break;
 			case GetToDefense:
@@ -51,6 +52,8 @@ public class Autonomous extends CommandGroup {
 			case ScoreHighGoal:
 				if(defense_position == AutoDefensePosition.SpyBox){
 					// just aim and stuff, no moving and stuff
+					armDown();
+					
 					shootHighGoal();
 				}else{
 					armDown();
@@ -71,7 +74,7 @@ public class Autonomous extends CommandGroup {
     }
     
     private void armDown(){
-    	addParallel(new ArmDown());
+    	addSequential(new ArmDown());
     }
     
     private void getToDefense(){
@@ -87,7 +90,7 @@ public class Autonomous extends CommandGroup {
 			case Ramparts:
 				addSequential(new TimedAutoDrive(0.9, 0.9, 0.5));
 				addSequential(new TimedAutoDrive(0.55, 1.0, 0.55));
-				addSequential(new TimedAutoDrive(0.9, 0.9, 0.7));
+				addSequential(new TimedAutoDrive(0.9, 0.9, 0.9));
 				addSequential(new CommandDelay(0.4));
 			break;
 			case RockWall:

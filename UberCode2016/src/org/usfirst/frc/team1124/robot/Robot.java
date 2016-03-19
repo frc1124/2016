@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     
     // this revision of code (displayed on dashboard)
-    public static String codeRevision = "[v3.1.3]:week_3:dartmouth";
+    public static String codeRevision = "[v4.0.0]:week_3:day_0";
 
     /**
      * This function is run when the robot is first started up and should be
@@ -104,6 +104,9 @@ public class Robot extends IterativeRobot {
         
         // start the compressor
         compressor.start();
+        
+        // init pistons
+        arm_pistons.retract();
     }
 	
 	public void disabledPeriodic() {

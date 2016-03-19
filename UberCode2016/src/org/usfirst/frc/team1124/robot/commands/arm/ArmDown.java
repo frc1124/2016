@@ -16,7 +16,7 @@ public class ArmDown extends Command {
     protected void initialize() {}
 
     protected void execute() {
-    	Robot.arm_actuator.manual(0.6);
+    	Robot.arm_actuator.manual(-0.6);
     }
 
     protected boolean isFinished() {
