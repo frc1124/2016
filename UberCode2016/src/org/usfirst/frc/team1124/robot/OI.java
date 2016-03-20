@@ -142,7 +142,7 @@ public class OI {
 		js3_buttons[6].whenPressed(new ArmManual());
 		js3_buttons[4].whenPressed(new ArmInterrupt());
 		
-		js3_buttons[10].whenPressed(new ArmPistonsExtend());
+		js3_buttons[11].whenPressed(new ArmPistonsExtend());
 		js3_buttons[12].whenPressed(new ArmPistonsRetract());
 		
 		js3_buttons[7].whenPressed(new SelectCamera(true));

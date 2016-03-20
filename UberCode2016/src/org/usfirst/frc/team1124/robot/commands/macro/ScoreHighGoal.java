@@ -50,6 +50,8 @@ public class ScoreHighGoal extends CommandGroup {
     protected void end(){
     	super.end();
     	
+    	Robot.shooter_pid.stop();
+    	
     	Robot.camera.setHeld(false);
     }
     
