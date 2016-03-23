@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1124.robot.commands.ramp;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,8 +10,18 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RampBeltsFeedToShooter extends Command {
 
+	private BringShooterToSpeed shooter_cmd;
+	
     public RampBeltsFeedToShooter() {
     	requires(Robot.ramp_belts);
+    	
+    	setInterruptible(true);
+    }
+    
+    public RampBeltsFeedToShooter(BringShooterToSpeed shooter_cmd) {
+    	requires(Robot.ramp_belts);
+    	
+    	this.shooter_cmd = shooter_cmd;
     	
     	setInterruptible(true);
     }
@@ -18,7 +29,13 @@ public class RampBeltsFeedToShooter extends Command {
     protected void initialize() {}
 
     protected void execute() {
-    	Robot.ramp_belts.feedToShooter();
+    	if(shooter_cmd != null){
+    		if(!shooter_cmd.isRunning()){
+            	Robot.ramp_belts.feedToShooter();
+    		}
+    	}else{
+        	Robot.ramp_belts.feedToShooter();
+    	}
     }
 
     protected boolean isFinished() {

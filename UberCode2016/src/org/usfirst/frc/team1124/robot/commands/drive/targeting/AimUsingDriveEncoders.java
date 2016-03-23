@@ -2,7 +2,7 @@ package org.usfirst.frc.team1124.robot.commands.drive.targeting;
 
 import org.usfirst.frc.team1124.robot.commands.drive.LeftDrivePID;
 import org.usfirst.frc.team1124.robot.commands.drive.RightDrivePID;
-import org.usfirst.frc.team1124.robot.tools.VisionTools;
+import org.usfirst.frc.team1124.robot.tools.vision.VisionTools;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

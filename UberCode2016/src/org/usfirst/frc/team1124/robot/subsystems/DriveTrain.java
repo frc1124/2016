@@ -4,6 +4,7 @@ import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
@@ -30,6 +31,7 @@ public class DriveTrain extends Subsystem {
 	private Encoder right;
 	
 	private AnalogGyro gyro;
+	private BuiltInAccelerometer accel;
 	
 	public DriveTrain(){
 		super("DriveTrain");
@@ -59,6 +61,8 @@ public class DriveTrain extends Subsystem {
 		gyro.initGyro();
 		
 		Robot.configIO.writeKeyValue("gyro_offset_calculated", "" + gyro.getOffset());
+		
+		accel = new BuiltInAccelerometer();
 	}
 	
 	protected void initDefaultCommand() {
@@ -88,6 +92,20 @@ public class DriveTrain extends Subsystem {
 	
 	public double getAngularRate(){
 		return gyro.getRate();
+	}
+	
+	// accelerometer methods
+	
+	public double getAccelX(){
+		return accel.getX();
+	}
+	
+	public double getAccelY(){
+		return -1 * ((accel.getY() * Math.cos(60.0 * (Math.PI/180.0))) - (accel.getZ() * Math.sin(60.0 * (Math.PI/180.0))));
+	}
+	
+	public double getAccelZ(){
+		return accel.getZ() * Math.cos(60.0 * (Math.PI/180.0)) + accel.getY() * Math.sin(60.0 * (Math.PI/180.0));
 	}
 	
 	// encoder methods

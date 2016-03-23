@@ -69,10 +69,8 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     
     // this revision of code (displayed on dashboard)
-    public static String codeRevision = "[v3.0.7]:waterbury:removed_at_target";
     
-    // illigitimate global static variables
-    public static double drive_voltage_for_targeting = 0;
+    public static String codeRevision = "[v4.1.4]:week_3:shooter_speed";
 
     /**
      * This function is run when the robot is first started up and should be
@@ -105,8 +103,11 @@ public class Robot extends IterativeRobot {
         // instantiate the command used for the autonomous period
         autonomousCommand = new Autonomous();
         
-        // make sure compressor is not running
-        compressor.stop();
+        // start the compressor
+        compressor.start();
+        
+        // init pistons
+        arm_pistons.retract();
     }
 	
 	public void disabledPeriodic() {

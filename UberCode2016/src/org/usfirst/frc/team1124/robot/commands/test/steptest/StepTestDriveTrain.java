@@ -4,8 +4,9 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.tools.StepTest;
-import org.usfirst.frc.team1124.robot.tools.StepTestPoint;
+import org.usfirst.frc.team1124.robot.tools.test.StepTest;
+import org.usfirst.frc.team1124.robot.tools.test.StepTestPoint;
+
 import edu.wpi.first.wpilibj.command.Command;
 import java.util.*;
 

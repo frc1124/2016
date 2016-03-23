@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.tools.VisionTools;
+import org.usfirst.frc.team1124.robot.tools.vision.VisionTools;
 
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;

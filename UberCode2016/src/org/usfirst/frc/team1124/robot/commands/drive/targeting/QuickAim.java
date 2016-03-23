@@ -1,36 +1,37 @@
 package org.usfirst.frc.team1124.robot.commands.drive.targeting;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.tools.Aim;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Hold a drivetrain voltage
+ * Gotta go fast.
  */
-public class HoldAtVoltage extends Command {
+public class QuickAim extends Command {
 	
-	private double voltage = 0;
+	private double x;
+	private double speed = 0;
 	
-	AimAtAnglePID cmd;
+	private Aim aim;
 	
-    public HoldAtVoltage(AimAtAnglePID cmd) {
+    public QuickAim() {
         requires(Robot.drivetrain);
-        
-        this.cmd = cmd;
-        
-        setInterruptible(true);
     }
 
     protected void initialize() {
-        voltage = cmd.voltage;
+        x = Robot.camera.getTargetCenterOfMass()[0];
+        
+    	aim = new Aim(x);
     }
 
     protected void execute() {
-    	Robot.drivetrain.drive_tank_auto((-1) * voltage, voltage);
+    	speed = aim.getOutput();
+    	Robot.drivetrain.drive_tank_auto((-1) * speed, speed);
     }
 
     protected boolean isFinished() {
-        return false;
+        return aim.done();
     }
 
     protected void end() {

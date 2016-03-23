@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Select which target to aim at
  */
 public class SelectTarget extends Command {
 	
@@ -12,6 +12,9 @@ public class SelectTarget extends Command {
 	
     public SelectTarget(boolean selectLeft) {
         this.selectLeft = selectLeft;
+        
+        // init this smart dashboard data on boot/in the constructor
+    	SmartDashboard.putBoolean("target_select", true);
     }
 
     protected void initialize() {}
