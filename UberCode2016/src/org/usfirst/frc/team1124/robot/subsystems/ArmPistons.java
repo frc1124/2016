@@ -3,6 +3,7 @@ package org.usfirst.frc.team1124.robot.subsystems;
 import org.usfirst.frc.team1124.robot.Robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
      
 /**
@@ -25,12 +26,19 @@ public class ArmPistons extends Subsystem {
     
     /** Extend the arm pistons */
     public void extend(){
-    	piston.set(DoubleSolenoid.Value.kForward);
+    	if(Robot.dashboard.getRemainingFieldTime() <= 20){
+    		piston.set(DoubleSolenoid.Value.kForward);
+    	}
     }
     
     /** Retract the arm pistons */
     public void retract(){
     	piston.set(DoubleSolenoid.Value.kReverse);
+    }
+    
+    /** Get the piston state */
+    public Value getState(){
+    	return piston.get();
     }
 }
 

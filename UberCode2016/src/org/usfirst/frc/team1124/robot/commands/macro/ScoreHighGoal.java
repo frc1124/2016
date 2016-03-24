@@ -2,6 +2,7 @@ package org.usfirst.frc.team1124.robot.commands.macro;
 
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.CommandDelay;
+import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.drive.targeting.AimAtAnglePID;
 import org.usfirst.frc.team1124.robot.commands.drive.targeting.HoldAtVoltage;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
@@ -53,6 +54,10 @@ public class ScoreHighGoal extends CommandGroup {
     	Robot.shooter_pid.stop();
     	
     	Robot.camera.setHeld(false);
+    	
+    	// give first driver control of the drive train again
+    	ArcadeDriveJoystick drive = new ArcadeDriveJoystick();
+    	drive.start();
     }
     
     protected void interrupted(){

@@ -1,8 +1,7 @@
 package org.usfirst.frc.team1124.robot;
 
 import org.usfirst.frc.team1124.robot.commands.arm.ArmManual;
-import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsExtend;
-import org.usfirst.frc.team1124.robot.commands.arm.ArmPistonsRetract;
+import org.usfirst.frc.team1124.robot.commands.arm.TogglePistonState;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectCamera;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
@@ -142,14 +141,10 @@ public class OI {
 		js3_buttons[6].whenPressed(new ArmManual());
 		js3_buttons[4].whenPressed(new ArmInterrupt());
 		
-		js3_buttons[11].whenPressed(new ArmPistonsExtend());
-		js3_buttons[12].whenPressed(new ArmPistonsRetract());
+		js3_buttons[1].whenPressed(new TogglePistonState());
 		
 		js3_buttons[7].whenPressed(new SelectCamera(true));
 		js3_buttons[8].whenPressed(new SelectCamera(false));
-		
-		//js3_buttons[9].whenPressed(new ExtendToClimb());
-		//js3_buttons[11].whenPressed(new Climb());
 	}
 	
 	// Joystick gets (used for getting axes)

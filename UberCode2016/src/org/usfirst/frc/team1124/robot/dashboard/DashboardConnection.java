@@ -16,6 +16,9 @@ public class DashboardConnection {
 	// previous compressor state
 	private boolean wasCompressorEnabled = false;
 	
+	// field variables
+	private double fieldTime;
+	
 	/**
 	 * Get data for autonomous
 	 */
@@ -132,6 +135,9 @@ public class DashboardConnection {
 		
 		// control compressor
 		operateCompressor();
+		
+		// get field data
+		getFieldData();
 	}
 	
 	private void oneTimeOperations(){
@@ -300,5 +306,17 @@ public class DashboardConnection {
 				wasCompressorEnabled = false;
 			}
 		}catch(Exception e){}
+	}
+	
+	private void getFieldData(){
+		try{
+			fieldTime = SmartDashboard.getNumber("elapsed_teleop_time");
+		}catch(Exception e){}
+	}
+	
+	// get data
+	
+	public Double getRemainingFieldTime(){
+		return 120.0 - fieldTime;
 	}
 }
