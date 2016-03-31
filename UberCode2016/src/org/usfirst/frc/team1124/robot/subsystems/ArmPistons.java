@@ -3,6 +3,7 @@ package org.usfirst.frc.team1124.robot.subsystems;
 import org.usfirst.frc.team1124.robot.Robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
      
@@ -26,7 +27,7 @@ public class ArmPistons extends Subsystem {
     
     /** Extend the arm pistons */
     public void extend(){
-    	if(Robot.dashboard.getRemainingFieldTime() <= 20){
+    	if(120.0 - Timer.getMatchTime() <= 20){
     		piston.set(DoubleSolenoid.Value.kForward);
     	}
     }
