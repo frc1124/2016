@@ -5,14 +5,12 @@ import org.usfirst.frc.team1124.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Trigger intake interrupt
+ * Interrupt drive train commands
  */
-public class IntakeInterrupt extends Command {
+public class DriveTrainInterrupt extends Command {
 
-    public IntakeInterrupt() {
-        requires(Robot.arm_intake_wheels);
-        
-        setInterruptible(false);
+    public DriveTrainInterrupt() {
+        requires(Robot.drivetrain);
     }
 
     protected void initialize() {}
@@ -24,6 +22,6 @@ public class IntakeInterrupt extends Command {
     }
 
     protected void end() {}
-
+    
     protected void interrupted() {}
 }

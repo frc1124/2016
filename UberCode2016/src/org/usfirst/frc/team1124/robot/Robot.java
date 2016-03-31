@@ -2,7 +2,7 @@ package org.usfirst.frc.team1124.robot;
 
 // commands
 import org.usfirst.frc.team1124.robot.commands.macro.Autonomous;
-
+import org.usfirst.frc.team1124.robot.commands.shooter.HoldShooterAtPrimingSpeed;
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1124.robot.subsystems.ArmIntakeWheels;
@@ -68,6 +68,9 @@ public class Robot extends IterativeRobot {
 	// autonomous
     Command autonomousCommand;
     
+    // shooter priming
+    Command bringShooterToSpeed;
+    
     // this revision of code (displayed on dashboard)
     
     public static String codeRevision = "[v4.1.4]:week_3:shooter_speed";
@@ -102,6 +105,9 @@ public class Robot extends IterativeRobot {
 
         // instantiate the command used for the autonomous period
         autonomousCommand = new Autonomous();
+        
+        // instantiate shooter priming command for later use
+        bringShooterToSpeed = new HoldShooterAtPrimingSpeed();
         
         // start the compressor
         compressor.start();
@@ -142,6 +148,8 @@ public class Robot extends IterativeRobot {
         if(autonomousCommand != null){
         	autonomousCommand.cancel();
         }
+        
+        bringShooterToSpeed.start();
     }
 
     /**

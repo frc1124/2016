@@ -15,7 +15,9 @@ public class ShooterInterrupt extends Command {
         setInterruptible(false);
     }
 
-    protected void initialize() {}
+    protected void initialize() {
+    	Robot.shooter_pid.setSetpoint(0.0);
+    }
 
     protected void execute() {}
 

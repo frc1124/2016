@@ -102,12 +102,13 @@ public class OI {
 	public OI(){
 		// Driver 1, Joystick 1
 
-		// by default drivetrain runs arcade, so don't need this
+		// by default drive train runs arcade, so don't need this
 		//js1_buttons[].whenPressed(new ArcadeDriveJoystick());
 		js1_buttons[7].toggleWhenPressed(new DriveHoldPosition(true));
 
 		js1_buttons[1].toggleWhenPressed(new ScoreHighGoal());
-		js1_buttons[2].whenPressed(new BringShooterToSpeed());
+		
+		//js1_buttons[2].whenPressed(new BringShooterToSpeed());
 		//js1_buttons[3].whenPressed(new AimTowardsGoal());
 		
 		js1_buttons[4].whenPressed(new AimAtAnglePID());
@@ -118,6 +119,8 @@ public class OI {
 		js1_buttons[12].whenPressed(new SelectTarget(false));
 		
 		// Driver 2, Joystick 2
+		
+		js2_buttons[1].whenPressed(new BringShooterToSpeed());
 		
 		js2_buttons[9].whenPressed(new IntakeBall());
 		js2_buttons[11].whenPressed(new RampAndIntakeInterrupt());
