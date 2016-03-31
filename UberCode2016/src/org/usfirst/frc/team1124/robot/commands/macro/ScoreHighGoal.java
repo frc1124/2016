@@ -5,9 +5,11 @@ import org.usfirst.frc.team1124.robot.commands.CommandDelay;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.drive.targeting.AimAtAnglePID;
 import org.usfirst.frc.team1124.robot.commands.drive.targeting.HoldAtVoltage;
+import org.usfirst.frc.team1124.robot.commands.interrupt.DriveTrainInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
 import org.usfirst.frc.team1124.robot.commands.ramp.RampBeltsFeedToShooter;
 import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
+import org.usfirst.frc.team1124.robot.commands.shooter.HoldShooterAtPrimingSpeed;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -21,6 +23,8 @@ public class ScoreHighGoal extends CommandGroup {
 	private BringShooterToSpeed shooter_cmd;
 	
 	private RampBeltsFeedToShooter feed_cmd;
+	
+	private HoldShooterAtPrimingSpeed prime_cmd;
 	
     public ScoreHighGoal() {
     	aim_cmd = new AimAtAnglePID();
@@ -40,6 +44,9 @@ public class ScoreHighGoal extends CommandGroup {
         // wait to be sure it fired and is done
         addSequential(new CommandDelay(1));
         addSequential(new ShooterInterrupt());
+        addSequential(new DriveTrainInterrupt());
+        
+        prime_cmd = new HoldShooterAtPrimingSpeed();
     }
     
     protected void initialize(){
@@ -51,13 +58,9 @@ public class ScoreHighGoal extends CommandGroup {
     protected void end(){
     	super.end();
     	
-    	Robot.shooter_pid.stop();
-    	
     	Robot.camera.setHeld(false);
     	
-    	// give first driver control of the drive train again
-    	ArcadeDriveJoystick drive = new ArcadeDriveJoystick();
-    	drive.start();
+    	prime_cmd.start();
     }
     
     protected void interrupted(){
