@@ -153,9 +153,9 @@ public class AimAtAnglePID extends PIDCommand {
     	if(gotToTarget){
     		output = Math.signum(prevOutput) * stop_voltage;
     		voltage = output;
-    	}else if(Math.abs(center - 160) < 5){
+    	}else if(Math.abs(center - 160) < 5 && Math.abs(output) > 0.25){
 			output = Math.signum(output) * 0.25;
-    	}else if(Math.abs(center - 160) < 10){
+    	}else if(Math.abs(center - 160) < 10 && Math.abs(output) > 0.32){
 			output = Math.signum(output) * 0.32;
     	}else if(Math.abs(center - 160) < 50 && Math.abs(center - 160) > 20){
 			output = Math.signum(output) * 0.65;
