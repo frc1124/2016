@@ -22,6 +22,7 @@ public class AimAtAnglePID extends PIDCommand {
 	private double prevOutput = 0;
 	
 	private boolean gotToTarget = false;
+	private boolean gotCloseToTarget = false;
 	
 	private Timer t = new Timer();
 	private boolean timerFirstCall = true;
@@ -29,6 +30,8 @@ public class AimAtAnglePID extends PIDCommand {
     public AimAtAnglePID() {
     	super("AimAtAngle", P, I, D);
         requires(Robot.drivetrain);
+        
+        setInterruptible(true);
         
         this.getPIDController().setOutputRange(-0.5, 0.5);
     }
@@ -69,7 +72,7 @@ public class AimAtAnglePID extends PIDCommand {
         	getPIDController().setPID(p_override, i_override, d_override);
         }else if(Math.signum(angle) < 0){
     		// things are different if left
-        	double p_override = 0.0826;
+        	double p_override = 0.1026;
         	double i_override = 0.00002;
         	double d_override = 0.05;
 
@@ -78,8 +81,11 @@ public class AimAtAnglePID extends PIDCommand {
     }
 
     protected void execute() {
-    	if(Math.abs(Robot.camera.getTargetCenterOfMass()[0] - 160) < 15){
+    	// used to be within 18.8 pixels
+    	if((Math.abs(Robot.camera.getTargetCenterOfMass()[0] - 160) <= 25.0 && Math.abs(Robot.drivetrain.getRightEncoderRate()) <= 0.5) || gotCloseToTarget){
     		getToCloseTarget();
+    		
+    		gotCloseToTarget = true;
     	}else{
     		timerFirstCall = true;
 	    	this.getPIDController().enable();
@@ -104,13 +110,23 @@ public class AimAtAnglePID extends PIDCommand {
     	this.getPIDController().reset();
     	
     	timerFirstCall = true;
+    	gotCloseToTarget = false;
     }
 
     protected void interrupted() {
     	end();
     }
+	
+	double output = 0;
+	
+	double offset;
+	
+	double acceleration = 0.08;
+	double stop_voltage = 0.14;
     
     protected void getToCloseTarget(){
+		double center = Robot.camera.getTargetCenterOfMass()[0];
+		
     	if(timerFirstCall){
 	    	this.getPIDController().disable();
 	    	
@@ -120,27 +136,36 @@ public class AimAtAnglePID extends PIDCommand {
 	    	timerFirstCall = false;
 	    	
 	    	gotToTarget = false;
+			
+			offset = 0.15 + (Math.abs(center - 160) * 0.01);
     	}
     	
-    	double output = 0;
-		double center = Robot.camera.getTargetCenterOfMass()[0];
-		double acceleration = 0.08;
-		double stop_voltage = 0.14;
+    	System.out.println("offset: " + offset);
     	
     	if(center < 162.0 && center > 158.0){
 			gotToTarget = true;
 		}else if(center > 160.0){
-			output = -((acceleration * t.get()) + 0.1);
+			output = -((acceleration * t.get()) + offset);
 		}else if(center < 160.0){
-			output = (acceleration * t.get()) + 0.1;
+			output = (acceleration * t.get()) + offset;
 		}
 		
     	if(gotToTarget){
     		output = Math.signum(prevOutput) * stop_voltage;
     		voltage = output;
-    	}else if(Math.abs(output) > 0.25){
+    	}else if(Math.abs(center - 160) < 5){
 			output = Math.signum(output) * 0.25;
+    	}else if(Math.abs(center - 160) < 10){
+			output = Math.signum(output) * 0.32;
+    	}else if(Math.abs(center - 160) < 50 && Math.abs(center - 160) > 20){
+			output = Math.signum(output) * 0.65;
+    	}
+    	
+    	if(Math.abs(output) > 0.45){
+			output = Math.signum(output) * 0.45;
 		}
+    	
+    	System.out.println("Output: " + output);
 		
 	    Robot.drivetrain.drive_tank_auto((-1) * output, output);
 	    
