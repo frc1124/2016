@@ -73,7 +73,7 @@ public class Robot extends IterativeRobot {
     
     // this revision of code (displayed on dash board)
     
-    public static String codeRevision = "[v5.1.2]:week_5:side-fix";
+    public static String codeRevision = "[v5.1.4]:week_5:auto";
 
     /**
      * This function is run when the robot is first started up and should be

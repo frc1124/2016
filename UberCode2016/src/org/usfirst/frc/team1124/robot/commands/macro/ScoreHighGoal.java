@@ -48,6 +48,33 @@ public class ScoreHighGoal extends CommandGroup {
         
         prime_cmd = new HoldShooterAtPrimingSpeed();
     }
+	
+    /**
+     * Run a faster shot
+     * @param auto doesn't mater what this is, just have a byte to select this method
+     */
+    public ScoreHighGoal(byte auto) {
+    	aim_cmd = new AimAtAnglePID();
+    	hold_cmd = new HoldAtVoltage(aim_cmd);
+    	
+    	shooter_cmd = new BringShooterToSpeed(3625.0);
+    	
+    	feed_cmd = new RampBeltsFeedToShooter(shooter_cmd);
+
+        addParallel(shooter_cmd);
+        
+    	addSequential(aim_cmd);
+        addParallel(hold_cmd);
+        
+        addSequential(feed_cmd);
+        
+        // wait to be sure it fired and is done
+        addSequential(new CommandDelay(1));
+        addSequential(new ShooterInterrupt());
+        addSequential(new DriveTrainInterrupt());
+        
+        prime_cmd = new HoldShooterAtPrimingSpeed();
+    }
     
     protected void initialize(){
     	super.initialize();
