@@ -137,7 +137,7 @@ public class AimAtAnglePID extends PIDCommand {
 	    	
 	    	gotToTarget = false;
 			
-			offset = 0.15 + (Math.abs(center - 160) * 0.01);
+			offset = 0.15; // + (Math.abs(center - 160) * 0.01);
     	}
     	
     	System.out.println("offset: " + offset);
@@ -157,9 +157,9 @@ public class AimAtAnglePID extends PIDCommand {
 			output = Math.signum(output) * 0.25;
     	//}else if(Math.abs(center - 160) < 10 && Math.abs(output) > 0.30){
 		//	output = Math.signum(output) * 0.30;
-    	}else if(Math.abs(center - 160) < 50 && Math.abs(center - 160) > 20){
-			output = Math.signum(output) * 0.65;
-    	}
+    	}//else if(Math.abs(center - 160) < 50 && Math.abs(center - 160) > 20){
+		//	output = Math.signum(output) * 0.65;
+    	//}
     	
     	if(Math.abs(output) > 0.45){
 			output = Math.signum(output) * 0.45;
