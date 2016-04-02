@@ -71,9 +71,9 @@ public class Robot extends IterativeRobot {
     // shooter priming
     Command bringShooterToSpeed;
     
-    // this revision of code (displayed on dashboard)
+    // this revision of code (displayed on dash board)
     
-    public static String codeRevision = "[v4.1.4]:week_3:shooter_speed";
+    public static String codeRevision = "[v5.0.2]:week_5:vision";
 
     /**
      * This function is run when the robot is first started up and should be
