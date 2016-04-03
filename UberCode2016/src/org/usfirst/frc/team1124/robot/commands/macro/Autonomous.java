@@ -5,7 +5,6 @@ import org.usfirst.frc.team1124.robot.commands.CommandDelay;
 import org.usfirst.frc.team1124.robot.commands.arm.ArmDown;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.TimedAutoDrive;
-import org.usfirst.frc.team1124.robot.commands.drive.TurnOffCurrentAnglePID;
 import org.usfirst.frc.team1124.robot.commands.drive.TurnTowardsAnglePID;
 import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
 import org.usfirst.frc.team1124.robot.enums.AutoDefensePosition;
@@ -49,6 +48,8 @@ public class Autonomous extends CommandGroup {
 				
 				getToDefense();
 				crossDefense();
+				
+				finishCross();
 			break;
 			case ScoreHighGoal:
 				if(defense_position == AutoDefensePosition.SpyBox){
@@ -64,6 +65,8 @@ public class Autonomous extends CommandGroup {
 					
 					turnTowardsApproxGoal();
 					scoreHighGoal();
+					
+					finishCross();
 				}
 			break;
 			case ScoreLowGoal:
@@ -86,7 +89,7 @@ public class Autonomous extends CommandGroup {
 		switch(defense_type){
 			case Moat:
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 1.8));
-				addSequential(new TimedAutoDrive(0.8, 0.9, 2.0));
+				addSequential(new TimedAutoDrive(0.8, 0.9, 2.1));
 				addSequential(new CommandDelay(0.2));
 			break;
 			case Ramparts:
@@ -108,6 +111,19 @@ public class Autonomous extends CommandGroup {
 			break;
 			case SomethingElse:
 				// do nothing
+			break;
+		}
+    }
+    
+    private void finishCross(){
+		switch(defense_type){
+			case Moat:
+			case Ramparts:
+			case RockWall:
+			case RoughTerrain:
+				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
+			break;
+			case SomethingElse:
 			break;
 		}
     }
