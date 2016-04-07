@@ -27,9 +27,9 @@ public class ArmPistons extends Subsystem {
     
     /** Extend the arm pistons */
     public void extend(){
-    	if(120.0 - Timer.getMatchTime() <= 20){
+    	//if(120.0 - Timer.getMatchTime() <= 20){
     		piston.set(DoubleSolenoid.Value.kForward);
-    	}
+    	//}
     }
     
     /** Retract the arm pistons */
