@@ -93,7 +93,7 @@ public class Autonomous extends CommandGroup {
 				addSequential(new CommandDelay(0.2));
 			break;
 			case Ramparts:
-				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
+				addSequential(new TimedAutoDrive(0.8, 0.8, 0.5));
 				addSequential(new TimedAutoDrive(0.55, 1.0, 0.55));
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 0.9));
 				addSequential(new TimedAutoDrive(0.8, 0.9, 1.15));
