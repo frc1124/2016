@@ -8,6 +8,7 @@ import org.usfirst.frc.team1124.robot.tools.Safe;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
@@ -28,6 +29,7 @@ public class ShooterPID extends PIDSubsystem implements Safe {
 	private final double UNITS_PER_TICK = 10.0 * 60.0 / 4096.0;
 	
 	private CANTalon shooter;
+	private DigitalInput ball_sensor;
 	
 	private Timer safetyTimer = new Timer();
 	private boolean timerFirstCall = true;
@@ -42,6 +44,7 @@ public class ShooterPID extends PIDSubsystem implements Safe {
     	super("ShooterPID", P, I, D);
     	
     	shooter = new CANTalon(Robot.configIO.getIntVal("shooter"));
+    	ball_sensor = new DigitalInput(Robot.configIO.getIntVal("shooter_ball_sensor"));
     	
     	setSetpoint(0);
     	
@@ -52,6 +55,11 @@ public class ShooterPID extends PIDSubsystem implements Safe {
     
     public void initDefaultCommand() {}
 
+    /**	The light sensor in the shooter cage */
+    public boolean getBallSensor(){
+    	return ball_sensor.get();
+    }
+    
     /**
      * Stops the PID control and sets output to 0.
      */
