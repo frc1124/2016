@@ -46,14 +46,14 @@ public class Camera extends Subsystem {
 	        Robot.shooter_camera.writeResolution(Resolution.k320x240);
 	        Robot.shooter_camera.writeExposureControl(ExposureControl.kHold);
 	        
-	        Robot.shooter_camera.writeWhiteBalance(WhiteBalance.kFixedFluorescent1);
+	        Robot.shooter_camera.writeWhiteBalance(WhiteBalance.kFixedFluorescent2);
 	        Robot.shooter_camera.writeMaxFPS(20);
 		}catch(Exception e) {}
 	}
 	
 	private void initIntakeCamera(){
 		try{
-			Robot.intake_camera = new USBCamera("cam1");
+			Robot.intake_camera = new USBCamera("cam0");
 			Robot.intake_camera.openCamera();
 			
 			Robot.intake_camera.setSize(160, 120);

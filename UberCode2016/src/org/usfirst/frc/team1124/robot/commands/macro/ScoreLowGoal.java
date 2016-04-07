@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1124.robot.commands.macro;
 
+import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.intake.LowGoal;
 import org.usfirst.frc.team1124.robot.commands.ramp.RampBeltsFeedToIntake;
 
@@ -13,5 +14,11 @@ public class ScoreLowGoal extends CommandGroup {
     public ScoreLowGoal() {
         addParallel(new RampBeltsFeedToIntake());
         addParallel(new LowGoal());
+    }
+    
+    protected void end(){
+    	super.end();
+
+    	Robot.ramp_belts.removeBall();
     }
 }

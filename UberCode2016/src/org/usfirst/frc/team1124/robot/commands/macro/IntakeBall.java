@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1124.robot.commands.macro;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
 
 import edu.wpi.first.wpilibj.command.Command;
                                                                                                 
@@ -30,9 +31,16 @@ public class IntakeBall extends Command {
     protected void end() {
     	Robot.arm_intake_wheels.stop();
     	Robot.ramp_belts.stop();
+    	
+    	// initiate the shooter after we have finished intaking a ball
+    	BringShooterToSpeed shooter_cmd = new BringShooterToSpeed();
+    	shooter_cmd.start();
+    	
+    	Robot.ramp_belts.addBall();
     }
 
     protected void interrupted() {
-    	end();
+    	Robot.arm_intake_wheels.stop();
+    	Robot.ramp_belts.stop();
     }
 }

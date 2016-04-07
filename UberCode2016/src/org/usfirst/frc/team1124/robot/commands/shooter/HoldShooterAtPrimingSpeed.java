@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class HoldShooterAtPrimingSpeed extends Command {
 
-	private static final double SPEED = 3575.0;
+	private static final double SPEED = 0.0;
 	
     public HoldShooterAtPrimingSpeed() {
         requires(Robot.shooter_pid);
