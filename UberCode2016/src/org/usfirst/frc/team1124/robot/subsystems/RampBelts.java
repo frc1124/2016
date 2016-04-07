@@ -17,6 +17,8 @@ public class RampBelts extends Subsystem {
 	private final double FEED_TO_INTAKE = -1;
 	private final double INTAKE_SPEED = 0.8;
 	private final double FEED_TO_SHOOTER = 1;
+	
+	private int ballCount = 0;
 
     public RampBelts() {
     	super("RampBelts");
@@ -27,6 +29,20 @@ public class RampBelts extends Subsystem {
     }
     
     public void initDefaultCommand() {}
+    
+    // keep track of balls in robot
+    
+    public void addBall(){
+    	ballCount++;
+    }
+    
+    public void removeBall(){
+    	ballCount--;
+    }
+    
+    public int getBallCount(){
+    	return ballCount;
+    }
     
     /** True is detected */
     public boolean getBallDetected(){

@@ -2,11 +2,11 @@ package org.usfirst.frc.team1124.robot.commands.macro;
 
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.CommandDelay;
-import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 import org.usfirst.frc.team1124.robot.commands.drive.targeting.AimAtAnglePID;
 import org.usfirst.frc.team1124.robot.commands.drive.targeting.HoldAtVoltage;
 import org.usfirst.frc.team1124.robot.commands.interrupt.DriveTrainInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
+import org.usfirst.frc.team1124.robot.commands.ramp.BallToSensor;
 import org.usfirst.frc.team1124.robot.commands.ramp.RampBeltsFeedToShooter;
 import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
 import org.usfirst.frc.team1124.robot.commands.shooter.HoldShooterAtPrimingSpeed;
@@ -62,6 +62,8 @@ public class ScoreHighGoal extends CommandGroup {
     	feed_cmd = new RampBeltsFeedToShooter(shooter_cmd);
 
         addParallel(shooter_cmd);
+        // ensure ball is in
+        addParallel(new BallToSensor());
         
     	addSequential(aim_cmd);
         addParallel(hold_cmd);
@@ -84,6 +86,8 @@ public class ScoreHighGoal extends CommandGroup {
     
     protected void end(){
     	super.end();
+    	
+    	Robot.ramp_belts.removeBall();
     	
     	Robot.camera.setHeld(false);
     	
