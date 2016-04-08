@@ -159,4 +159,15 @@ public class VisionTools {
     	double x = xlhsGoalBBox + widthGoalBBox / 2 - cameraWidth / 2;
     	return ((degrees) ? (180 / Math.PI) : (1)) * Math.atan(2 * x * Math.tan(viewAngleHoriz / 2) / cameraWidth);
     }
+    
+    /**
+     * Gets angle that the robot should turn in order to face the center of the goal.
+     * @param x_cm	x center of mass
+     * @return		angle to turn.
+     */
+    public static double turnAngle(double x_cm) {
+    	double x = x_cm - (cameraWidth / 2);
+    	
+    	return (180 / Math.PI) * Math.atan(2 * x * Math.tan(viewAngleHoriz / 2) / cameraWidth);
+    }
 }
