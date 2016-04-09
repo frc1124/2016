@@ -19,14 +19,14 @@ public class TrapezoidalAngleOutput extends Command {
 	private double distance = 0;
 	
 	// constants
-	private final double v_max = 50.0;
+	private final double v_max = 60.0;
 	private final double filter_time_1 = 0.200;
 	private final double filter_time_2 = 0.100;
-	private final double itp = 0.020;
+	private double itp = 0.020;
 	
 	// system variables
-	private int fl_1 = (int) Math.ceil(filter_time_1 / itp);
-	private int fl_2 = (int) Math.ceil(filter_time_2 / itp);
+	private double fl_1 = Math.ceil(filter_time_1 / itp);
+	private double fl_2 = Math.ceil(filter_time_2 / itp);
 	
 	// calculated variables
 	private double t_4 = 0.0;
@@ -80,6 +80,9 @@ public class TrapezoidalAngleOutput extends Command {
 	    	distance = VisionTools.turnAngle(x_cm);
 	    	
 	    	distance = 15.0;
+
+	    	sign = (int) Math.signum(distance);
+	    	distance = Math.abs(distance);
 	    	
 	    	System.out.println("Distance: " + distance);
     	}catch(Exception oh_no){
@@ -92,8 +95,18 @@ public class TrapezoidalAngleOutput extends Command {
     	System.out.println("t_4: " + t_4 + "	n: " + n);
     }
     
+    private long prev_time = System.currentTimeMillis();
+    private long deltaTime = 0;
+    
     protected void execute() {
     	time = t.get();
+    	
+    	deltaTime = System.currentTimeMillis() - prev_time;
+    	prev_time = System.currentTimeMillis();
+    	
+    	System.out.println(deltaTime);
+    	
+    	itp = (((double) deltaTime) / 1000);
     	
     	if(time >= step * itp){
     		//=MAX(0,	MIN(1,	(prev_f1_sum + IF((input == 1),		(1/FL1),	(-1/FL1)	)	)	)	)
@@ -113,7 +126,7 @@ public class TrapezoidalAngleOutput extends Command {
     		fl2_sum = 0;
     		
     		for(int i = 0; i < Math.min(fl_2, step); i++){
-    			fl2_sum += filter_1_data.get((filter_1_data.size() - 1) + (-1 * Math.min(fl_2, step)) + 1);
+    			fl2_sum += filter_1_data.get( ((filter_1_data.size() - 1) + (-1 * Math.min((int) fl_2, step)) + 1));
     		}
     		
     		velocity = sign * (fl1_sum + fl2_sum) / (1 + fl_2) * v_max;
