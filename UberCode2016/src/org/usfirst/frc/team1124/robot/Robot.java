@@ -137,8 +137,6 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
     	dashboard.updateDashboard();
     	
-    	camera.getImage();
-    	
         Scheduler.getInstance().run();
     }
 
@@ -165,8 +163,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	dashboard.updateDashboard();
-    	
-    	camera.getImage();
     	
         Scheduler.getInstance().run();
     }
