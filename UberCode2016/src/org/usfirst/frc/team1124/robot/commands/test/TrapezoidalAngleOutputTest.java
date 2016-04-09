@@ -115,13 +115,14 @@ public class TrapezoidalAngleOutputTest {
     			fl2_sum += filter_1_data.get((int) ((filter_1_data.size() - 1) + (-1 * Math.min(fl_2, step)) + 1));
     		}
     		
-    		velocity = (fl1_sum + fl2_sum) / (1 + fl_2) * v_max;
+    		velocity = sign * (fl1_sum + fl2_sum) / (1 + fl_2) * v_max;
     		
     		position = (((velocity + prev_velocity) / 2) * itp) + prev_position;
     		
-    		acceleration = ((((velocity + prev_velocity)) / itp));
+    		acceleration = ((((velocity - prev_velocity)) / itp));
     		
-    		System.out.println("Step #" + step + ": Filter 1 Sum: " + fl1_sum + " Fitler 2 Sum: " + fl2_sum + " Position: " + position + " Velocity: " + velocity + " Acceleration: " + acceleration);
+    		//System.out.println("Step #" + step + "	Filter 1 Sum: " + fl1_sum + "	Fitler 2 Sum: " + fl2_sum + "	Position: " + position + "	Velocity: " + velocity + "	Acceleration: " + acceleration);
+    		System.out.println("Step #" + step + "	" + fl1_sum + "	" + fl2_sum + "	" + position + "	" + velocity + "	" + acceleration);
     		
     		step++;
     		
@@ -131,6 +132,9 @@ public class TrapezoidalAngleOutputTest {
     		if(velocity == 0 && step > 2){
     			run = false;
     		}
+    		
+    		prev_velocity = velocity;
+    		prev_position = position;
     	}
     	
     	t++;

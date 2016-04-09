@@ -31,6 +31,7 @@ public class TrapezoidalAngleOutput extends Command {
 	// calculated variables
 	private double t_4 = 0.0;
 	private int n = 0;
+	private int sign = 0;
 	
 	// iteration data
 	private int step = 1;
@@ -47,12 +48,15 @@ public class TrapezoidalAngleOutput extends Command {
 	private double fl1_sum;
 	private double prev_fl1_sum;
 	private double fl2_sum;
-	private double prev_fl2_sum;
+	
+	private double prev_velocity = 0;
+	private double prev_position = 0;
+	
+	// pid
+	private AngularRatePID pid = new AngularRatePID();
+	private double output = 0;
 	
 	private ArrayList<Double> filter_1_data = new ArrayList<Double>();
-
-	private ArrayList<Double> positions = new ArrayList<Double>();
-	private ArrayList<Double> velocities = new ArrayList<Double>();
 	
     public TrapezoidalAngleOutput() {
         requires(Robot.drivetrain);
@@ -60,6 +64,8 @@ public class TrapezoidalAngleOutput extends Command {
     
     protected void initialize() {
     	t.start();
+    	
+    	pid.start();
     	
     	try{
     		/*
@@ -73,6 +79,8 @@ public class TrapezoidalAngleOutput extends Command {
     		
 	    	distance = VisionTools.turnAngle(x_cm);
 	    	
+	    	distance = 15.0;
+	    	
 	    	System.out.println("Distance: " + distance);
     	}catch(Exception oh_no){
     		System.out.println("Fatal Targeting Error: Dashboard data not found.");
@@ -81,7 +89,7 @@ public class TrapezoidalAngleOutput extends Command {
     	t_4 = distance / v_max;
     	n = (int) (t_4 / itp);
     	
-    	System.out.println("t_4: " + t_4 + " n: " + n);
+    	System.out.println("t_4: " + t_4 + "	n: " + n);
     }
     
     protected void execute() {
@@ -108,19 +116,28 @@ public class TrapezoidalAngleOutput extends Command {
     			fl2_sum += filter_1_data.get((filter_1_data.size() - 1) + (-1 * Math.min(fl_2, step)) + 1);
     		}
     		
-    		velocity = (fl1_sum + fl2_sum) / (1 + fl_2) * v_max;
-    		velocities.add(velocity);
+    		velocity = sign * (fl1_sum + fl2_sum) / (1 + fl_2) * v_max;
     		
-    		position = (((velocities.get(velocities.size() - 1) + velocities.get(velocities.size() - 2)) / 2) * itp) + positions.get(positions.size() - 1);
-    		positions.add(position);
+    		position = (((velocity + prev_velocity) / 2) * itp) + prev_position;
     		
-    		acceleration = (((velocities.get(velocities.size() - 1) + velocities.get(velocities.size() - 2)) / itp));
+    		acceleration = (velocity - prev_velocity) / itp;
+    		
+    		System.out.println("Step #" + step + "	Filter 1 Sum: " + fl1_sum + "	Filter 2 Sum: " + fl2_sum + "	Position: " + position + "	Velocity: " + velocity + "	Acceleration: " + acceleration);
+    		//System.out.println("Step #" + step + "	" + fl1_sum + "	" + fl2_sum + "	" + position + "	" + velocity + "	" + acceleration);
+    		
+    		pid.setSetpoint(velocity);
     		
     		step++;
     		
     		prev_fl1_sum = fl1_sum;
-    		prev_fl2_sum = fl2_sum;
+    		
+    		prev_velocity = velocity;
+    		prev_position = position;
     	}
+    	
+    	output = pid.getOutput();
+		
+		Robot.drivetrain.drive_tank_auto(output, (-1) * output);
     }
 
     protected boolean isFinished() {
@@ -135,10 +152,13 @@ public class TrapezoidalAngleOutput extends Command {
     	acceleration = 0;
     	
     	filter_1_data.clear();
-    	positions.clear();
-    	velocities.clear();
+    	
+    	prev_velocity = 0;
+    	prev_position = 0;
     	
     	t.reset();
+    	
+    	pid.cancel();
     }
     
     protected void interrupted() {
