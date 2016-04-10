@@ -20,15 +20,13 @@ public class TrapezoidalAngleOutput extends Command {
 	
 	// constants
 	private final double v_max = 60.0;
-	private final double filter_time_1 = 0.200;
-	private final double filter_time_2 = 0.100;
-	//private final double filter_time_1 = 0.050;
-	//private final double filter_time_2 = 0.025;
+	private double filter_time_1 = 0.0;
+	private double filter_time_2 = 0.0;
 	private double itp = 0.020;
 	
 	// system variables
-	private double fl_1 = Math.ceil(filter_time_1 / itp);
-	private double fl_2 = Math.ceil(filter_time_2 / itp);
+	private double fl_1 = 0.0;
+	private double fl_2 = 0.0;
 	
 	// calculated variables
 	private double t_4 = 0.0;
@@ -81,12 +79,30 @@ public class TrapezoidalAngleOutput extends Command {
     		
 	    	distance = VisionTools.turnAngle(x_cm);
 	    	
-	    	distance = 5.0;
+	    	fl_1 = Math.ceil(filter_time_1 / itp);
+	    	fl_2 = Math.ceil(filter_time_2 / itp);
 
 	    	sign = (int) Math.signum(distance);
 	    	distance = Math.abs(distance);
 	    	
 	    	System.out.println("Distance: " + distance);
+	    	
+	    	if(distance >= 18.0){
+		    	filter_time_1 = 0.200;
+		    	filter_time_2 = 0.100;
+	    	}else if(distance >= 8){
+		    	filter_time_1 = 0.100;
+		    	filter_time_2 = 0.050;
+	    	}else if(distance >= 5){
+		    	filter_time_1 = 0.050;
+		    	filter_time_2 = 0.025;
+	    	}else{
+		    	filter_time_1 = 0.025;
+		    	filter_time_2 = 0.025;
+	    	}
+	    	
+	    	System.out.println("fl time 1: " + filter_time_1);
+	    	System.out.println("fl time 2: " + filter_time_2);
     	}catch(Exception oh_no){
     		System.out.println("Fatal Targeting Error: Dashboard data not found.");
     	}
@@ -106,7 +122,7 @@ public class TrapezoidalAngleOutput extends Command {
     	deltaTime = System.currentTimeMillis() - prev_time;
     	prev_time = System.currentTimeMillis();
     	
-    	System.out.println(deltaTime);
+    	//System.out.println(deltaTime);
     	
     	itp = (((double) deltaTime) / 1000);
     	
@@ -137,7 +153,7 @@ public class TrapezoidalAngleOutput extends Command {
     		
     		acceleration = (velocity - prev_velocity) / itp;
     		
-    		System.out.println("Step #" + step + "	Filter 1 Sum: " + fl1_sum + "	Filter 2 Sum: " + fl2_sum + "	Position: " + position + "	Velocity: " + velocity + "	Acceleration: " + acceleration);
+    		//System.out.println("Step #" + step + "	Filter 1 Sum: " + fl1_sum + "	Filter 2 Sum: " + fl2_sum + "	Position: " + position + "	Velocity: " + velocity + "	Acceleration: " + acceleration);
     		//System.out.println("Step #" + step + "	" + fl1_sum + "	" + fl2_sum + "	" + position + "	" + velocity + "	" + acceleration);
     		
     		pid.setSetpoint(velocity);
