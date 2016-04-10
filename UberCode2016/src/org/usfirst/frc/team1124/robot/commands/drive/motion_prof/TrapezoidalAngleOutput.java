@@ -22,6 +22,8 @@ public class TrapezoidalAngleOutput extends Command {
 	private final double v_max = 60.0;
 	private final double filter_time_1 = 0.200;
 	private final double filter_time_2 = 0.100;
+	//private final double filter_time_1 = 0.050;
+	//private final double filter_time_2 = 0.025;
 	private double itp = 0.020;
 	
 	// system variables
@@ -79,7 +81,7 @@ public class TrapezoidalAngleOutput extends Command {
     		
 	    	distance = VisionTools.turnAngle(x_cm);
 	    	
-	    	distance = 15.0;
+	    	distance = 5.0;
 
 	    	sign = (int) Math.signum(distance);
 	    	distance = Math.abs(distance);
