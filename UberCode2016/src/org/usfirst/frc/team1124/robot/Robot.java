@@ -38,6 +38,16 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
+ * 
+ * I'm never gonna dance again
+ * Guilty feet have got no rhythm
+ * Though it's easy to pretend
+ * I know your not a fool
+ * 
+ * Should've known better than to cheat a friend
+ * And waste the chance that I've been given
+ * So I'm never gonna dance again
+ * The way I danced with you~
  */
 public class Robot extends IterativeRobot {
 	// operator interface
