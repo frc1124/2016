@@ -77,7 +77,8 @@ public class TrapezoidalAngleOutput extends Command {
     		
     		double x_cm = SmartDashboard.getNumber("vision_target_x_cm");
     		
-	    	distance = VisionTools.turnAngle(x_cm);
+	    	distance = VisionTools.turnAngleOld(x_cm);
+	    	double distance_old = VisionTools.turnAngle(x_cm);
 	    	
 	    	fl_1 = Math.ceil(filter_time_1 / itp);
 	    	fl_2 = Math.ceil(filter_time_2 / itp);
@@ -85,7 +86,7 @@ public class TrapezoidalAngleOutput extends Command {
 	    	sign = (int) Math.signum(distance);
 	    	distance = Math.abs(distance);
 	    	
-	    	System.out.println("Distance: " + distance);
+	    	System.out.println("Distance: " + distance + ", Old Distance Calc: " + distance_old);
 	    	
 	    	if(distance >= 18.0){
 		    	filter_time_1 = 0.200;
