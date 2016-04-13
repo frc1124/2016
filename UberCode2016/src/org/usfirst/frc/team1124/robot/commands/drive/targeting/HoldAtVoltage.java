@@ -5,6 +5,7 @@ import org.usfirst.frc.team1124.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
+ * @deprecated
  * Hold a drive train voltage
  */
 public class HoldAtVoltage extends Command {

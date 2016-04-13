@@ -2,7 +2,7 @@ package org.usfirst.frc.team1124.robot;
 
 // commands
 import org.usfirst.frc.team1124.robot.commands.macro.Autonomous;
-import org.usfirst.frc.team1124.robot.commands.shooter.HoldShooterAtPrimingSpeed;
+
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1124.robot.subsystems.ArmIntakeWheels;
@@ -38,6 +38,16 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
+ * 
+ * I'm never gonna dance again
+ * Guilty feet have got no rhythm
+ * Though it's easy to pretend
+ * I know your not a fool
+ * 
+ * Should've known better than to cheat a friend
+ * And waste the chance that I've been given
+ * So I'm never gonna dance again
+ * The way I danced with you~
  */
 public class Robot extends IterativeRobot {
 	// operator interface
@@ -73,7 +83,7 @@ public class Robot extends IterativeRobot {
     
     // this revision of code (displayed on dash board)
     
-    public static String codeRevision = "[v5.2.3]:week_5:auto";
+    public static String codeRevision = "[v7.0.0]:week_7:ne_champs";
 
     /**
      * This function is run when the robot is first started up and should be
@@ -106,9 +116,6 @@ public class Robot extends IterativeRobot {
         // instantiate the command used for the autonomous period
         autonomousCommand = new Autonomous();
         
-        // instantiate shooter priming command for later use
-        bringShooterToSpeed = new HoldShooterAtPrimingSpeed();
-        
         // start the compressor
         compressor.start();
         
@@ -137,8 +144,6 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
     	dashboard.updateDashboard();
     	
-    	camera.getImage();
-    	
         Scheduler.getInstance().run();
     }
 
@@ -165,8 +170,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	dashboard.updateDashboard();
-    	
-    	camera.getImage();
     	
         Scheduler.getInstance().run();
     }

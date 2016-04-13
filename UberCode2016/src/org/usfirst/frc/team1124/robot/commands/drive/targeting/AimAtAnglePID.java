@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
+ * @deprecated
  * Aim at an angle using the gyro.
  */
 public class AimAtAnglePID extends PIDCommand {

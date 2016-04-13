@@ -2,14 +2,14 @@ package org.usfirst.frc.team1124.robot.commands.macro;
 
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.CommandDelay;
-import org.usfirst.frc.team1124.robot.commands.drive.targeting.AimAtAnglePID;
-import org.usfirst.frc.team1124.robot.commands.drive.targeting.HoldAtVoltage;
+import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.FreezeDrive;
+import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.LockOnToPixelTarget;
+import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.TrapezoidalAngleOutput;
 import org.usfirst.frc.team1124.robot.commands.interrupt.DriveTrainInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
 import org.usfirst.frc.team1124.robot.commands.ramp.BallToSensor;
 import org.usfirst.frc.team1124.robot.commands.ramp.RampBeltsFeedToShooter;
 import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
-import org.usfirst.frc.team1124.robot.commands.shooter.HoldShooterAtPrimingSpeed;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -17,27 +17,31 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * Aim and shoot the ball :)
  */
 public class ScoreHighGoal extends CommandGroup {
-	private AimAtAnglePID aim_cmd;
-	private HoldAtVoltage hold_cmd;
+	private TrapezoidalAngleOutput aim_cmd;
+	private LockOnToPixelTarget short_aim;
+	private FreezeDrive lock_cmd;
 	
 	private BringShooterToSpeed shooter_cmd;
 	
 	private RampBeltsFeedToShooter feed_cmd;
 	
-	private HoldShooterAtPrimingSpeed prime_cmd;
-	
     public ScoreHighGoal() {
-    	aim_cmd = new AimAtAnglePID();
-    	hold_cmd = new HoldAtVoltage(aim_cmd);
+    	aim_cmd = new TrapezoidalAngleOutput();
+    	short_aim = new LockOnToPixelTarget();
+    	lock_cmd = new FreezeDrive();
     	
     	shooter_cmd = new BringShooterToSpeed();
     	
     	feed_cmd = new RampBeltsFeedToShooter(shooter_cmd);
 
         addParallel(shooter_cmd);
+       
+        // ensure ball is in
+        addParallel(new BallToSensor());
         
     	addSequential(aim_cmd);
-        addParallel(hold_cmd);
+        addSequential(short_aim);
+        addParallel(lock_cmd);
         
         addSequential(feed_cmd);
         
@@ -45,8 +49,6 @@ public class ScoreHighGoal extends CommandGroup {
         addSequential(new CommandDelay(1));
         addSequential(new ShooterInterrupt());
         addSequential(new DriveTrainInterrupt());
-        
-        prime_cmd = new HoldShooterAtPrimingSpeed();
     }
 	
     /**
@@ -54,19 +56,22 @@ public class ScoreHighGoal extends CommandGroup {
      * @param auto doesn't mater what this is, just have a byte to select this method
      */
     public ScoreHighGoal(byte auto) {
-    	aim_cmd = new AimAtAnglePID();
-    	hold_cmd = new HoldAtVoltage(aim_cmd);
+    	aim_cmd = new TrapezoidalAngleOutput();
+    	short_aim = new LockOnToPixelTarget();
+    	lock_cmd = new FreezeDrive();
     	
     	shooter_cmd = new BringShooterToSpeed(3625.0);
     	
     	feed_cmd = new RampBeltsFeedToShooter(shooter_cmd);
 
         addParallel(shooter_cmd);
+       
         // ensure ball is in
         addParallel(new BallToSensor());
         
     	addSequential(aim_cmd);
-        addParallel(hold_cmd);
+        addSequential(short_aim);
+        addParallel(lock_cmd);
         
         addSequential(feed_cmd);
         
@@ -74,8 +79,6 @@ public class ScoreHighGoal extends CommandGroup {
         addSequential(new CommandDelay(1));
         addSequential(new ShooterInterrupt());
         addSequential(new DriveTrainInterrupt());
-        
-        prime_cmd = new HoldShooterAtPrimingSpeed();
     }
     
     protected void initialize(){
@@ -90,8 +93,6 @@ public class ScoreHighGoal extends CommandGroup {
     	Robot.ramp_belts.removeBall();
     	
     	Robot.camera.setHeld(false);
-    	
-    	prime_cmd.start();
     }
     
     protected void interrupted(){

@@ -3,6 +3,8 @@ package org.usfirst.frc.team1124.robot.subsystems;
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANTalon;
@@ -11,6 +13,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -32,6 +35,8 @@ public class DriveTrain extends Subsystem {
 	
 	private AnalogGyro gyro;
 	private BuiltInAccelerometer accel;
+	
+	private AHRS navx;
 	
 	public DriveTrain(){
 		super("DriveTrain");
@@ -63,10 +68,18 @@ public class DriveTrain extends Subsystem {
 		Robot.configIO.writeKeyValue("gyro_offset_calculated", "" + gyro.getOffset());
 		
 		accel = new BuiltInAccelerometer();
+		
+		navx = new AHRS(SPI.Port.kMXP);
 	}
 	
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ArcadeDriveJoystick());
+	}
+	
+	// navx
+	
+	public AHRS getNavX(){
+		return navx;
 	}
 	
 	// gyro methods

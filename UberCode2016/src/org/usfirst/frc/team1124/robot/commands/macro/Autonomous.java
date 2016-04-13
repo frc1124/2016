@@ -6,6 +6,7 @@ import org.usfirst.frc.team1124.robot.commands.arm.ArmDown;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.TimedAutoDrive;
 import org.usfirst.frc.team1124.robot.commands.drive.TurnTowardsAnglePID;
+import org.usfirst.frc.team1124.robot.commands.ramp.BallToSensor;
 import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
 import org.usfirst.frc.team1124.robot.enums.AutoDefensePosition;
 import org.usfirst.frc.team1124.robot.enums.AutoDefenseType;
@@ -159,8 +160,8 @@ public class Autonomous extends CommandGroup {
     }
     
     private void scoreHighGoal(){
-    	// re-intake incase ball fell down a bit
-    	addSequential(new IntakeBall());
+    	// re-intake in case ball fell down a bit
+    	addSequential(new BallToSensor());
     	
     	// shoot
     	addSequential(new ScoreHighGoal((byte) 0));
