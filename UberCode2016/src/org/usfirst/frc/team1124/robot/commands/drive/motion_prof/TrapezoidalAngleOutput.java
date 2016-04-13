@@ -39,6 +39,7 @@ public class TrapezoidalAngleOutput extends Command {
 	// results
 	private double position = 0.0;
 	private double velocity = 0.0;
+	@SuppressWarnings("unused")
 	private double acceleration = 0.0;
 	
 	// execution variables
@@ -58,6 +59,9 @@ public class TrapezoidalAngleOutput extends Command {
 	
 	private ArrayList<Double> filter_1_data = new ArrayList<Double>();
 	
+	// final targeting system
+	private LockOnToPixelTarget second_stage;
+	
     public TrapezoidalAngleOutput() {
         requires(Robot.drivetrain);
     }
@@ -68,25 +72,18 @@ public class TrapezoidalAngleOutput extends Command {
     	pid.start();
     	
     	try{
-    		/*
-	    	double xlhsGoalBBox = SmartDashboard.getNumber("vision_target_left");
-	    	double widthGoalBBox = SmartDashboard.getNumber("vision_target_width");
-	    	
-	    	System.out.println("Target Left X: " + xlhsGoalBBox + " Width: " + widthGoalBBox);
-	    	*/
-    		
     		double x_cm = SmartDashboard.getNumber("vision_target_x_cm");
     		
-	    	distance = VisionTools.turnAngleOld(x_cm);
-	    	double distance_old = VisionTools.turnAngle(x_cm);
+	    	distance = VisionTools.turnAngleAlt(x_cm);
+	    	//double distance_alt = VisionTools.turnAngle(x_cm);
+	    	
+	    	//System.out.println("Distance: " + distance + ", Old Distance Calc: " + distance_alt);
 	    	
 	    	fl_1 = Math.ceil(filter_time_1 / itp);
 	    	fl_2 = Math.ceil(filter_time_2 / itp);
 
 	    	sign = (int) Math.signum(distance);
 	    	distance = Math.abs(distance);
-	    	
-	    	System.out.println("Distance: " + distance + ", Old Distance Calc: " + distance_old);
 	    	
 	    	if(distance >= 18.0){
 		    	filter_time_1 = 0.200;
@@ -102,8 +99,8 @@ public class TrapezoidalAngleOutput extends Command {
 		    	filter_time_2 = 0.025;
 	    	}
 	    	
-	    	System.out.println("fl time 1: " + filter_time_1);
-	    	System.out.println("fl time 2: " + filter_time_2);
+	    	//System.out.println("fl time 1: " + filter_time_1);
+	    	//System.out.println("fl time 2: " + filter_time_2);
     	}catch(Exception oh_no){
     		System.out.println("Fatal Targeting Error: Dashboard data not found.");
     	}
@@ -111,7 +108,7 @@ public class TrapezoidalAngleOutput extends Command {
     	t_4 = distance / v_max;
     	n = (int) (t_4 / itp);
     	
-    	System.out.println("t_4: " + t_4 + "	n: " + n);
+    	//System.out.println("t_4: " + t_4 + "	n: " + n);
     }
     
     private long prev_time = System.currentTimeMillis();
@@ -173,7 +170,7 @@ public class TrapezoidalAngleOutput extends Command {
     }
 
     protected boolean isFinished() {
-        return false;
+        return velocity == 0 && step > 2;
     }
 
     protected void end() {
@@ -191,6 +188,10 @@ public class TrapezoidalAngleOutput extends Command {
     	t.reset();
     	
     	pid.cancel();
+
+    	second_stage = new LockOnToPixelTarget();
+    	
+    	second_stage.start();
     }
     
     protected void interrupted() {

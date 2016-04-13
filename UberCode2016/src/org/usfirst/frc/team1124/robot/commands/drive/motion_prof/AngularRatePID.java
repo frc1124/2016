@@ -3,9 +3,7 @@ package org.usfirst.frc.team1124.robot.commands.drive.motion_prof;
 import org.usfirst.frc.team1124.robot.Robot;
 
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Control the angular rate of the robot (this file just does calculations).
@@ -47,6 +45,7 @@ public class AngularRatePID extends PIDCommand {
 
     protected void initialize() {
     	Robot.drivetrain.resetGyro();
+    	Robot.drivetrain.getNavX().reset();
     }
 
     protected void execute() {}
@@ -64,6 +63,7 @@ public class AngularRatePID extends PIDCommand {
     }
 
 	protected double returnPIDInput() {
+		//return Robot.drivetrain.getNavX().getRawGyroZ();
 		return Robot.drivetrain.getAngularRate();
 	}
 
