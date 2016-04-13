@@ -71,7 +71,7 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp;
 	public static Compressor compressor;
 	
-	// dashboard and camera
+	// dash board and camera
 	public static DashboardConnection dashboard = new DashboardConnection();
 	public static Camera camera;
 	
@@ -83,7 +83,7 @@ public class Robot extends IterativeRobot {
     
     // this revision of code (displayed on dash board)
     
-    public static String codeRevision = "[v7.0.0]:week_7:ne_champs";
+    public static String codeRevision = "[v7.0.1]:week_7:cam";
 
     /**
      * This function is run when the robot is first started up and should be
