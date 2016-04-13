@@ -75,7 +75,7 @@ public class TrapezoidalAngleOutputTest {
     		
     		double x_cm = 120;// = SmartDashboard.getNumber("vision_target_x_cm");
     		
-	    	distance = VisionTools.turnAngle(x_cm);
+	    	distance = VisionTools.turnAngleAlt(x_cm);
 	    	
 	    	System.out.println("Distance: " + distance);
 
