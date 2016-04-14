@@ -45,7 +45,6 @@ public class AngularRatePID extends PIDCommand {
 
     protected void initialize() {
     	Robot.drivetrain.resetGyro();
-    	Robot.drivetrain.getNavX().reset();
     }
 
     protected void execute() {}

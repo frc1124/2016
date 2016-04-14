@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SPI;
+//import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -36,6 +36,7 @@ public class DriveTrain extends Subsystem {
 	private AnalogGyro gyro;
 	private BuiltInAccelerometer accel;
 	
+	@SuppressWarnings("unused")
 	private AHRS navx;
 	
 	public DriveTrain(){
@@ -69,7 +70,7 @@ public class DriveTrain extends Subsystem {
 		
 		accel = new BuiltInAccelerometer();
 		
-		navx = new AHRS(SPI.Port.kMXP);
+		//navx = new AHRS(SPI.Port.kMXP);
 	}
 	
 	protected void initDefaultCommand() {
@@ -77,11 +78,11 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	// navx
-	
+	/*
 	public AHRS getNavX(){
 		return navx;
 	}
-	
+	*/
 	// gyro methods
 	
 	public void resetGyro(){
