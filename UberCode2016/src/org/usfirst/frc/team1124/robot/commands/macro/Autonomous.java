@@ -90,24 +90,28 @@ public class Autonomous extends CommandGroup {
 		switch(defense_type){
 			case Moat:
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 1.8));
-				addSequential(new TimedAutoDrive(0.8, 0.9, 2.1));
+				//addSequential(new TimedAutoDrive(0.8, 0.9, 2.1));
+				addSequential(new TimedAutoDrive(0.8, 0.9, 2.35));
 				addSequential(new CommandDelay(0.2));
 			break;
 			case Ramparts:
 				addSequential(new TimedAutoDrive(0.8, 0.8, 0.5));
 				addSequential(new TimedAutoDrive(0.55, 1.0, 0.55));
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 0.9));
-				addSequential(new TimedAutoDrive(0.8, 0.9, 1.15));
+				//addSequential(new TimedAutoDrive(0.8, 0.9, 1.15));
+				addSequential(new TimedAutoDrive(0.8, 0.9, 1.4));
 				addSequential(new CommandDelay(0.4));
 			break;
 			case RockWall:
 				//addSequential(new TimedAutoDrive(0.8, 0.8, 2.1));
-				addSequential(new TimedAutoDrive(0.75, 0.85, 2.6));
+				//addSequential(new TimedAutoDrive(0.75, 0.85, 2.6));
+				addSequential(new TimedAutoDrive(0.75, 0.85, 2.85));
 				addSequential(new CommandDelay(0.4));
 			break;
 			case RoughTerrain:
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 1.7));
-				addSequential(new TimedAutoDrive(0.8, 0.9, 1.95));
+				//addSequential(new TimedAutoDrive(0.8, 0.9, 1.95));
+				addSequential(new TimedAutoDrive(0.8, 0.9, 2.2));
 				addSequential(new CommandDelay(0.2));
 			break;
 			case SomethingElse:
