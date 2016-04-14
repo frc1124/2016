@@ -1,9 +1,6 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
-import org.usfirst.frc.team1124.robot.Robot;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
      
@@ -17,8 +14,8 @@ public class ArmPistons extends Subsystem {
 	public ArmPistons(){
 		super("ArmPistons");
 		
-		int a = Robot.configIO.getIntVal("arm_piston_a");
-		int b = Robot.configIO.getIntVal("arm_piston_b");
+		int a = 0;
+		int b = 1;
 		
 		piston = new DoubleSolenoid(a, b);
 	}

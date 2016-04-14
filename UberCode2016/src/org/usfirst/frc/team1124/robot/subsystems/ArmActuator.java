@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
-import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
 import org.usfirst.frc.team1124.robot.enums.SafetyError;
 import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
@@ -39,15 +38,15 @@ public class ArmActuator extends Subsystem implements Safe {
 	public ArmActuator() {
 		super("ArmActuators");
 		
-		actuator = new CANTalon(Robot.configIO.getIntVal("arm_actuator"));
+		actuator = new CANTalon(5);
 		
-		int a_channel = Robot.configIO.getIntVal("arm_encoder_a");
-		int b_channel = Robot.configIO.getIntVal("arm_encoder_b");
+		int a_channel = 6;
+		int b_channel = 7;
 		
 		encoder = new Encoder(a_channel, b_channel);
 		
-		limit_switch_back = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_back"));
-		forward_light_sensor = new DigitalInput(Robot.configIO.getIntVal("front_light_sensor"));
+		limit_switch_back = new DigitalInput(4);
+		forward_light_sensor = new DigitalInput(3);
 		
 		enableSafety();
 	}

@@ -129,7 +129,7 @@ public class DashboardConnection {
 		updateSensors();
 		
 		// config
-		sendConfigToDash();
+		//sendConfigToDash();
 		
 		// control compressor
 		operateCompressor();
@@ -258,7 +258,7 @@ public class DashboardConnection {
 			}
 		}catch(Exception e){}
 	}
-	
+	/*
 	private void sendConfigToDash(){
 		ArrayList<String> temp = Robot.configIO.getConfigText();
 		
@@ -286,7 +286,7 @@ public class DashboardConnection {
 			SmartDashboard.putString("config_" + i, list.get(i));
 		}
 	}
-	
+	*/
 	private void operateCompressor(){
 		try{
 			boolean enableCompressor = SmartDashboard.getBoolean("compressor_enable");

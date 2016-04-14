@@ -17,9 +17,6 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 
-// tools
-import org.usfirst.frc.team1124.robot.tools.ConfigIO;
-
 // dashboard
 import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
@@ -53,9 +50,6 @@ public class Robot extends IterativeRobot {
 	// operator interface
 	public static OI oi;
 	
-	// configuration interface
-	public static ConfigIO configIO;
-	
 	// subsystems
 	public static DriveTrain drivetrain;
 	public static ArmPistons arm_pistons;
@@ -83,16 +77,13 @@ public class Robot extends IterativeRobot {
     
     // this revision of code (displayed on dash board)
     
-    public static String codeRevision = "[v7.1.0]:week_7:no_navx";
+    public static String codeRevision = "[v7.1.1]:week_7:remove_cfg";
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-    	// instantiate configuration interface
-    	configIO = new ConfigIO();
-    	
     	// instantiate subsystems
 		drivetrain = new DriveTrain();
 		pdp = new PowerDistributionPanel();
