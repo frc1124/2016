@@ -72,9 +72,6 @@ public class Robot extends IterativeRobot {
 	// autonomous
     Command autonomousCommand;
     
-    // shooter priming
-    Command bringShooterToSpeed;
-    
     // this revision of code (displayed on dash board)
     
     public static String codeRevision = "[v7.1.2]:week_7:l_enc_bug";
@@ -144,8 +141,6 @@ public class Robot extends IterativeRobot {
         if(autonomousCommand != null){
         	autonomousCommand.cancel();
         }
-        
-        bringShooterToSpeed.start();
     }
 
     /**
