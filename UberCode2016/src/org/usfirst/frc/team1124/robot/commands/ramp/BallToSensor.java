@@ -11,6 +11,8 @@ public class BallToSensor extends Command {
 
     public BallToSensor() {
         requires(Robot.ramp_belts);
+        
+        setInterruptible(true);
     }
 
     protected void initialize() {}

@@ -60,7 +60,7 @@ public class TrapezoidalAngleOutput extends Command {
 	private ArrayList<Double> filter_1_data = new ArrayList<Double>();
 	
 	// final targeting system
-	private LockOnToPixelTarget second_stage;
+	//private LockOnToPixelTarget second_stage;
 	
     public TrapezoidalAngleOutput() {
         requires(Robot.drivetrain);
@@ -189,9 +189,9 @@ public class TrapezoidalAngleOutput extends Command {
     	
     	pid.cancel();
 
-    	second_stage = new LockOnToPixelTarget();
+    	//second_stage = new LockOnToPixelTarget();
     	
-    	second_stage.start();
+    	//second_stage.start();
     }
     
     protected void interrupted() {

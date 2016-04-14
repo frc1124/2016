@@ -54,7 +54,6 @@ public class BringShooterToSpeed extends Command {
     		safetyTrippedFirstCall = false;
     	}
     	
-    	
     	if(Robot.shooter_pid.isSafetyTripped()){
         	Robot.shooter_pid.manual(voltage);
     	}

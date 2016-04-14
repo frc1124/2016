@@ -27,7 +27,7 @@ public class LockOnToPixelTarget extends Command {
     protected void execute() {
 		double center = Robot.camera.getTargetCenterOfMass()[0];
 		
-		if(center < 161.0 && center > 159.0){
+		if(center <= 161.0 && center >= 159.0){
 			gotToTarget = true;
 		}else if(center > 160.0){
 			rate = 10.0;
