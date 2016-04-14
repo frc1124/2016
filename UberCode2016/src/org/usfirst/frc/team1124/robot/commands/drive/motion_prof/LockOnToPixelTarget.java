@@ -27,7 +27,7 @@ public class LockOnToPixelTarget extends Command {
     protected void execute() {
 		double center = Robot.camera.getTargetCenterOfMass()[0];
 		
-		if(center <= 162.0 && center >= 158.0){
+		if(center <= 161.0 && center >= 159.0){
 			gotToTarget = true;
 		}else if(center > 160.0){
 			rate = 10.0;
@@ -35,9 +35,13 @@ public class LockOnToPixelTarget extends Command {
 			rate = -10.0;
 		}
 		
-		if(Math.abs(center - 160.0) < 5.0){
-			rate = Math.signum(rate) * 6.0;
-		}
+		double error = Math.abs(center - 160);
+		
+		if(error < 5.0){
+			rate = Math.signum(rate) * 4.0;
+		}/*else if(error < 15.0){
+			rate = Math.signum(rate) * 10.0;
+		}else if(){}*/
 		
 		pid.setSetpoint(rate);
 		

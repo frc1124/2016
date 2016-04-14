@@ -170,7 +170,7 @@ public class TrapezoidalAngleOutput extends Command {
     }
 
     protected boolean isFinished() {
-        return velocity == 0 && step > 2;
+        return (velocity == 0 && step > 2) || Math.abs(Robot.camera.getTargetCenterOfMass()[0] - 160) < 20;
     }
 
     protected void end() {
