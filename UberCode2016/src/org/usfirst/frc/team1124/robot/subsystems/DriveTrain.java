@@ -53,7 +53,7 @@ public class DriveTrain extends Subsystem {
 		//left = new Encoder(left_a_channel, left_b_channel, true, EncodingType.k4X);
 		right = new Encoder(right_a_channel, right_b_channel, false, EncodingType.k4X);
 		
-		left.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
+		//left.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
 		right.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
 		
 		gyro = new AnalogGyro(0);
