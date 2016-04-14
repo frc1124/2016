@@ -20,7 +20,7 @@ public class ArmDown extends Command {
     }
 
     protected boolean isFinished() {
-        return Robot.arm_actuator.getLimitSwitchStates()[1];
+        return Robot.arm_actuator.getLimitSwitchStates()[1] && Robot.arm_actuator.getDistance() >= 340.0;
     }
 
     protected void end() {
