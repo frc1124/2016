@@ -5,7 +5,6 @@ import org.usfirst.frc.team1124.robot.commands.arm.TogglePistonState;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectCamera;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
-import org.usfirst.frc.team1124.robot.commands.drive.DriveHoldPosition;
 import org.usfirst.frc.team1124.robot.commands.intake.IntakeManual;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ArmInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.IntakeInterrupt;
@@ -102,7 +101,6 @@ public class OI {
 
 		// by default drive train runs arcade, so don't need this
 		//js1_buttons[].whenPressed(new ArcadeDriveJoystick());
-		js1_buttons[7].toggleWhenPressed(new DriveHoldPosition(true));
 
 		js1_buttons[1].toggleWhenPressed(new ScoreHighGoal());
 		

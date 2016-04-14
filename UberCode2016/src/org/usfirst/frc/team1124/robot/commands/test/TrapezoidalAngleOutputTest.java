@@ -43,7 +43,6 @@ public class TrapezoidalAngleOutputTest {
 	private static double fl1_sum;
 	private static double prev_fl1_sum;
 	private static double fl2_sum;
-	private static double prev_fl2_sum;
 	
 	private static double prev_velocity = 0;
 	private static double prev_position = 0;
@@ -127,7 +126,6 @@ public class TrapezoidalAngleOutputTest {
     		step++;
     		
     		prev_fl1_sum = fl1_sum;
-    		prev_fl2_sum = fl2_sum;
     		
     		if(velocity == 0 && step > 2){
     			run = false;
