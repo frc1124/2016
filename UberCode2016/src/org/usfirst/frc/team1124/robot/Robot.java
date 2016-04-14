@@ -77,7 +77,7 @@ public class Robot extends IterativeRobot {
     
     // this revision of code (displayed on dash board)
     
-    public static String codeRevision = "[v7.1.1]:week_7:remove_cfg";
+    public static String codeRevision = "[v7.1.2]:week_7:l_enc_bug";
 
     /**
      * This function is run when the robot is first started up and should be
