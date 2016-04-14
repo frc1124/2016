@@ -33,11 +33,11 @@ public class RampBelts extends Subsystem {
     // keep track of balls in robot
     
     public void addBall(){
-    	ballCount++;
+    	ballCount = 1;
     }
     
     public void removeBall(){
-    	ballCount--;
+    	ballCount = 0;
     }
     
     public int getBallCount(){

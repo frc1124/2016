@@ -45,8 +45,6 @@ public class ScoreHighGoal extends CommandGroup {
         
         addSequential(feed_cmd);
         
-        // wait to be sure it fired and is done
-        addSequential(new CommandDelay(1));
         addSequential(new ShooterInterrupt());
         addSequential(new DriveTrainInterrupt());
     }
@@ -75,8 +73,6 @@ public class ScoreHighGoal extends CommandGroup {
         
         addSequential(feed_cmd);
         
-        // wait to be sure it fired and is done
-        addSequential(new CommandDelay(1));
         addSequential(new ShooterInterrupt());
         addSequential(new DriveTrainInterrupt());
     }
@@ -89,8 +85,6 @@ public class ScoreHighGoal extends CommandGroup {
     
     protected void end(){
     	super.end();
-    	
-    	Robot.ramp_belts.removeBall();
     	
     	Robot.camera.setHeld(false);
     }

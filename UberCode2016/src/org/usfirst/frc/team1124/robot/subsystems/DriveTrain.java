@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * The Drive Train subsystem. Contains both the left and right gearboxes. </br>
+ * The Drive Train subsystem. Contains both the left and right gear boxes. </br>
  * The safeties are contained in LeftDrivePID.java and RightDrivePID.java (commands).
  */
 public class DriveTrain extends Subsystem {
@@ -50,13 +50,13 @@ public class DriveTrain extends Subsystem {
 		firstpair = new RobotDrive(left_1, right_1);
 		secondpair = new RobotDrive(left_2, right_2);
 		
-		int left_a_channel = Robot.configIO.getIntVal("left_enc_a");
-		int left_b_channel = Robot.configIO.getIntVal("left_enc_b");
+		//int left_a_channel = Robot.configIO.getIntVal("left_enc_a");
+		//int left_b_channel = Robot.configIO.getIntVal("left_enc_b");
 		
 		int right_a_channel = Robot.configIO.getIntVal("right_enc_a");
 		int right_b_channel = Robot.configIO.getIntVal("right_enc_b");
 		
-		left = new Encoder(left_a_channel, left_b_channel, true, EncodingType.k4X);
+		//left = new Encoder(left_a_channel, left_b_channel, true, EncodingType.k4X);
 		right = new Encoder(right_a_channel, right_b_channel, false, EncodingType.k4X);
 		
 		left.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
@@ -124,19 +124,19 @@ public class DriveTrain extends Subsystem {
 	// encoder methods
 	
 	public double getLeftEncoderDistance(){
-		return left.getDistance();
+		return 0;//left.getDistance();
 	}
 	
 	public boolean getLeftEncoderDirection(){
-		return left.getDirection();
+		return false;//left.getDirection();
 	}
 	
 	public double getLeftEncoderRate(){
-		return left.getRate();
+		return 0;//left.getRate();
 	}
 	
 	public boolean getLeftEncoderStopped(){
-		return left.getStopped();
+		return false;//left.getStopped();
 	}
 	
 	public double getRightEncoderDistance(){

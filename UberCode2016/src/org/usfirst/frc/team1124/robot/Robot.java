@@ -83,7 +83,7 @@ public class Robot extends IterativeRobot {
     
     // this revision of code (displayed on dash board)
     
-    public static String codeRevision = "[v7.0.1]:week_7:cam";
+    public static String codeRevision = "[v7.0.2]:week_7:light_sensors";
 
     /**
      * This function is run when the robot is first started up and should be

@@ -34,7 +34,7 @@ public class ArmActuator extends Subsystem implements Safe {
 	//private final double MAX_DOWN = 0;
 	
 	private DigitalInput limit_switch_back;
-	private DigitalInput limit_switch_forward;
+	private DigitalInput forward_light_sensor;
 	
 	public ArmActuator() {
 		super("ArmActuators");
@@ -47,7 +47,7 @@ public class ArmActuator extends Subsystem implements Safe {
 		encoder = new Encoder(a_channel, b_channel);
 		
 		limit_switch_back = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_back"));
-		limit_switch_forward = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_forward"));
+		forward_light_sensor = new DigitalInput(Robot.configIO.getIntVal("front_light_sensor"));
 		
 		enableSafety();
 	}
@@ -75,13 +75,13 @@ public class ArmActuator extends Subsystem implements Safe {
     public boolean[] getLimitSwitchStates(){
     	boolean[] switches = {
     			limit_switch_back.get(),
-    			limit_switch_forward.get(),
+    			forward_light_sensor.get(),
     		};
     	
     	return switches;
     }
 	
-	//measures in changer per millisecond
+	//measures in changes per millisecond
 	public double getRate(){
 		return encoder.getRate();
 	}
@@ -129,7 +129,7 @@ public class ArmActuator extends Subsystem implements Safe {
 		}
 		
 		// directional safety
-		if(limit_switch_forward.get() && output > 0 || limit_switch_back.get() && output < 0){
+		if(forward_light_sensor.get() && output > 0 || limit_switch_back.get() && output < 0){
 			// trying to go too far up, so only allow going down
 			safeOutput = 0;
 			
