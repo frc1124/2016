@@ -37,18 +37,18 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  * 
  * @author FRC Team 1124
- * @version [7.2.7]:week_7:auto_pos_5
+ * @version [v7.2.8]:week_7:RT_timing
  * 
  * @see
- * I'm never gonna dance again
- * Guilty feet have got no rhythm
- * Though it's easy to pretend
- * I know your not a fool
- * 
- * Should've known better than to cheat a friend
- * And waste the chance that I've been given
- * So I'm never gonna dance again
- * The way I danced with you~
+ * I'm never gonna dance again </br>
+ * Guilty feet have got no rhythm </br>
+ * Though it's easy to pretend </br>
+ * I know your not a fool </br>
+ *  </br>
+ * Should've known better than to cheat a friend </br>
+ * And waste the chance that I've been given </br>
+ * So I'm never gonna dance again </br>
+ * The way I danced with you~ </br>
  */
 public class Robot extends IterativeRobot {
 	// operator interface
@@ -78,7 +78,7 @@ public class Robot extends IterativeRobot {
     
     // this revision of code (displayed on dash board)
     
-    public static String codeRevision = "[v7.2.7]:week_7:auto_pos_5";
+    public static String codeRevision = "[v7.2.8]:week_7:RT_timing";
 
     /**
      * This function is run when the robot is first started up and should be
