@@ -145,19 +145,23 @@ public class Autonomous extends CommandGroup {
 				// destroyLowBar(DestroyType.violently);
 				break;
 			case Pos_2:
+				// shoot for the middle goal
 				addParallel(new SelectTarget(false));
 				addSequential(new TurnTowardsAnglePID(24.0));
 				break;
 			case Pos_3:
+				// shoot for the middle goal
 				addParallel(new SelectTarget(false));
 				addSequential(new TurnTowardsAnglePID(14.0));
 				break;
 			case Pos_4:
+				// shoot for the middle goal
 				addParallel(new SelectTarget(true));
 				addSequential(new TurnTowardsAnglePID(0.0));
 				break;
 			case Pos_5:
-				addParallel(new SelectTarget(true));
+				// we can't easily make the middle goal from here, so shoot for the right side goal instead
+				addParallel(new SelectTarget(false));
 		    	addSequential(new TurnTowardsAnglePID(-18.0));
 				break;
 			case SpyBox:
