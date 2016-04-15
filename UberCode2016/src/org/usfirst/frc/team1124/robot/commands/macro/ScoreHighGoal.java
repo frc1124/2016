@@ -58,7 +58,7 @@ public class ScoreHighGoal extends CommandGroup {
     	short_aim = new LockOnToPixelTarget();
     	lock_cmd = new FreezeDrive();
     	
-    	shooter_cmd = new BringShooterToSpeed(3625.0);
+    	shooter_cmd = new BringShooterToSpeed(3645.0);
     	
     	feed_cmd = new RampBeltsFeedToShooter(shooter_cmd);
 
