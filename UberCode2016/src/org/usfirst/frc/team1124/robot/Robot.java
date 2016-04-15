@@ -37,7 +37,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  * 
  * @author FRC Team 1124
- * @version [7.2.5]:week_7:slower_shooter
+ * @version [7.2.6]:week_7:better_rough
  * 
  * @see
  * I'm never gonna dance again
@@ -78,7 +78,7 @@ public class Robot extends IterativeRobot {
     
     // this revision of code (displayed on dash board)
     
-    public static String codeRevision = "[v7.2.5]:week_7:slower_shooter";
+    public static String codeRevision = "[v7.2.6]:week_7:better_rough";
 
     /**
      * This function is run when the robot is first started up and should be

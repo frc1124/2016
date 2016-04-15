@@ -113,7 +113,7 @@ public class Autonomous extends CommandGroup {
 			case RoughTerrain:
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 1.7));
 				//addSequential(new TimedAutoDrive(0.8, 0.9, 1.95));
-				addSequential(new TimedAutoDrive(0.8, 0.9, 2.2));
+				addSequential(new TimedAutoDrive(0.78, 0.98, 2.2));
 				addSequential(new CommandDelay(0.2));
 			break;
 			case SomethingElse:
