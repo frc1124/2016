@@ -36,6 +36,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  * 
+ * @author FRC Team 1124
+ * @version [7.2.5]:week_7:slower_shooter
+ * 
+ * @see
  * I'm never gonna dance again
  * Guilty feet have got no rhythm
  * Though it's easy to pretend
@@ -74,7 +78,7 @@ public class Robot extends IterativeRobot {
     
     // this revision of code (displayed on dash board)
     
-    public static String codeRevision = "[v7.2.4]:week_7:faster_shooter";
+    public static String codeRevision = "[v7.2.5]:week_7:slower_shooter";
 
     /**
      * This function is run when the robot is first started up and should be
