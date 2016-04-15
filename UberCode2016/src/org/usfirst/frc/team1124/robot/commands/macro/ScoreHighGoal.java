@@ -39,7 +39,7 @@ public class ScoreHighGoal extends CommandGroup {
         // ensure ball is in
         addParallel(new BallToSensor());
         
-    	addSequential(aim_cmd);
+    	//addSequential(aim_cmd);
         addSequential(short_aim);
         addParallel(lock_cmd);
         
@@ -67,7 +67,7 @@ public class ScoreHighGoal extends CommandGroup {
         // ensure ball is in
         addParallel(new BallToSensor());
         
-    	addSequential(aim_cmd);
+    	//addSequential(aim_cmd);
         addSequential(short_aim);
         addParallel(lock_cmd);
         
