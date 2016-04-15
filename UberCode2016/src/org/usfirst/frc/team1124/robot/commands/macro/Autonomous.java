@@ -36,7 +36,7 @@ public class Autonomous extends CommandGroup {
 		switch(mode){
 			case Nothing:
 				// do everything cause spite
-				// import org.curren.scrub.spite;
+				// import com.currenjeandell.scrub.spite;
 				// doEverything();
 			break;
 			case GetToDefense:
@@ -95,7 +95,8 @@ public class Autonomous extends CommandGroup {
 				addSequential(new CommandDelay(0.2));
 			break;
 			case Ramparts:
-				addSequential(new TimedAutoDrive(0.8, 0.8, 0.5));
+				//addSequential(new TimedAutoDrive(0.8, 0.8, 0.5));
+				addSequential(new TimedAutoDrive(0.9, 0.9, 0.4));
 				//addSequential(new TimedAutoDrive(0.55, 1.0, 0.55));
 				addSequential(new TimedAutoDrive(0.55, 1.0, 0.85));
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 0.9));
@@ -124,8 +125,11 @@ public class Autonomous extends CommandGroup {
     private void finishCross(){
 		switch(defense_type){
 			case Moat:
+				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
 			case Ramparts:
+				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
 			case RockWall:
+				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
 			case RoughTerrain:
 				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
 			break;
