@@ -40,13 +40,13 @@ public class LockOnToPixelTarget extends Command {
 		if(error < 5.0){
 			rate = Math.signum(rate) * 4.0;
 		}else if(error < 10.0){
-			rate = Math.signum(rate) * 7.0;
+			rate = Math.signum(rate) * 6.0;
 		}else if(error < 15.0){
-			rate = Math.signum(rate) * 10.0;
+			rate = Math.signum(rate) * 8.0;
 		}else if(error < 25.0){
-			rate = Math.signum(rate) * 20.0;
+			rate = Math.signum(rate) * 15.0;
 		}else{
-			rate = Math.signum(rate) * 30.0;
+			rate = Math.signum(rate) * 20.0;
 		}
 		
 		pid.setSetpoint(rate);
