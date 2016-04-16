@@ -98,7 +98,7 @@ public class Autonomous extends CommandGroup {
 				//addSequential(new TimedAutoDrive(0.8, 0.8, 0.5));
 				addSequential(new TimedAutoDrive(0.8, 0.8, 0.5));
 				//addSequential(new TimedAutoDrive(0.55, 1.0, 0.55));
-				addSequential(new TimedAutoDrive(0.55, 1.0, 0.85));
+				addSequential(new TimedAutoDrive(0.55, 1.0, 0.55));
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 0.9));
 				//addSequential(new TimedAutoDrive(0.8, 0.9, 1.15));
 				addSequential(new TimedAutoDrive(0.9, 0.9, 1.15));
