@@ -1,8 +1,7 @@
 package org.usfirst.frc.team1124.robot.commands.macro;
 
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.commands.CommandDelay;
-import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.FreezeDrive;
+import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.ContinualTargeting;
 import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.LockOnToPixelTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.TrapezoidalAngleOutput;
 import org.usfirst.frc.team1124.robot.commands.interrupt.DriveTrainInterrupt;
@@ -19,7 +18,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ScoreHighGoal extends CommandGroup {
 	private TrapezoidalAngleOutput aim_cmd;
 	private LockOnToPixelTarget short_aim;
-	private FreezeDrive lock_cmd;
+	private ContinualTargeting continual_aim;
 	
 	private BringShooterToSpeed shooter_cmd;
 	
@@ -28,7 +27,7 @@ public class ScoreHighGoal extends CommandGroup {
     public ScoreHighGoal() {
     	aim_cmd = new TrapezoidalAngleOutput();
     	short_aim = new LockOnToPixelTarget();
-    	lock_cmd = new FreezeDrive();
+    	continual_aim = new ContinualTargeting();
     	
     	shooter_cmd = new BringShooterToSpeed();
     	
@@ -41,7 +40,7 @@ public class ScoreHighGoal extends CommandGroup {
         
     	//addSequential(aim_cmd);
         addSequential(short_aim);
-        addParallel(lock_cmd);
+        addParallel(continual_aim);
         
         addSequential(feed_cmd);
         
@@ -56,7 +55,7 @@ public class ScoreHighGoal extends CommandGroup {
     public ScoreHighGoal(byte auto) {
     	aim_cmd = new TrapezoidalAngleOutput();
     	short_aim = new LockOnToPixelTarget();
-    	lock_cmd = new FreezeDrive();
+    	continual_aim = new ContinualTargeting();
     	
     	shooter_cmd = new BringShooterToSpeed(3645.0);
     	
@@ -69,7 +68,7 @@ public class ScoreHighGoal extends CommandGroup {
         
     	//addSequential(aim_cmd);
         addSequential(short_aim);
-        addParallel(lock_cmd);
+        addParallel(continual_aim);
         
         addSequential(feed_cmd);
         
