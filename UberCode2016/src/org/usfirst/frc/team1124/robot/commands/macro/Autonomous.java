@@ -126,10 +126,11 @@ public class Autonomous extends CommandGroup {
 		switch(defense_type){
 			case Moat:
 				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
+			break;
 			case Ramparts:
-				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
+			break;
 			case RockWall:
-				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
+			break;
 			case RoughTerrain:
 				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
 			break;
@@ -160,8 +161,8 @@ public class Autonomous extends CommandGroup {
 				addSequential(new TurnTowardsAnglePID(0.0));
 				break;
 			case Pos_5:
-				// we can't easily make the middle goal from here, so shoot for the right side goal instead
-				addParallel(new SelectTarget(false));
+				// shoot middle goal
+				addParallel(new SelectTarget(true));
 		    	addSequential(new TurnTowardsAnglePID(-18.0));
 				break;
 			case SpyBox:
