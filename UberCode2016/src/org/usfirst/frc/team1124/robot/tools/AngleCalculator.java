@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class AngleCalculator {
-	private static final double CAMERA_X_OFFSET = -3.0;
+	private static final double CAMERA_X_OFFSET = -5.0;
 	private static final double CAMERA_Y_OFFSET = 0.0;
 	private static final double CAMERA_Z_OFFSET = 42.5;
 	private static final double CAMERA_MOUNT_ANGLE = 28.0;

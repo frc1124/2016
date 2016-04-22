@@ -19,8 +19,10 @@ public class TrapezoidalAngleOutput extends Command {
 	
 	private double distance = 0;
 	
+	private boolean aborted = false;
+	
 	// constants
-	private final double v_max = 60.0;
+	private double v_max = 60.0;
 	private double filter_time_1 = 0.0;
 	private double filter_time_2 = 0.0;
 	private double itp = 0.020;
@@ -82,31 +84,46 @@ public class TrapezoidalAngleOutput extends Command {
 	    	double nutron_distance = AngleCalculator.getHorizontalAngleUsingYPos(x_cm, y_cm);
 	    	
 	    	System.out.println("Distance: " + distance + ", Old Distance Calc: " + distance_alt + ", NUTRONS SAY: " + nutron_distance);
-	    	
-	    	fl_1 = Math.ceil(filter_time_1 / itp);
-	    	fl_2 = Math.ceil(filter_time_2 / itp);
 
+	    	distance = nutron_distance;
+	    	
 	    	sign = (int) Math.signum(distance);
 	    	distance = Math.abs(distance);
 	    	
 	    	if(distance >= 18.0){
 		    	filter_time_1 = 0.200;
 		    	filter_time_2 = 0.100;
-	    	}else if(distance >= 8){
+		    	v_max = 60.0;
+	    	}else if(distance >= 9){
+		    	filter_time_1 = 0.200;
+		    	filter_time_2 = 0.100;
+		    	v_max = 30.0;
+	    	}else if(distance >= 5){
+		    	filter_time_1 = 0.200;
+		    	filter_time_2 = 0.100;
+		    	v_max = 15.0;
+	    	}else if(distance >= 2){
 		    	filter_time_1 = 0.100;
 		    	filter_time_2 = 0.050;
-	    	}else if(distance >= 5){
-		    	filter_time_1 = 0.050;
-		    	filter_time_2 = 0.025;
+		    	v_max = 10.0;
+	    	}else if(distance >= 1){
+	    		filter_time_1 = 0.100;
+	    		filter_time_2 = 0.050;
+	    		v_max = 5.0;
 	    	}else{
-		    	filter_time_1 = 0.025;
-		    	filter_time_2 = 0.025;
+	    		// just abort this command and let the next code take over
+	    		aborted = true;
 	    	}
+	    	
+	    	fl_1 = Math.ceil(filter_time_1 / itp);
+	    	fl_2 = Math.ceil(filter_time_2 / itp);
 	    	
 	    	//System.out.println("fl time 1: " + filter_time_1);
 	    	//System.out.println("fl time 2: " + filter_time_2);
     	}catch(Exception oh_no){
     		System.out.println("Fatal Targeting Error: Dashboard data not found.");
+    		
+    		aborted = true;
     	}
     	
     	t_4 = distance / v_max;
@@ -174,7 +191,8 @@ public class TrapezoidalAngleOutput extends Command {
     }
 
     protected boolean isFinished() {
-        return (velocity == 0 && step > 2) || Math.abs(Robot.camera.getTargetCenterOfMass()[0] - 160) < 20;
+        //return (velocity == 0 && step > 2) || Math.abs(Robot.camera.getTargetCenterOfMass()[0] - 160) < 20;
+    	return (velocity == 0 && step > 2) || aborted;
     }
 
     protected void end() {
