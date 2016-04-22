@@ -3,6 +3,7 @@ package org.usfirst.frc.team1124.robot.commands.drive.motion_prof;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.tools.AngleCalculator;
 import org.usfirst.frc.team1124.robot.tools.vision.VisionTools;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -73,11 +74,14 @@ public class TrapezoidalAngleOutput extends Command {
     	
     	try{
     		double x_cm = SmartDashboard.getNumber("vision_target_x_cm");
+    		double y_cm = SmartDashboard.getNumber("vision_target_y_cm");
     		
 	    	distance = VisionTools.turnAngleAlt(x_cm);
-	    	//double distance_alt = VisionTools.turnAngle(x_cm);
+	    	double distance_alt = VisionTools.turnAngle(x_cm);
 	    	
-	    	//System.out.println("Distance: " + distance + ", Old Distance Calc: " + distance_alt);
+	    	double nutron_distance = AngleCalculator.getHorizontalAngleUsingYPos(x_cm, y_cm);
+	    	
+	    	System.out.println("Distance: " + distance + ", Old Distance Calc: " + distance_alt + ", NUTRONS SAY: " + nutron_distance);
 	    	
 	    	fl_1 = Math.ceil(filter_time_1 / itp);
 	    	fl_2 = Math.ceil(filter_time_2 / itp);
