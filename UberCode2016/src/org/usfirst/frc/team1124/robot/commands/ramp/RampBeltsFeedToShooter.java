@@ -39,14 +39,17 @@ public class RampBeltsFeedToShooter extends Command {
     }
 
     protected boolean isFinished() {
-        return !Robot.ramp_belts.getBallDetected();
+        //return !Robot.ramp_belts.getBallDetected();
+    	return Robot.shooter_pid.getBallSensor();
     }
 
     protected void end() {
     	Robot.ramp_belts.stop();
+    	
+    	Robot.ramp_belts.removeBall();
     }
 
     protected void interrupted() {
-    	end();
+    	Robot.ramp_belts.stop();
     }
 }

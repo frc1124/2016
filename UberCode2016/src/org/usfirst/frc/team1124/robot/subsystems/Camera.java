@@ -38,7 +38,7 @@ public class Camera extends Subsystem {
 	        shooter_frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 	        Robot.shooter_camera = new AxisCamera("10.11.24.11");
 	        
-	        Robot.shooter_camera.writeColorLevel(50);
+	        Robot.shooter_camera.writeColorLevel(100);
 	        Robot.shooter_camera.writeBrightness(50);
 	        
 	        Robot.shooter_camera.writeCompression(30);

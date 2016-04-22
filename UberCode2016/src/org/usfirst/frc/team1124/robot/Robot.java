@@ -2,7 +2,7 @@ package org.usfirst.frc.team1124.robot;
 
 // commands
 import org.usfirst.frc.team1124.robot.commands.macro.Autonomous;
-import org.usfirst.frc.team1124.robot.commands.shooter.HoldShooterAtPrimingSpeed;
+
 // subsystems
 import org.usfirst.frc.team1124.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1124.robot.subsystems.ArmIntakeWheels;
@@ -16,9 +16,6 @@ import edu.wpi.first.wpilibj.Compressor;
 // cameras
 import edu.wpi.first.wpilibj.vision.AxisCamera;
 import edu.wpi.first.wpilibj.vision.USBCamera;
-
-// tools
-import org.usfirst.frc.team1124.robot.tools.ConfigIO;
 
 // dashboard
 import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
@@ -38,13 +35,24 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
+ * 
+ * @author FRC Team 1124
+ * @version [v7.3.6]:week_7:auto_quaters
+ * 
+ * @see
+ * I'm never gonna dance again </br>
+ * Guilty feet have got no rhythm </br>
+ * Though it's easy to pretend </br>
+ * I know your not a fool </br>
+ *  </br>
+ * Should've known better than to cheat a friend </br>
+ * And waste the chance that I've been given </br>
+ * So I'm never gonna dance again </br>
+ * The way I danced with you~ </br>
  */
 public class Robot extends IterativeRobot {
 	// operator interface
 	public static OI oi;
-	
-	// configuration interface
-	public static ConfigIO configIO;
 	
 	// subsystems
 	public static DriveTrain drivetrain;
@@ -61,28 +69,22 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp;
 	public static Compressor compressor;
 	
-	// dashboard and camera
+	// dash board and camera
 	public static DashboardConnection dashboard = new DashboardConnection();
 	public static Camera camera;
 	
 	// autonomous
     Command autonomousCommand;
     
-    // shooter priming
-    Command bringShooterToSpeed;
-    
     // this revision of code (displayed on dash board)
     
-    public static String codeRevision = "[v5.2.3]:week_5:auto";
+    public static String codeRevision = "[v7.3.6]:week_7:auto_quaters";
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-    	// instantiate configuration interface
-    	configIO = new ConfigIO();
-    	
     	// instantiate subsystems
 		drivetrain = new DriveTrain();
 		pdp = new PowerDistributionPanel();
@@ -105,9 +107,6 @@ public class Robot extends IterativeRobot {
 
         // instantiate the command used for the autonomous period
         autonomousCommand = new Autonomous();
-        
-        // instantiate shooter priming command for later use
-        bringShooterToSpeed = new HoldShooterAtPrimingSpeed();
         
         // start the compressor
         compressor.start();
@@ -137,8 +136,6 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
     	dashboard.updateDashboard();
     	
-    	camera.getImage();
-    	
         Scheduler.getInstance().run();
     }
 
@@ -148,8 +145,6 @@ public class Robot extends IterativeRobot {
         if(autonomousCommand != null){
         	autonomousCommand.cancel();
         }
-        
-        bringShooterToSpeed.start();
     }
 
     /**
@@ -165,8 +160,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	dashboard.updateDashboard();
-    	
-    	camera.getImage();
     	
         Scheduler.getInstance().run();
     }

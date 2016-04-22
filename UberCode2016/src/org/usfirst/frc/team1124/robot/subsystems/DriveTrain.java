@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
-import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -14,7 +13,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * The Drive Train subsystem. Contains both the left and right gearboxes. </br>
+ * The Drive Train subsystem. Contains both the left and right gear boxes. </br>
  * The safeties are contained in LeftDrivePID.java and RightDrivePID.java (commands).
  */
 public class DriveTrain extends Subsystem {
@@ -36,31 +35,29 @@ public class DriveTrain extends Subsystem {
 	public DriveTrain(){
 		super("DriveTrain");
 		
-		left_1 = new CANTalon(Robot.configIO.getIntVal("left_1"));
-		left_2 = new CANTalon(Robot.configIO.getIntVal("left_2"));
+		left_1 = new CANTalon(6);
+		left_2 = new CANTalon(7);
 		
-		right_1 = new CANTalon(Robot.configIO.getIntVal("right_1"));
-		right_2 = new CANTalon(Robot.configIO.getIntVal("right_2"));
+		right_1 = new CANTalon(3);
+		right_2 = new CANTalon(4);
 		
 		firstpair = new RobotDrive(left_1, right_1);
 		secondpair = new RobotDrive(left_2, right_2);
 		
-		int left_a_channel = Robot.configIO.getIntVal("left_enc_a");
-		int left_b_channel = Robot.configIO.getIntVal("left_enc_b");
+		//int left_a_channel = 2;
+		//int left_b_channel = 3;
 		
-		int right_a_channel = Robot.configIO.getIntVal("right_enc_a");
-		int right_b_channel = Robot.configIO.getIntVal("right_enc_b");
+		int right_a_channel = 0;
+		int right_b_channel = 1;
 		
-		left = new Encoder(left_a_channel, left_b_channel, true, EncodingType.k4X);
+		//left = new Encoder(left_a_channel, left_b_channel, true, EncodingType.k4X);
 		right = new Encoder(right_a_channel, right_b_channel, false, EncodingType.k4X);
 		
-		left.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
+		//left.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
 		right.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
 		
-		gyro = new AnalogGyro(Robot.configIO.getIntVal("gyro"));
+		gyro = new AnalogGyro(0);
 		gyro.initGyro();
-		
-		Robot.configIO.writeKeyValue("gyro_offset_calculated", "" + gyro.getOffset());
 		
 		accel = new BuiltInAccelerometer();
 	}
@@ -111,19 +108,19 @@ public class DriveTrain extends Subsystem {
 	// encoder methods
 	
 	public double getLeftEncoderDistance(){
-		return left.getDistance();
+		return 0;//left.getDistance();
 	}
 	
 	public boolean getLeftEncoderDirection(){
-		return left.getDirection();
+		return false;//left.getDirection();
 	}
 	
 	public double getLeftEncoderRate(){
-		return left.getRate();
+		return 0;//left.getRate();
 	}
 	
 	public boolean getLeftEncoderStopped(){
-		return left.getStopped();
+		return false;//left.getStopped();
 	}
 	
 	public double getRightEncoderDistance(){

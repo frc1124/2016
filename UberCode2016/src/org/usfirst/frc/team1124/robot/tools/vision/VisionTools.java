@@ -159,4 +159,27 @@ public class VisionTools {
     	double x = xlhsGoalBBox + widthGoalBBox / 2 - cameraWidth / 2;
     	return ((degrees) ? (180 / Math.PI) : (1)) * Math.atan(2 * x * Math.tan(viewAngleHoriz / 2) / cameraWidth);
     }
+    
+    /**
+     * Gets angle that the robot should turn in order to face the center of the goal.
+     * @param x_cm	x center of mass
+     * @return		angle to turn.
+     */
+    public static double turnAngle(double x_cm) {
+    	double x = x_cm - (cameraWidth / 2);
+    	return (180 / Math.PI) * Math.atan(2 * x * Math.tan(viewAngleHoriz / 2) / cameraWidth);
+    }
+    /**
+     * Gets angle that the robot should turn in order to face the center of the goal.
+     * http://www.chiefdelphi.com/forums/showthread.php?t=147036
+     * @param goal_x	x center of mass
+     * @return			angle to turn.
+     */
+    public static double turnAngleAlt(double goal_x) {
+    	double center_x = (cameraWidth / 2.0) - 0.5;
+    	double focal_length_px = 0.5 * 320.0 / Math.tan(viewAngleHoriz / 2);
+    	double horiz_angle_to_goal = (180 / Math.PI) * Math.atan((goal_x - center_x) / focal_length_px);
+    	
+    	return horiz_angle_to_goal;
+    }
 }

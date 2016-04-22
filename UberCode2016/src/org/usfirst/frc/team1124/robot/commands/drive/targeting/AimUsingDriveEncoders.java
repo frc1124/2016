@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
+ * @deprecated
  * Aim at an angle using a conversion of the angle to rotational inches
  */
 public class AimUsingDriveEncoders extends CommandGroup {	

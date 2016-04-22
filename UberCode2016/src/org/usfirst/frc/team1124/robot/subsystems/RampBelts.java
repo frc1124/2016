@@ -1,7 +1,5 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
-import org.usfirst.frc.team1124.robot.Robot;
-
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -23,9 +21,9 @@ public class RampBelts extends Subsystem {
     public RampBelts() {
     	super("RampBelts");
     	
-    	ramp_belts = new CANTalon(Robot.configIO.getIntVal("ramp_conveyor_talon"));
+    	ramp_belts = new CANTalon(10);
 		
-		light_sensor = new DigitalInput(Robot.configIO.getIntVal("intake_belts_light_sensor"));
+		light_sensor = new DigitalInput(8);
     }
     
     public void initDefaultCommand() {}
@@ -33,11 +31,11 @@ public class RampBelts extends Subsystem {
     // keep track of balls in robot
     
     public void addBall(){
-    	ballCount++;
+    	ballCount = 1;
     }
     
     public void removeBall(){
-    	ballCount--;
+    	ballCount = 0;
     }
     
     public int getBallCount(){

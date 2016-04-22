@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
+ * @deprecated
  * Starts a hold position loop that also incorporates feed-forward control from the driver
  */
 public class DriveHoldPosition extends CommandGroup {

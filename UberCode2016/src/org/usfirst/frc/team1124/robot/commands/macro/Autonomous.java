@@ -6,6 +6,7 @@ import org.usfirst.frc.team1124.robot.commands.arm.ArmDown;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.TimedAutoDrive;
 import org.usfirst.frc.team1124.robot.commands.drive.TurnTowardsAnglePID;
+import org.usfirst.frc.team1124.robot.commands.ramp.BallToSensor;
 import org.usfirst.frc.team1124.robot.dashboard.DashboardConnection;
 import org.usfirst.frc.team1124.robot.enums.AutoDefensePosition;
 import org.usfirst.frc.team1124.robot.enums.AutoDefenseType;
@@ -35,7 +36,7 @@ public class Autonomous extends CommandGroup {
 		switch(mode){
 			case Nothing:
 				// do everything cause spite
-				// import org.curren.scrub.spite;
+				// import com.currenjeandell.scrub.spite;
 				// doEverything();
 			break;
 			case GetToDefense:
@@ -89,24 +90,30 @@ public class Autonomous extends CommandGroup {
 		switch(defense_type){
 			case Moat:
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 1.8));
-				addSequential(new TimedAutoDrive(0.8, 0.9, 2.1));
+				//addSequential(new TimedAutoDrive(0.8, 0.9, 2.1));
+				addSequential(new TimedAutoDrive(0.9, 0.9, 2.0));
 				addSequential(new CommandDelay(0.2));
 			break;
 			case Ramparts:
+				//addSequential(new TimedAutoDrive(0.8, 0.8, 0.5));
 				addSequential(new TimedAutoDrive(0.8, 0.8, 0.5));
+				//addSequential(new TimedAutoDrive(0.55, 1.0, 0.55));
 				addSequential(new TimedAutoDrive(0.55, 1.0, 0.55));
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 0.9));
-				addSequential(new TimedAutoDrive(0.8, 0.9, 1.15));
+				//addSequential(new TimedAutoDrive(0.8, 0.9, 1.15));
+				addSequential(new TimedAutoDrive(0.9, 0.9, 1.0));
 				addSequential(new CommandDelay(0.4));
 			break;
 			case RockWall:
 				//addSequential(new TimedAutoDrive(0.8, 0.8, 2.1));
-				addSequential(new TimedAutoDrive(0.75, 0.85, 2.6));
+				//addSequential(new TimedAutoDrive(0.75, 0.85, 2.6));
+				addSequential(new TimedAutoDrive(0.8, 0.8, 2.4));
 				addSequential(new CommandDelay(0.4));
 			break;
 			case RoughTerrain:
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 1.7));
-				addSequential(new TimedAutoDrive(0.8, 0.9, 1.95));
+				//addSequential(new TimedAutoDrive(0.8, 0.9, 1.95));
+				addSequential(new TimedAutoDrive(0.9, 0.9, 1.8));
 				addSequential(new CommandDelay(0.2));
 			break;
 			case SomethingElse:
@@ -118,8 +125,12 @@ public class Autonomous extends CommandGroup {
     private void finishCross(){
 		switch(defense_type){
 			case Moat:
+				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
+			break;
 			case Ramparts:
+			break;
 			case RockWall:
+			break;
 			case RoughTerrain:
 				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
 			break;
@@ -135,18 +146,22 @@ public class Autonomous extends CommandGroup {
 				// destroyLowBar(DestroyType.violently);
 				break;
 			case Pos_2:
+				// shoot for the middle goal
 				addParallel(new SelectTarget(false));
 				addSequential(new TurnTowardsAnglePID(24.0));
 				break;
 			case Pos_3:
+				// shoot for the middle goal
 				addParallel(new SelectTarget(false));
 				addSequential(new TurnTowardsAnglePID(14.0));
 				break;
 			case Pos_4:
+				// shoot for the middle goal
 				addParallel(new SelectTarget(true));
 				addSequential(new TurnTowardsAnglePID(0.0));
 				break;
 			case Pos_5:
+				// shoot middle goal
 				addParallel(new SelectTarget(true));
 		    	addSequential(new TurnTowardsAnglePID(-18.0));
 				break;
@@ -159,8 +174,8 @@ public class Autonomous extends CommandGroup {
     }
     
     private void scoreHighGoal(){
-    	// re-intake incase ball fell down a bit
-    	addSequential(new IntakeBall());
+    	// re-intake in case ball fell down a bit
+    	addSequential(new BallToSensor());
     	
     	// shoot
     	addSequential(new ScoreHighGoal((byte) 0));

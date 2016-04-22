@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
-import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
 import org.usfirst.frc.team1124.robot.enums.SafetyError;
 import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
@@ -34,20 +33,20 @@ public class ArmActuator extends Subsystem implements Safe {
 	//private final double MAX_DOWN = 0;
 	
 	private DigitalInput limit_switch_back;
-	private DigitalInput limit_switch_forward;
+	private DigitalInput forward_light_sensor;
 	
 	public ArmActuator() {
 		super("ArmActuators");
 		
-		actuator = new CANTalon(Robot.configIO.getIntVal("arm_actuator"));
+		actuator = new CANTalon(5);
 		
-		int a_channel = Robot.configIO.getIntVal("arm_encoder_a");
-		int b_channel = Robot.configIO.getIntVal("arm_encoder_b");
+		int a_channel = 6;
+		int b_channel = 7;
 		
 		encoder = new Encoder(a_channel, b_channel);
 		
-		limit_switch_back = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_back"));
-		limit_switch_forward = new DigitalInput(Robot.configIO.getIntVal("arm_actuator_limit_forward"));
+		limit_switch_back = new DigitalInput(4);
+		forward_light_sensor = new DigitalInput(3);
 		
 		enableSafety();
 	}
@@ -75,13 +74,13 @@ public class ArmActuator extends Subsystem implements Safe {
     public boolean[] getLimitSwitchStates(){
     	boolean[] switches = {
     			limit_switch_back.get(),
-    			limit_switch_forward.get(),
+    			forward_light_sensor.get(),
     		};
     	
     	return switches;
     }
 	
-	//measures in changer per millisecond
+	//measures in changes per millisecond
 	public double getRate(){
 		return encoder.getRate();
 	}
@@ -129,7 +128,7 @@ public class ArmActuator extends Subsystem implements Safe {
 		}
 		
 		// directional safety
-		if(limit_switch_forward.get() && output > 0 || limit_switch_back.get() && output < 0){
+		if(forward_light_sensor.get() && output > 0 || limit_switch_back.get() && output < 0){
 			// trying to go too far up, so only allow going down
 			safeOutput = 0;
 			

@@ -1,14 +1,11 @@
 package org.usfirst.frc.team1124.robot.dashboard;
 
-import java.util.ArrayList;
-
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.enums.AutoDefensePosition;
 import org.usfirst.frc.team1124.robot.enums.AutoDefenseType;
 import org.usfirst.frc.team1124.robot.enums.AutoMode;
 
 import edu.wpi.first.wpilibj.ControllerPower;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashboardConnection {
@@ -129,7 +126,7 @@ public class DashboardConnection {
 		updateSensors();
 		
 		// config
-		sendConfigToDash();
+		//sendConfigToDash();
 		
 		// control compressor
 		operateCompressor();
@@ -258,7 +255,7 @@ public class DashboardConnection {
 			}
 		}catch(Exception e){}
 	}
-	
+	/*
 	private void sendConfigToDash(){
 		ArrayList<String> temp = Robot.configIO.getConfigText();
 		
@@ -286,7 +283,7 @@ public class DashboardConnection {
 			SmartDashboard.putString("config_" + i, list.get(i));
 		}
 	}
-	
+	*/
 	private void operateCompressor(){
 		try{
 			boolean enableCompressor = SmartDashboard.getBoolean("compressor_enable");
