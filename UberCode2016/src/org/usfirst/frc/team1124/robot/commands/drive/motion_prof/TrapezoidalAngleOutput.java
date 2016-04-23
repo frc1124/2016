@@ -18,8 +18,16 @@ public class TrapezoidalAngleOutput extends Command {
 	Timer t = new Timer();
 	
 	private double distance = 0;
+	private double distance_alt;
+	private double nutron_distance;
 	
+	// early canceling
 	private boolean aborted = false;
+	private double target_position_sign = 0;
+	
+	// camera data
+	private double x_cm;
+	private double y_cm;
 	
 	// constants
 	private double v_max = 60.0;
@@ -67,8 +75,6 @@ public class TrapezoidalAngleOutput extends Command {
 	
     public TrapezoidalAngleOutput() {
         requires(Robot.drivetrain);
-        
-        SmartDashboard.putNumber("angle_to_turn", 0);
     }
     
     protected void initialize() {
@@ -77,17 +83,19 @@ public class TrapezoidalAngleOutput extends Command {
     	pid.start();
     	
     	try{
-    		double x_cm = SmartDashboard.getNumber("vision_target_x_cm");
-    		double y_cm = SmartDashboard.getNumber("vision_target_y_cm");
+    		x_cm = SmartDashboard.getNumber("vision_target_x_cm");
+    		y_cm = SmartDashboard.getNumber("vision_target_y_cm");
+    		
+    		target_position_sign = Math.signum(160 - x_cm);
     		
 	    	distance = VisionTools.turnAngleAlt(x_cm);
-	    	double distance_alt = VisionTools.turnAngle(x_cm);
+	    	distance_alt = VisionTools.turnAngle(x_cm);
 	    	
-	    	double nutron_distance = AngleCalculator.getHorizontalAngleUsingYPos(x_cm, y_cm);
+	    	nutron_distance = AngleCalculator.getHorizontalAngleUsingYPos(x_cm, y_cm);
 	    	
 	    	System.out.println("Distance: " + distance + ", Old Distance Calc: " + distance_alt + ", NUTRONS SAY: " + nutron_distance);
 
-	    	distance = SmartDashboard.getNumber("angle_to_turn");
+	    	distance = nutron_distance;
 	    	
 	    	sign = (int) Math.signum(distance);
 	    	distance = Math.abs(distance);
@@ -131,7 +139,7 @@ public class TrapezoidalAngleOutput extends Command {
     	t_4 = distance / v_max;
     	n = (int) (t_4 / itp);
     	
-    	//System.out.println("t_4: " + t_4 + "	n: " + n);
+    	// System.out.println("t_4: " + t_4 + "	n: " + n);
     }
     
     private long prev_time = System.currentTimeMillis();
@@ -190,6 +198,12 @@ public class TrapezoidalAngleOutput extends Command {
     	output = pid.getOutput();
 		
 		Robot.drivetrain.drive_tank_auto(output, (-1) * output);
+		
+		double x_cm = SmartDashboard.getNumber("vision_target_x_cm");
+    	
+    	if(Math.signum(160 - x_cm) != target_position_sign){
+    		aborted = true;
+    	}
     }
 
     protected boolean isFinished() {
