@@ -3,7 +3,7 @@ package org.usfirst.frc.team1124.robot.commands.drive.motion_prof;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team1124.robot.Robot;
-import org.usfirst.frc.team1124.robot.tools.AngleCalculator;
+import org.usfirst.frc.team1124.robot.tools.vision.AngleCalculator;
 import org.usfirst.frc.team1124.robot.tools.vision.VisionTools;
 
 import edu.wpi.first.wpilibj.Timer;

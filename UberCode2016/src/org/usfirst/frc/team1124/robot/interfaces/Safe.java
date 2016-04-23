@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1124.robot.tools;
+package org.usfirst.frc.team1124.robot.interfaces;
 
 /** 
  * This is implimented in subsystems where safeties are used. 

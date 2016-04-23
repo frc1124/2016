@@ -1,4 +1,6 @@
-package org.usfirst.frc.team1124.robot.tools;
+package org.usfirst.frc.team1124.robot.tools.vision;
+
+import org.usfirst.frc.team1124.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -8,20 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class AngleCalculator {
-	private static final double CAMERA_X_OFFSET = -5.0;
-	private static final double CAMERA_Y_OFFSET = 0.0;
-	private static final double CAMERA_Z_OFFSET = 42.5;
-	private static final double CAMERA_MOUNT_ANGLE = 28.0;
-	
-	private static final double CAMERA_PIXEL_WIDTH = 320.0;
-	private static final double CAMERA_PIXEL_HEIGHT = 240.0;
-	
-	private static final double CAMERA_FOV = 47.0;
-	private static final double CAMERA_VERTICAL_FOV = CAMERA_FOV * CAMERA_PIXEL_HEIGHT / CAMERA_PIXEL_WIDTH;
-	
-	private static final double TARGET_HEIGHT_ON_WALL = 90.0;
-	private static final double TARGET_HEIGHT = 14.0;
-	
 	/**
 	 * @param pixelWidth width of the target, in pixels, on the image
 	 * @param centerX horizontal position of the target, in pixels, on the image
@@ -34,7 +22,7 @@ public class AngleCalculator {
     	double distance = getRobotDist(measuredDistance, getHorizontalCameraAngle(centerX));
     	SmartDashboard.putNumber("robotPredictedDistance", distance);
     	
-    	return Math.toDegrees(Math.acos((Math.pow(CAMERA_X_OFFSET, 2) - Math.pow(measuredDistance, 2) + Math.pow(distance, 2)) / (2 * distance * Math.abs(CAMERA_X_OFFSET)))) - 90.0;
+    	return Math.toDegrees(Math.acos((Math.pow(RobotMap.CAMERA_X_OFFSET, 2) - Math.pow(measuredDistance, 2) + Math.pow(distance, 2)) / (2 * distance * Math.abs(RobotMap.CAMERA_X_OFFSET)))) - 90.0;
     }
 	
 	/**
@@ -45,13 +33,13 @@ public class AngleCalculator {
 	 */
 	public static double getHorizontalAngleUsingYPos(double centerX, double centerY){
 		// TODO calculate height from arm angle instead of using constant
-		double measuredDistance = getCameraDistUsingAngle(getVerticalCameraAngle(centerY) + CAMERA_MOUNT_ANGLE);
+		double measuredDistance = getCameraDistUsingAngle(getVerticalCameraAngle(centerY) + RobotMap.CAMERA_MOUNT_ANGLE);
 		SmartDashboard.putNumber("cameraMeasuredDistanceUsingYPos", measuredDistance);
     	
 		double distance = getRobotDist(measuredDistance, getHorizontalCameraAngle(centerX));
     	SmartDashboard.putNumber("robotPredictedDistanceUsingYPos", distance);
     	
-    	return Math.toDegrees(Math.acos((Math.pow(CAMERA_X_OFFSET, 2) - Math.pow(measuredDistance, 2) + Math.pow(distance, 2)) / (2 * distance * Math.abs(CAMERA_X_OFFSET)))) - 90.0;
+    	return Math.toDegrees(Math.acos((Math.pow(RobotMap.CAMERA_X_OFFSET, 2) - Math.pow(measuredDistance, 2) + Math.pow(distance, 2)) / (2 * distance * Math.abs(RobotMap.CAMERA_X_OFFSET)))) - 90.0;
     }
 	
 	/**
@@ -59,8 +47,8 @@ public class AngleCalculator {
 	 * @return horizontal position of target in degrees
 	 */
 	public static double getHorizontalCameraAngle(double x){
-		double slope = CAMERA_FOV / CAMERA_PIXEL_WIDTH;
-	    double intercept = -CAMERA_FOV / 2;
+		double slope = RobotMap.CAMERA_FOV / RobotMap.CAMERA_PIXEL_WIDTH;
+	    double intercept = -RobotMap.CAMERA_FOV / 2;
 	    return x * slope + intercept;
 	}
 	
@@ -69,8 +57,8 @@ public class AngleCalculator {
 	 * @return vertical position of target in degrees
 	 */
 	public static double getVerticalCameraAngle(double y){
-    	double slope = -CAMERA_VERTICAL_FOV / CAMERA_PIXEL_HEIGHT;
-        double intercept = CAMERA_VERTICAL_FOV / 2;
+    	double slope = -RobotMap.CAMERA_VERTICAL_FOV / RobotMap.CAMERA_PIXEL_HEIGHT;
+        double intercept = RobotMap.CAMERA_VERTICAL_FOV / 2;
         return y * slope + intercept;
     }
 	
@@ -79,13 +67,13 @@ public class AngleCalculator {
      * @return the distance to the target
      */
     public static double getCameraDistUsingAngle(double yAngle){
-    	return (TARGET_HEIGHT_ON_WALL - CAMERA_Z_OFFSET)/Math.tan(Math.toRadians(yAngle));
+    	return (RobotMap.TARGET_HEIGHT_ON_WALL - RobotMap.CAMERA_Z_OFFSET)/Math.tan(Math.toRadians(yAngle));
     }
     
 	public static double getCameraDist(double targetPixelWidth){
-		double targetAngularWidth = targetPixelWidth * CAMERA_FOV / CAMERA_PIXEL_WIDTH;
+		double targetAngularWidth = targetPixelWidth * RobotMap.CAMERA_FOV / RobotMap.CAMERA_PIXEL_WIDTH;
 		
-		return (TARGET_HEIGHT / 2.0)/Math.tan(Math.toRadians(targetAngularWidth/2.0));
+		return (RobotMap.TARGET_HEIGHT / 2.0)/Math.tan(Math.toRadians(targetAngularWidth/2.0));
 	}
     
 	/**
@@ -95,13 +83,13 @@ public class AngleCalculator {
      */
 	@SuppressWarnings("unused")
 	private static double getRobotDist(double cameraDistance, double cameraXAngle){
-		double angle = 90 + ((CAMERA_X_OFFSET > 0) ? cameraXAngle : -cameraXAngle);
+		double angle = 90 + ((RobotMap.CAMERA_X_OFFSET > 0) ? cameraXAngle : -cameraXAngle);
 		
-    	if(CAMERA_X_OFFSET == 0.0){
+    	if(RobotMap.CAMERA_X_OFFSET == 0.0){
     		return cameraDistance;
     	}
     	
-    	return Math.sqrt(Math.pow(CAMERA_X_OFFSET, 2) + Math.pow(cameraDistance, 2) - (2 * Math.abs(CAMERA_X_OFFSET) * cameraDistance * Math.cos(Math.toRadians(angle))));
+    	return Math.sqrt(Math.pow(RobotMap.CAMERA_X_OFFSET, 2) + Math.pow(cameraDistance, 2) - (2 * Math.abs(RobotMap.CAMERA_X_OFFSET) * cameraDistance * Math.cos(Math.toRadians(angle))));
     }
     
     public static void main(String[] args){
