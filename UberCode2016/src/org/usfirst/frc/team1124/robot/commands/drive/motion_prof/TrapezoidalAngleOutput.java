@@ -67,6 +67,8 @@ public class TrapezoidalAngleOutput extends Command {
 	
     public TrapezoidalAngleOutput() {
         requires(Robot.drivetrain);
+        
+        SmartDashboard.putNumber("angle_to_turn", 0);
     }
     
     protected void initialize() {
@@ -85,16 +87,16 @@ public class TrapezoidalAngleOutput extends Command {
 	    	
 	    	System.out.println("Distance: " + distance + ", Old Distance Calc: " + distance_alt + ", NUTRONS SAY: " + nutron_distance);
 
-	    	distance = nutron_distance;
+	    	distance = SmartDashboard.getNumber("angle_to_turn");
 	    	
 	    	sign = (int) Math.signum(distance);
 	    	distance = Math.abs(distance);
 	    	
-	    	if(distance >= 18.0){
+	    	if(distance > 18.0){
 		    	filter_time_1 = 0.200;
 		    	filter_time_2 = 0.100;
 		    	v_max = 60.0;
-	    	}else if(distance >= 9){
+	    	}else if(distance > 9){
 		    	filter_time_1 = 0.200;
 		    	filter_time_2 = 0.100;
 		    	v_max = 30.0;
@@ -102,7 +104,7 @@ public class TrapezoidalAngleOutput extends Command {
 		    	filter_time_1 = 0.200;
 		    	filter_time_2 = 0.100;
 		    	v_max = 15.0;
-	    	}else if(distance >= 2){
+	    	}else if(distance > 2){
 		    	filter_time_1 = 0.100;
 		    	filter_time_2 = 0.050;
 		    	v_max = 10.0;

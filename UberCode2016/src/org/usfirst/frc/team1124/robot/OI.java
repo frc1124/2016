@@ -5,6 +5,7 @@ import org.usfirst.frc.team1124.robot.commands.arm.TogglePistonState;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectCamera;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
+import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.AngularRatePID;
 import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.TrapezoidalAngleOutput;
 import org.usfirst.frc.team1124.robot.commands.intake.IntakeManual;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ArmInterrupt;
@@ -105,6 +106,7 @@ public class OI {
 		js1_buttons[1].toggleWhenPressed(new ScoreHighGoal());
 		
 		js1_buttons[4].toggleWhenPressed(new TrapezoidalAngleOutput());
+		js1_buttons[3].toggleWhenPressed(new AngularRatePID());
 		
 		js1_buttons[8].whenPressed(new ArcadeDriveJoystick());
 
