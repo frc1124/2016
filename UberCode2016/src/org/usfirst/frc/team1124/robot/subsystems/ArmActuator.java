@@ -3,14 +3,15 @@ package org.usfirst.frc.team1124.robot.subsystems;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
 import org.usfirst.frc.team1124.robot.enums.SafetyError;
 import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
+import org.usfirst.frc.team1124.robot.interfaces.Safe;
+
+import org.usfirst.frc.team1124.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
-import org.usfirst.frc.team1124.robot.tools.Safe;
 
 /**
  * The linear actuator on the arm used to actuate the arm.
@@ -25,6 +26,7 @@ public class ArmActuator extends Subsystem implements Safe {
 	
 	private boolean safetyEnabled = false;
 	private boolean safetyTripped = false;
+	
 	/** TODO tune this */
 	private double rate_threshold = 1.0;
 	
@@ -38,21 +40,23 @@ public class ArmActuator extends Subsystem implements Safe {
 	public ArmActuator() {
 		super("ArmActuators");
 		
-		actuator = new CANTalon(5);
+		actuator = new CANTalon(RobotMap.ARM_ACTUATOR);
 		
-		int a_channel = 6;
-		int b_channel = 7;
+		int a_channel = RobotMap.ARM_ENCODER_A;
+		int b_channel = RobotMap.ARM_ENCODER_B;
 		
 		encoder = new Encoder(a_channel, b_channel);
 		
-		limit_switch_back = new DigitalInput(4);
-		forward_light_sensor = new DigitalInput(3);
+		limit_switch_back = new DigitalInput(RobotMap.ARM_LIMIT_SWITCH_BACK);
+		forward_light_sensor = new DigitalInput(RobotMap.ARM_LIGHT_SENSOR_FORWARD);
 		
 		enableSafety();
 	}
 	
     public void initDefaultCommand() {}
     
+	// Output setting
+	
     public void manual(double outputValue){
 		if(isSafetyEnabled()){
 			actuator.set(safeOutput(-outputValue));
@@ -80,12 +84,14 @@ public class ArmActuator extends Subsystem implements Safe {
     	return switches;
     }
 	
-	//measures in changes per millisecond
+	/* Encoders */
+	
+	/**
+	* @return measures in changes per millisecond
+	*/
 	public double getRate(){
 		return encoder.getRate();
 	}
-	
-	/* Encoders */
 	
 	public double getDistance(){
 		return encoder.getDistance();

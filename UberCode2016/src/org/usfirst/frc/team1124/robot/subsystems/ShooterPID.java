@@ -1,9 +1,10 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
+import org.usfirst.frc.team1124.robot.RobotMap;
 import org.usfirst.frc.team1124.robot.dashboard.SafetyErrorLogger;
 import org.usfirst.frc.team1124.robot.enums.SafetyError;
 import org.usfirst.frc.team1124.robot.enums.SafetySubsystem;
-import org.usfirst.frc.team1124.robot.tools.Safe;
+import org.usfirst.frc.team1124.robot.interfaces.Safe;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.CANTalon;
@@ -42,8 +43,8 @@ public class ShooterPID extends PIDSubsystem implements Safe {
     public ShooterPID() {
     	super("ShooterPID", P, I, D);
     	
-    	shooter = new CANTalon(1);
-    	ball_sensor = new DigitalInput(2);
+    	shooter = new CANTalon(RobotMap.SHOOTER);
+    	ball_sensor = new DigitalInput(RobotMap.SHOOTER_CAGE_LIGHT_SENSOR);
     	
     	setSetpoint(0);
     	

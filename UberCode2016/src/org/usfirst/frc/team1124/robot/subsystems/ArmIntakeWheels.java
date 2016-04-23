@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
+import org.usfirst.frc.team1124.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -15,7 +17,7 @@ public class ArmIntakeWheels extends Subsystem {
 	public ArmIntakeWheels(){
 		super("ArmIntakeWheels");
 		
-		arm_wheels_motor = new CANTalon(9);
+		arm_wheels_motor = new CANTalon(RobotMap.ARM_WHEELS);
 	}
 	
     public void initDefaultCommand() {}
@@ -42,4 +44,3 @@ public class ArmIntakeWheels extends Subsystem {
     	arm_wheels_motor.set(0);
     }
 }
-
