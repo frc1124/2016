@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *	Ball intake. Belts/wheels will run at intake speed, then stop when light sensor detects ball.
  */
 public class IntakeBall extends Command {
-
+	
     public IntakeBall() {
         requires(Robot.arm_intake_wheels);
         requires(Robot.ramp_belts);
@@ -25,7 +25,8 @@ public class IntakeBall extends Command {
     }
 
     protected boolean isFinished() {
-        return Robot.ramp_belts.getBallDetected();
+    	// stop if sensor is false but had detected a ball or if we already have a ball
+        return Robot.ramp_belts.getBallDetected() || Robot.ramp_belts.getBallCount() > 0;
     }
 
     protected void end() {
