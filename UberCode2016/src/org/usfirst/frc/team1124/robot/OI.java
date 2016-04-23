@@ -101,7 +101,6 @@ public class OI {
 		// Driver 1, Joystick 1
 
 		// by default drive train runs arcade, so don't need this
-		//js1_buttons[].whenPressed(new ArcadeDriveJoystick());
 
 		js1_buttons[1].toggleWhenPressed(new ScoreHighGoal());
 		

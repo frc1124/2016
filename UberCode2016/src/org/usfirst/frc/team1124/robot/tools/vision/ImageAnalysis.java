@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
  * You can optionally pass a USB or Axis camera to updateImage() and it will switch to using that camera. The next
  * call to getDistance(), getAngle(), or getCenterOfTarget() will trigger the analysis.
  * 
+ * @deprecated This is not currently implemented.
  */
 public class ImageAnalysis {
 	// Camera used
