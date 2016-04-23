@@ -4,6 +4,7 @@ import org.usfirst.frc.team1124.robot.Robot;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Control the angular rate of the robot (this file just does calculations).

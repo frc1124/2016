@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
+import org.usfirst.frc.team1124.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -21,9 +23,9 @@ public class RampBelts extends Subsystem {
     public RampBelts() {
     	super("RampBelts");
     	
-    	ramp_belts = new CANTalon(10);
+    	ramp_belts = new CANTalon(RobotMap.RAMP_BELTS);
 		
-		light_sensor = new DigitalInput(8);
+		light_sensor = new DigitalInput(RobotMap.RAMP_LIGHT_SENSOR);
     }
     
     public void initDefaultCommand() {}

@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class BringShooterToApproxSpeed extends Command {
 	
 	private double voltage = 0.00;
-	private final double MAX_RPM = 3680.0;
 
     public BringShooterToApproxSpeed() {
     	/**
@@ -21,7 +20,7 @@ public class BringShooterToApproxSpeed extends Command {
     	// requires(Robot.shooter_pid);
     	
     	// convert RPM back to voltage
-    	voltage = Robot.camera.getCalculatedShooterRPM() / MAX_RPM;
+    	voltage = BringShooterToSpeed.SPEED / BringShooterToSpeed.MAX_RPM;
     	
     	setInterruptible(true);
     }
