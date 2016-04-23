@@ -2,25 +2,17 @@ package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.RobotMap;
-import org.usfirst.frc.team1124.robot.tools.vision.VisionTools;
-
-import com.ni.vision.NIVision;
-import com.ni.vision.NIVision.Image;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
-import edu.wpi.first.wpilibj.vision.AxisCamera.ExposureControl;
-import edu.wpi.first.wpilibj.vision.AxisCamera.Resolution;
-import edu.wpi.first.wpilibj.vision.AxisCamera.WhiteBalance;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 
 /**
  * The subsystem that manages camera streams and data processing
  */
 public class Camera extends Subsystem {
-	private Image shooter_frame;
 	
 	// if camera is being held by auto code
 	private boolean camera_held = false;
@@ -36,7 +28,6 @@ public class Camera extends Subsystem {
 	
 	private void initShooterCamera(){
 		try{
-	        shooter_frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 	        Robot.shooter_camera = new AxisCamera(RobotMap.CAMERA_IP);
 	        
 	        Robot.shooter_camera.writeColorLevel(RobotMap.CAMERA_COLOR_LEVEL);
