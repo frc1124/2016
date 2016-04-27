@@ -4,6 +4,7 @@ import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
                                                                                                 
 /**
  *	Ball intake. Belts/wheels will run at intake speed, then stop when light sensor detects ball.
@@ -36,6 +37,9 @@ public class IntakeBall extends Command {
     	// initiate the shooter after we have finished intaking a ball
     	BringShooterToSpeed shooter_cmd = new BringShooterToSpeed();
     	shooter_cmd.start();
+    	
+    	// manually switch to shooter camera now that we are done intaking
+    	SmartDashboard.putBoolean("camera_select", true);
     	
     	Robot.ramp_belts.addBall();
     }
