@@ -12,7 +12,7 @@ public class DashboardConnection {
 	private static boolean firstCall = true;
 	
 	// previous compressor state
-	private boolean wasCompressorEnabled = false;
+	private boolean wasCompressorEnabled = true;
 	
 	/**
 	 * Get data for autonomous
@@ -184,8 +184,12 @@ public class DashboardConnection {
 		SmartDashboard.putBoolean("arm_actuator_back", switches[0]);
 		SmartDashboard.putBoolean("arm_actuator_forward", switches[1]);
 		
-		// ball detection sensor
+		// ball detection sensors
 		SmartDashboard.putBoolean("ramp_belts_sensor", Robot.ramp_belts.getBallDetected());
+		SmartDashboard.putBoolean("shooter_cage_sensor", Robot.shooter_pid.getBallSensor());
+		
+		// ball count
+		SmartDashboard.putNumber("ball_count", Robot.ramp_belts.getBallCount());
 		
 		// gyro
 		SmartDashboard.putNumber("gyro_full_angle", Robot.drivetrain.getFullAngle());
