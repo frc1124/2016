@@ -125,14 +125,16 @@ public class Autonomous extends CommandGroup {
     private void finishCross(){
 		switch(defense_type){
 			case Moat:
-				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
+				addSequential(new TimedAutoDrive(0.9, 0.9, 0.5));
 			break;
 			case Ramparts:
+				addSequential(new TimedAutoDrive(0.9, 0.9, 0.25));
 			break;
 			case RockWall:
+				addSequential(new TimedAutoDrive(0.9, 0.9, 0.25));
 			break;
 			case RoughTerrain:
-				addSequential(new TimedAutoDrive(0.8, 0.9, 0.5));
+				addSequential(new TimedAutoDrive(0.9, 0.9, 0.5));
 			break;
 			case SomethingElse:
 			break;

@@ -11,6 +11,7 @@ import org.usfirst.frc.team1124.robot.commands.intake.IntakeManual;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ArmInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.IntakeInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.RampBeltsInterrupt;
+import org.usfirst.frc.team1124.robot.commands.interrupt.ReportFinishedShooting;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
 import org.usfirst.frc.team1124.robot.commands.macro.IntakeBall;
 import org.usfirst.frc.team1124.robot.commands.macro.RampAndIntakeInterrupt;
@@ -143,6 +144,8 @@ public class OI {
 		
 		js3_buttons[7].whenPressed(new SelectCamera(true));
 		js3_buttons[8].whenPressed(new SelectCamera(false));
+		
+		js3_buttons[12].whenPressed(new ReportFinishedShooting());
 	}
 	
 	// Joystick gets (used for getting axes)
