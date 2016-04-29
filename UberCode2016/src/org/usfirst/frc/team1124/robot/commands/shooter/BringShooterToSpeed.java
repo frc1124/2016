@@ -45,6 +45,10 @@ public class BringShooterToSpeed extends Command {
     	
     	Robot.shooter_pid.enable();
     }
+    
+    public double getSetpoint(){
+    	return this.setpoint;
+    }
 
     protected void execute() {
     	if(Robot.shooter_pid.isSafetyTripped() && safetyTrippedFirstCall){

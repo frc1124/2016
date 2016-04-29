@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1124.robot.commands.ramp;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.commands.macro.ScoreHighGoal;
 import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RampBeltsFeedToShooter extends Command {
 
 	private BringShooterToSpeed shooter_cmd;
+	private boolean auto = false;
 	
     public RampBeltsFeedToShooter() {
     	requires(Robot.ramp_belts);
@@ -22,6 +24,8 @@ public class RampBeltsFeedToShooter extends Command {
     	requires(Robot.ramp_belts);
     	
     	this.shooter_cmd = shooter_cmd;
+    	
+    	auto = shooter_cmd.getSetpoint() == ScoreHighGoal.AUTO_SHOOTER_SPEED;
     	
     	setInterruptible(true);
     }
@@ -39,8 +43,11 @@ public class RampBeltsFeedToShooter extends Command {
     }
 
     protected boolean isFinished() {
-        //return !Robot.ramp_belts.getBallDetected();
-    	return Robot.shooter_pid.getBallSensor();
+    	if(auto){
+    		return !Robot.ramp_belts.getBallDetected();
+    	}else{
+        	return Robot.shooter_pid.getBallSensor();
+    	}
     }
 
     protected void end() {
