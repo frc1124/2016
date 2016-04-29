@@ -128,7 +128,7 @@ public class Autonomous extends CommandGroup {
 				addSequential(new TimedAutoDrive(0.9, 0.9, 0.5));
 			break;
 			case Ramparts:
-				addSequential(new TimedAutoDrive(0.9, 0.9, 0.25));
+				addSequential(new TimedAutoDrive(0.9, 0.9, 0.1));
 			break;
 			case RockWall:
 				addSequential(new TimedAutoDrive(0.9, 0.9, 0.25));
