@@ -4,12 +4,13 @@ import org.usfirst.frc.team1124.robot.Robot;
 import org.usfirst.frc.team1124.robot.commands.shooter.BringShooterToSpeed;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
                                                                                                 
 /**
  *	Ball intake. Belts/wheels will run at intake speed, then stop when light sensor detects ball.
  */
 public class IntakeBall extends Command {
-
+	
     public IntakeBall() {
         requires(Robot.arm_intake_wheels);
         requires(Robot.ramp_belts);
@@ -25,7 +26,8 @@ public class IntakeBall extends Command {
     }
 
     protected boolean isFinished() {
-        return Robot.ramp_belts.getBallDetected();
+    	// stop if sensor is false but had detected a ball or if we already have a ball
+        return Robot.ramp_belts.getBallDetected() || Robot.ramp_belts.getBallCount() > 0;
     }
 
     protected void end() {
@@ -35,6 +37,9 @@ public class IntakeBall extends Command {
     	// initiate the shooter after we have finished intaking a ball
     	BringShooterToSpeed shooter_cmd = new BringShooterToSpeed();
     	shooter_cmd.start();
+    	
+    	// manually switch to shooter camera now that we are done intaking
+    	SmartDashboard.putBoolean("camera_select", true);
     	
     	Robot.ramp_belts.addBall();
     }

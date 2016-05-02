@@ -5,10 +5,13 @@ import org.usfirst.frc.team1124.robot.commands.arm.TogglePistonState;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectCamera;
 import org.usfirst.frc.team1124.robot.commands.camera.SelectTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
+import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.AngularRatePID;
+import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.TrapezoidalAngleOutput;
 import org.usfirst.frc.team1124.robot.commands.intake.IntakeManual;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ArmInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.IntakeInterrupt;
 import org.usfirst.frc.team1124.robot.commands.interrupt.RampBeltsInterrupt;
+import org.usfirst.frc.team1124.robot.commands.interrupt.ReportFinishedShooting;
 import org.usfirst.frc.team1124.robot.commands.interrupt.ShooterInterrupt;
 import org.usfirst.frc.team1124.robot.commands.macro.IntakeBall;
 import org.usfirst.frc.team1124.robot.commands.macro.RampAndIntakeInterrupt;
@@ -100,9 +103,11 @@ public class OI {
 		// Driver 1, Joystick 1
 
 		// by default drive train runs arcade, so don't need this
-		//js1_buttons[].whenPressed(new ArcadeDriveJoystick());
 
 		js1_buttons[1].toggleWhenPressed(new ScoreHighGoal());
+		
+		js1_buttons[4].toggleWhenPressed(new TrapezoidalAngleOutput());
+		js1_buttons[3].toggleWhenPressed(new AngularRatePID());
 		
 		js1_buttons[8].whenPressed(new ArcadeDriveJoystick());
 
@@ -139,6 +144,8 @@ public class OI {
 		
 		js3_buttons[7].whenPressed(new SelectCamera(true));
 		js3_buttons[8].whenPressed(new SelectCamera(false));
+		
+		js3_buttons[12].whenPressed(new ReportFinishedShooting());
 	}
 	
 	// Joystick gets (used for getting axes)

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1124.robot.subsystems;
 
 import org.usfirst.frc.team1124.robot.commands.drive.ArcadeDriveJoystick;
+import org.usfirst.frc.team1124.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
@@ -35,28 +36,28 @@ public class DriveTrain extends Subsystem {
 	public DriveTrain(){
 		super("DriveTrain");
 		
-		left_1 = new CANTalon(6);
-		left_2 = new CANTalon(7);
+		left_1 = new CANTalon(RobotMap.LEFT_DRIVE_1);
+		left_2 = new CANTalon(RobotMap.LEFT_DRIVE_2);
 		
-		right_1 = new CANTalon(3);
-		right_2 = new CANTalon(4);
+		right_1 = new CANTalon(RobotMap.RIGHT_DRIVE_1);
+		right_2 = new CANTalon(RobotMap.RIGHT_DRIVE_2);
 		
 		firstpair = new RobotDrive(left_1, right_1);
 		secondpair = new RobotDrive(left_2, right_2);
 		
-		//int left_a_channel = 2;
-		//int left_b_channel = 3;
+		// int left_a_channel = 2;
+		// int left_b_channel = 3;
 		
-		int right_a_channel = 0;
-		int right_b_channel = 1;
+		int right_a_channel = RobotMap.RIGHT_DRIVE_A;
+		int right_b_channel = RobotMap.RIGHT_DRIVE_B;
 		
-		//left = new Encoder(left_a_channel, left_b_channel, true, EncodingType.k4X);
+		// left = new Encoder(left_a_channel, left_b_channel, true, EncodingType.k4X);
 		right = new Encoder(right_a_channel, right_b_channel, false, EncodingType.k4X);
 		
-		//left.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
+		// left.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
 		right.setDistancePerPulse(ENCODER_DIST_PER_PULSE);
 		
-		gyro = new AnalogGyro(0);
+		gyro = new AnalogGyro(RobotMap.GYRO);
 		gyro.initGyro();
 		
 		accel = new BuiltInAccelerometer();
@@ -107,20 +108,24 @@ public class DriveTrain extends Subsystem {
 	
 	// encoder methods
 	
+	/** @deprecated */
 	public double getLeftEncoderDistance(){
-		return 0;//left.getDistance();
+		return 0; //left.getDistance();
 	}
 	
+	/** @deprecated */
 	public boolean getLeftEncoderDirection(){
-		return false;//left.getDirection();
+		return false; //left.getDirection();
 	}
 	
+	/** @deprecated */
 	public double getLeftEncoderRate(){
-		return 0;//left.getRate();
+		return 0; //left.getRate();
 	}
 	
+	/** @deprecated */
 	public boolean getLeftEncoderStopped(){
-		return false;//left.getStopped();
+		return false; //left.getStopped();
 	}
 	
 	public double getRightEncoderDistance(){

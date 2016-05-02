@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1124.robot.commands.macro;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.commands.CommandDelay;
 import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.ContinualTargeting;
 import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.LockOnToPixelTarget;
 import org.usfirst.frc.team1124.robot.commands.drive.motion_prof.TrapezoidalAngleOutput;
@@ -24,6 +25,8 @@ public class ScoreHighGoal extends CommandGroup {
 	
 	private RampBeltsFeedToShooter feed_cmd;
 	
+	public static final double AUTO_SHOOTER_SPEED = 3685.0; //3655.0
+	
     public ScoreHighGoal() {
     	aim_cmd = new TrapezoidalAngleOutput();
     	short_aim = new LockOnToPixelTarget();
@@ -38,7 +41,7 @@ public class ScoreHighGoal extends CommandGroup {
         // ensure ball is in
         addParallel(new BallToSensor());
         
-    	//addSequential(aim_cmd);
+    	addSequential(aim_cmd);
         addSequential(short_aim);
         addParallel(continual_aim);
         
@@ -57,7 +60,7 @@ public class ScoreHighGoal extends CommandGroup {
     	short_aim = new LockOnToPixelTarget();
     	continual_aim = new ContinualTargeting();
     	
-    	shooter_cmd = new BringShooterToSpeed(3645.0);
+    	shooter_cmd = new BringShooterToSpeed(AUTO_SHOOTER_SPEED);
     	
     	feed_cmd = new RampBeltsFeedToShooter(shooter_cmd);
 
@@ -66,11 +69,12 @@ public class ScoreHighGoal extends CommandGroup {
         // ensure ball is in
         addParallel(new BallToSensor());
         
-    	//addSequential(aim_cmd);
+    	addSequential(aim_cmd);
         addSequential(short_aim);
         addParallel(continual_aim);
         
         addSequential(feed_cmd);
+        addSequential(new CommandDelay(1.0));
         
         addSequential(new ShooterInterrupt());
         addSequential(new DriveTrainInterrupt());

@@ -78,7 +78,7 @@ public class Robot extends IterativeRobot {
     
     // this revision of code (displayed on dash board)
     
-    public static String codeRevision = "[v7.3.6]:week_7:auto_quaters";
+    public static String codeRevision = "[v8.2.3]:week_8:stl:auto_time";
 
     /**
      * This function is run when the robot is first started up and should be

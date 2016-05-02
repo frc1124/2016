@@ -3,6 +3,7 @@ package org.usfirst.frc.team1124.robot.commands.drive.motion_prof;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team1124.robot.Robot;
+import org.usfirst.frc.team1124.robot.tools.vision.AngleCalculator;
 import org.usfirst.frc.team1124.robot.tools.vision.VisionTools;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -17,9 +18,19 @@ public class TrapezoidalAngleOutput extends Command {
 	Timer t = new Timer();
 	
 	private double distance = 0;
+	private double distance_alt;
+	private double nutron_distance;
+	
+	// early canceling
+	private boolean aborted = false;
+	private double target_position_sign = 0;
+	
+	// camera data
+	private double x_cm;
+	private double y_cm;
 	
 	// constants
-	private final double v_max = 60.0;
+	private double v_max = 60.0;
 	private double filter_time_1 = 0.0;
 	private double filter_time_2 = 0.0;
 	private double itp = 0.020;
@@ -72,43 +83,63 @@ public class TrapezoidalAngleOutput extends Command {
     	pid.start();
     	
     	try{
-    		double x_cm = SmartDashboard.getNumber("vision_target_x_cm");
+    		x_cm = SmartDashboard.getNumber("vision_target_x_cm");
+    		y_cm = SmartDashboard.getNumber("vision_target_y_cm");
+    		
+    		target_position_sign = Math.signum(160 - x_cm);
     		
 	    	distance = VisionTools.turnAngleAlt(x_cm);
-	    	//double distance_alt = VisionTools.turnAngle(x_cm);
+	    	distance_alt = VisionTools.turnAngle(x_cm);
 	    	
-	    	//System.out.println("Distance: " + distance + ", Old Distance Calc: " + distance_alt);
+	    	nutron_distance = AngleCalculator.getHorizontalAngleUsingYPos(x_cm, y_cm);
 	    	
-	    	fl_1 = Math.ceil(filter_time_1 / itp);
-	    	fl_2 = Math.ceil(filter_time_2 / itp);
+	    	System.out.println("Distance: " + distance + ", Old Distance Calc: " + distance_alt + ", NUTRONS SAY: " + nutron_distance);
 
+	    	distance = nutron_distance;
+	    	
 	    	sign = (int) Math.signum(distance);
 	    	distance = Math.abs(distance);
 	    	
-	    	if(distance >= 18.0){
+	    	if(distance > 18.0){
 		    	filter_time_1 = 0.200;
 		    	filter_time_2 = 0.100;
-	    	}else if(distance >= 8){
+		    	v_max = 60.0;
+	    	}else if(distance > 9){
+		    	filter_time_1 = 0.200;
+		    	filter_time_2 = 0.100;
+		    	v_max = 30.0;
+	    	}else if(distance >= 5){
+		    	filter_time_1 = 0.200;
+		    	filter_time_2 = 0.100;
+		    	v_max = 15.0;
+	    	}else if(distance > 2){
 		    	filter_time_1 = 0.100;
 		    	filter_time_2 = 0.050;
-	    	}else if(distance >= 5){
-		    	filter_time_1 = 0.050;
-		    	filter_time_2 = 0.025;
+		    	v_max = 10.0;
+	    	}else if(distance >= 1){
+	    		filter_time_1 = 0.100;
+	    		filter_time_2 = 0.050;
+	    		v_max = 5.0;
 	    	}else{
-		    	filter_time_1 = 0.025;
-		    	filter_time_2 = 0.025;
+	    		// just abort this command and let the next code take over
+	    		aborted = true;
 	    	}
+	    	
+	    	fl_1 = Math.ceil(filter_time_1 / itp);
+	    	fl_2 = Math.ceil(filter_time_2 / itp);
 	    	
 	    	//System.out.println("fl time 1: " + filter_time_1);
 	    	//System.out.println("fl time 2: " + filter_time_2);
     	}catch(Exception oh_no){
     		System.out.println("Fatal Targeting Error: Dashboard data not found.");
+    		
+    		aborted = true;
     	}
     	
     	t_4 = distance / v_max;
     	n = (int) (t_4 / itp);
     	
-    	//System.out.println("t_4: " + t_4 + "	n: " + n);
+    	// System.out.println("t_4: " + t_4 + "	n: " + n);
     }
     
     private long prev_time = System.currentTimeMillis();
@@ -167,10 +198,17 @@ public class TrapezoidalAngleOutput extends Command {
     	output = pid.getOutput();
 		
 		Robot.drivetrain.drive_tank_auto(output, (-1) * output);
+		
+		double x_cm = SmartDashboard.getNumber("vision_target_x_cm");
+    	
+    	if(Math.signum(160 - x_cm) != target_position_sign){
+    		aborted = true;
+    	}
     }
 
     protected boolean isFinished() {
-        return (velocity == 0 && step > 2) || Math.abs(Robot.camera.getTargetCenterOfMass()[0] - 160) < 20;
+        //return (velocity == 0 && step > 2) || Math.abs(Robot.camera.getTargetCenterOfMass()[0] - 160) < 20;
+    	return (velocity == 0 && step > 2) || aborted;
     }
 
     protected void end() {
