@@ -101,7 +101,6 @@ public class Autonomous extends CommandGroup {
 				addSequential(new TimedAutoDrive(0.55, 1.0, 0.55));
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 0.9));
 				//addSequential(new TimedAutoDrive(0.8, 0.9, 1.15));
-				addSequential(new TimedAutoDrive(0.9, 0.9, 1.50));
 				addSequential(new CommandDelay(0.4));
 			break;
 			case RockWall:
@@ -113,7 +112,7 @@ public class Autonomous extends CommandGroup {
 			case RoughTerrain:
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 1.7));
 				//addSequential(new TimedAutoDrive(0.8, 0.9, 1.95));
-				addSequential(new TimedAutoDrive(0.9, 0.9, 1.8));
+				addSequential(new TimedAutoDrive(0.9, 0.9, 1.6));
 				addSequential(new CommandDelay(0.2));
 			break;
 			case SomethingElse:

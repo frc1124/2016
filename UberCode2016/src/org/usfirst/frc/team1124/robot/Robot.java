@@ -78,7 +78,7 @@ public class Robot extends IterativeRobot {
     
     // this revision of code (displayed on dash board)
     
-    public static String codeRevision = "[v9.1.1]:off:ciac:ramparts";
+    public static String codeRevision = "[v9.1.3]:off:ciac:ramparts";
 
     /**
      * This function is run when the robot is first started up and should be
