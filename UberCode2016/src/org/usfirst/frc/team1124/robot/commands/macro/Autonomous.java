@@ -101,7 +101,8 @@ public class Autonomous extends CommandGroup {
 				addSequential(new TimedAutoDrive(0.55, 1.0, 0.55));
 				//addSequential(new TimedAutoDrive(0.9, 0.9, 0.9));
 				//addSequential(new TimedAutoDrive(0.8, 0.9, 1.15));
-				addSequential(new TimedAutoDrive(0.9, 0.9, 1.1));
+				//addSequential(new TimedAutoDrive(0.8, 0.9, 1.05));
+				addSequential(new TimedAutoDrive(0.9, 0.9, 0.8));
 				addSequential(new CommandDelay(0.4));
 			break;
 			case RockWall:
@@ -155,7 +156,11 @@ public class Autonomous extends CommandGroup {
 			case Pos_3:
 				// shoot for the middle goal
 				addParallel(new SelectTarget(false));
-				addSequential(new TurnTowardsAnglePID(14.0));
+				if(defense_type == AutoDefenseType.Ramparts){
+					addSequential(new TurnTowardsAnglePID(25.0));
+				}else{
+					addSequential(new TurnTowardsAnglePID(14.0));
+				}
 				break;
 			case Pos_4:
 				// shoot for the middle goal
@@ -163,7 +168,7 @@ public class Autonomous extends CommandGroup {
 				addSequential(new TurnTowardsAnglePID(0.0));
 				break;
 			case Pos_5:
-				// shoot middle goal
+				// shoot for the middle goal
 				addParallel(new SelectTarget(true));
 		    	addSequential(new TurnTowardsAnglePID(-18.0));
 				break;
