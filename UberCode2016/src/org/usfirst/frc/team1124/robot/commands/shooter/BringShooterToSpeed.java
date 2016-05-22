@@ -12,7 +12,7 @@ public class BringShooterToSpeed extends Command {
 	private double setpoint;
 	private double voltage;
 	
-	public static final double SPEED = 3700.0; //3680.0;
+	public static final double SPEED = 3730.0; //3700.0;
 	public static final double MAX_RPM = 4100.0;
 	private final double APPROX_TIME_TO_SPEED_UP = 3.0;
 	

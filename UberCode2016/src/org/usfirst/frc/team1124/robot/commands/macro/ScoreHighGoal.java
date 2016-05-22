@@ -25,7 +25,7 @@ public class ScoreHighGoal extends CommandGroup {
 	
 	private RampBeltsFeedToShooter feed_cmd;
 	
-	public static final double AUTO_SHOOTER_SPEED = 3695.0; //3685.0
+	public static final double AUTO_SHOOTER_SPEED = 3710.0; //3695.0
 	
     public ScoreHighGoal() {
     	aim_cmd = new TrapezoidalAngleOutput();
