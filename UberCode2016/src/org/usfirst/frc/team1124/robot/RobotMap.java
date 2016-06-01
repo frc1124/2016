@@ -45,7 +45,7 @@ public class RobotMap {
 	public static final String CAMERA_IP = "10.11.24.11";
 	
 	public static final int CAMERA_COLOR_LEVEL = 60;
-	public static final int CAMERA_BRIGHTNESS = 20;
+	public static final int CAMERA_BRIGHTNESS = 13;
 	public static final int CAMERA_COMPRESSION = 30;
 	public static final int CAMERA_MAX_FPS = 20;
 	
