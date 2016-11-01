@@ -6,6 +6,7 @@ import org.usfirst.frc.team1124.robot.enums.AutoDefenseType;
 import org.usfirst.frc.team1124.robot.enums.AutoMode;
 
 import edu.wpi.first.wpilibj.ControllerPower;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashboardConnection {
@@ -17,6 +18,7 @@ public class DashboardConnection {
 	/**
 	 * Get data for autonomous
 	 */
+	
 	public static class Auto {
 		public static AutoMode getMode(){
 			AutoMode mode = AutoMode.Nothing;
