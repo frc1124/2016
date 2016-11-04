@@ -11,16 +11,17 @@ public class SelectCamera extends Command {
 
 	private boolean shooter = true; 
 	
-    public SelectCamera(boolean shooter) {
-        this.shooter = shooter;
+    public SelectCamera(boolean initialValue) {
+        this.shooter = initialValue;
         
         // init this smart dashboard data with the constructor
-    	SmartDashboard.putBoolean("camera_select", true);
+    	SmartDashboard.putBoolean("camera_select", initialValue);
     }
 
     protected void initialize() {}
 
     protected void execute() {
+	shooter = !shooter;
     	SmartDashboard.putBoolean("camera_select", shooter);
     }
 
