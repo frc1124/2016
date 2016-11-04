@@ -10,16 +10,17 @@ public class SelectTarget extends Command {
 	
 	private boolean selectLeft;
 	
-    public SelectTarget(boolean selectLeft) {
-        this.selectLeft = selectLeft;
+    public SelectTarget(boolean initialValue) {
+        this.selectLeft = initialValue;
         
         // init this smart dashboard data on boot/in the constructor
-    	SmartDashboard.putBoolean("target_select", true);
+    	SmartDashboard.putBoolean("target_select", initialValue);
     }
 
     protected void initialize() {}
 
     protected void execute() {
+	selectLeft = !selectLeft;
     	SmartDashboard.putBoolean("target_select", selectLeft);
     }
 
