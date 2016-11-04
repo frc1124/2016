@@ -112,7 +112,6 @@ public class OI {
 		js1_buttons[8].whenPressed(new ArcadeDriveJoystick());
 
 		js1_buttons[11].whenPressed(new SelectTarget(true));
-		js1_buttons[12].whenPressed(new SelectTarget(false));
 		
 		// Driver 2, Joystick 2
 		
@@ -142,8 +141,7 @@ public class OI {
 		
 		js3_buttons[1].whenPressed(new TogglePistonState());
 		
-		js3_buttons[7].whenPressed(new SelectCamera(true));
-		js3_buttons[8].whenPressed(new SelectCamera(false));
+		js3_buttons[7].whenPressed(new SelectCamera(false));
 		
 		js3_buttons[12].whenPressed(new ReportFinishedShooting());
 	}
