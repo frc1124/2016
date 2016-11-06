@@ -188,18 +188,11 @@ public class DriveTrain extends Subsystem {
 	
 	// Toggle Break/Coast
 	
-	public void setCoast(){
-		left_1.enableBrakeMode(false);
-		left_2.enableBrakeMode(false);
-		right_1.enableBrakeMode(false);
-		right_2.enableBrakeMode(false);
-	}
-	
-	public void setBrake(){
-		left_1.enableBrakeMode(true);
-		left_2.enableBrakeMode(true);
-		right_1.enableBrakeMode(true);
-		right_2.enableBrakeMode(true);
+	public void setBrakeMode(boolean enabled){
+		left_1.enableBrakeMode(enabled);
+		left_2.enableBrakeMode(enabled);
+		right_1.enableBrakeMode(enabled);
+		right_2.enableBrakeMode(enabled);	
 	}
 	
 	// Manual Control
